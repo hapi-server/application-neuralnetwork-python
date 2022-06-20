@@ -1,3 +1,5 @@
+# Author: Travis Hammond
+
 import numpy as np
 import numpy.lib.recfunctions as rf
 import sys
@@ -6,6 +8,8 @@ from os.path import dirname, basename
 import matplotlib.pyplot as plt
 
 from hapiclient import hapitime2datetime
+
+__version__ = '0.1.0'
 
 MODEL_ENGINE = 'TORCH'
 # MODEL_ENGINE = 'TENSORFLOW'
