@@ -1,3 +1,5 @@
+# Author: Travis Hammond
+
 import sys
 import warnings
 from os import listdir
@@ -10,6 +12,30 @@ from hapiclient import hapitime2datetime
 
 MODEL_ENGINE = 'TORCH'
 # MODEL_ENGINE = 'TENSORFLOW'
+
+
+def extract_format_structured_data(data, parameters):
+    new_data = []
+    for dat in data:
+        for param in parameters:
+            if param in dat.dtype.names:
+                dp = dat[param]
+                if len(dp.shape) > 1:
+                    for ndx in range(dp.shape[1]):
+                        new_data.append(np.array(
+                            dp[:, ndx], dtype=[(param + f'_{ndx}', dp.dtype)]
+                        ))
+                else:
+                    new_data.append(dat[[param]])
+            elif '_' in param:
+                base_param, ndx = param.rsplit('_', 1)
+                ndx = int(ndx)
+                dp = dat[base_param]
+                if base_param in dat.dtype.names and len(dat.dtype[base_param].shape) > 0:
+                    new_data.append(np.array(
+                        dp[:, ndx], dtype=[(base_param + f'_{ndx}', dp.dtype)]
+                    ))
+    return rf.merge_arrays(new_data, flatten=True)
 
 
 class HAPINNTrainer:
@@ -74,7 +100,7 @@ class HAPINNTrainer:
             raise TypeError('in_steps must be an int.')
         if not isinstance(out_steps, int):
             raise TypeError('out_steps must be an int.')
-        if not lag and self.out_steps > self.in_steps:
+        if not lag and out_steps > in_steps:
             raise ValueError('out_steps must be less than '
                              'in_steps if not lagging data')
         self.in_steps = in_steps
@@ -96,7 +122,8 @@ class HAPINNTrainer:
             datas: A list or tuple of hapi data, which
                    has same data columns and same intervals.
                    The datas should not have same columns besides
-                   for time.
+                   for time. datas can have time gaps, however,
+                   the gaps must be the same across all datas.
             xyparameters: A list or tuple of lists which contain
                           the column names that indicate the
                           wanted columns in x input and y input,
@@ -134,26 +161,13 @@ class HAPINNTrainer:
             datas[ndx] = datas[ndx][list(datas[ndx].dtype.names[1:])]
 
         # Combine all columns based on X and Y requested parameters
-        # TODO: CHECK IF HANDLE VECTORS
         if xyparameters is None:
-            self.data = rf.merge_arrays(datas, flatten=True)
+            self.data = extract_format_structured_data(datas, datas.dtype.names)
         elif xyparameters[0] == xyparameters[1]:
-            self.data = rf.merge_arrays(
-                [data[[param]] for param in xyparameters[0]
-                    for data in datas if param in data.dtype.names],
-                flatten=True
-            )
+            self.data = extract_format_structured_data(datas, xyparameters[0])
         else:
-            self.data = rf.merge_arrays(
-                [data[[param]] for param in xyparameters[0]
-                    for data in datas if param in data.dtype.names],
-                flatten=True
-            )
-            self.y_data = rf.merge_arrays(
-                [data[[param]] for param in xyparameters[1]
-                    for data in datas if param in data.dtype.names],
-                flatten=True
-            )
+            self.data = extract_format_structured_data(datas, xyparameters[0])
+            self.y_data = extract_format_structured_data(datas, xyparameters[1])
 
         # Split Data on time gaps
         self.data = np.split(self.data, split_ndxs)
@@ -319,7 +333,7 @@ class HAPINNTrainer:
             min_steps = self.in_steps + self.out_steps
         else:
             min_steps = max(self.in_steps, self.out_steps)
-
+   
         # Split data into segments for later partitioning.
         # The data split has noise in the edges to avoid the
         # chance of a bias in splitting.
@@ -338,7 +352,7 @@ class HAPINNTrainer:
                     break
                 data.append(self.data[ndx][cndx:cndx + end])
                 if self.y_data is not None:
-                    y_data.append(self.y_data[cndx:cndx + end])
+                    y_data.append(self.y_data[ndx][cndx:cndx + end])
                 cndx += end
             else:
                 if len(self.data[ndx]) - cndx >= min_steps:
@@ -651,7 +665,7 @@ class HAPINNTester:
             datas: A list or tuple of hapi data, which
                    has same data columns and same intervals.
                    The datas should not have same columns besides
-                   for time.
+                   for time. Note, datas cannot have time gaps.
             xyparameters: A list or tuple of lists which contain
                           the column names that indicate the
                           wanted columns in x input and y input,
@@ -688,27 +702,13 @@ class HAPINNTester:
             datas[ndx] = datas[ndx][list(datas[ndx].dtype.names[1:])]
 
         # Combine all columns based on X and Y requested parameters
-        # TODO: CHECK IF HANDLE VECTORS
         if xyparameters is None:
-            self.data = rf.merge_arrays(datas, flatten=True)
+            self.data = extract_format_structured_data(datas, datas.dtype.names)
         elif xyparameters[0] == xyparameters[1]:
-            self.data = rf.merge_arrays(
-                [data[[param]] for param in xyparameters[0]
-                    for data in datas if param in data.dtype.names],
-                flatten=True
-            )
-            self.y_data = self.data
+            self.data = extract_format_structured_data(datas, xyparameters[0])
         else:
-            self.data = rf.merge_arrays(
-                [data[[param]] for param in xyparameters[0]
-                    for data in datas if param in data.dtype.names],
-                flatten=True
-            )
-            self.y_data = rf.merge_arrays(
-                [data[[param]] for param in xyparameters[1]
-                    for data in datas if param in data.dtype.names],
-                flatten=True
-            )
+            self.data = extract_format_structured_data(datas, xyparameters[0])
+            self.y_data = extract_format_structured_data(datas, xyparameters[1])
 
     def prepare_data(self):
         """Prepares the data for testing by
@@ -793,7 +793,7 @@ class HAPINNTester:
 
             col_ndx = self.y_data.dtype.names.index(column_name)
             forecasts = np.append(
-                self.y_data[:self.in_steps][column_name], np.concatenate(preds)
+                self.y_data[:self.in_steps][column_name], np.concatenate(preds)[:, col_ndx]
             )
 
             plt.plot(forecasts)
@@ -830,5 +830,5 @@ class HAPINNTester:
             ndx = stride + self.in_steps
             col_ndx = self.y_data.dtype.names.index(column_name)
             preds = np.concatenate(preds)
-            plt.plot(preds)
+            plt.plot(preds[:, col_ndx])
             plt.plot(self.y_data[column_name])
