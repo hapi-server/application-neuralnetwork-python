@@ -1,7 +1,7 @@
 # Author: Travis Hammond
 
-import sys
 import warnings
+from time import time
 from os import listdir
 from os.path import dirname, basename
 import numpy as np
@@ -31,7 +31,8 @@ def extract_format_structured_data(data, parameters):
                 base_param, ndx = param.rsplit('_', 1)
                 ndx = int(ndx)
                 dp = dat[base_param]
-                if base_param in dat.dtype.names and len(dat.dtype[base_param].shape) > 0:
+                if base_param in dat.dtype.names and len(
+                        dat.dtype[base_param].shape) > 0:
                     new_data.append(np.array(
                         dp[:, ndx], dtype=[(base_param + f'_{ndx}', dp.dtype)]
                     ))
@@ -128,7 +129,8 @@ class HAPINNTrainer:
                           the column names that indicate the
                           wanted columns in x input and y input,
                           respectively.
-
+        Returns:
+            A number that represents the time interval between data points.
         """
         if (xyparameters is not None
                 and not isinstance(xyparameters, (list, tuple))):
@@ -144,7 +146,7 @@ class HAPINNTrainer:
         time = datas[0]['Time']
         time_data = hapitime2datetime(time)
         time_deltas = np.vectorize(lambda x: x.total_seconds())(
-             time_data[1:] - time_data[:-1]
+            time_data[1:] - time_data[:-1]
         )
         self.time_interval = np.median(time_deltas)
         split_ndxs = np.nonzero(time_deltas != self.time_interval)[0] + 1
@@ -162,12 +164,15 @@ class HAPINNTrainer:
 
         # Combine all columns based on X and Y requested parameters
         if xyparameters is None:
-            self.data = extract_format_structured_data(datas, datas.dtype.names)
+            self.data = extract_format_structured_data(
+                datas, datas.dtype.names)
         elif xyparameters[0] == xyparameters[1]:
             self.data = extract_format_structured_data(datas, xyparameters[0])
         else:
             self.data = extract_format_structured_data(datas, xyparameters[0])
-            self.y_data = extract_format_structured_data(datas, xyparameters[1])
+            self.y_data = extract_format_structured_data(
+                datas, xyparameters[1]
+            )
 
         # Split Data on time gaps
         self.data = np.split(self.data, split_ndxs)
@@ -180,7 +185,7 @@ class HAPINNTrainer:
         else:
             min_steps = max(self.in_steps, self.out_steps)
         data = []
-        data_ndxs = []  
+        data_ndxs = []
         for ndx, split in enumerate(self.data):
             split_size = int(len(split) / 10)
             if split_size >= min_steps:
@@ -205,11 +210,12 @@ class HAPINNTrainer:
                           f'10% of the average data gap size ({avg_size}). '
                           'This may reduce the precision of the test split '
                           'and lead to increased data lost from splits.')
+        return self.time_interval
 
     def prepare_data(self):
         """Prepares the data for training by
            processing it and partitioning it.
-           
+
         Returns:
             A list of the actual resulting partition proportions is returned.
         """
@@ -274,7 +280,7 @@ class HAPINNTrainer:
                 preprocessed_y_data_all = None
             else:
                 preprocessed_y_data_all = self.preprocess_func(y_data)
-        
+
         x_datas = []
         y_datas = []
         for ndx in range(len(preprocessed_data_all)):
@@ -292,7 +298,8 @@ class HAPINNTrainer:
                 preprocessed_data, self.in_steps, axis=0
             ), 1, 2)
 
-            if self.in_steps == self.out_steps and preprocessed_y_data_all is None:
+            if (self.in_steps == self.out_steps
+                    and preprocessed_y_data_all is None):
                 if self.lag:
                     # CHECK lengths
                     y_data = x_data[self.in_steps:]
@@ -302,13 +309,15 @@ class HAPINNTrainer:
                     x_data = x_data
             else:
                 if preprocessed_y_data_all is None:
-                    y_data = np.swapaxes(np.lib.stride_tricks.sliding_window_view(
-                        preprocessed_data, self.out_steps, axis=0
-                    ), 1, 2)
+                    y_data = np.swapaxes(
+                        np.lib.stride_tricks.sliding_window_view(
+                            preprocessed_data, self.out_steps, axis=0), 1, 2
+                    )
                 else:
-                    y_data = np.swapaxes(np.lib.stride_tricks.sliding_window_view(
-                        preprocessed_y_data, self.out_steps, axis=0
-                    ), 1, 2)
+                    y_data = np.swapaxes(
+                        np.lib.stride_tricks.sliding_window_view(
+                            preprocessed_y_data, self.out_steps, axis=0), 1, 2
+                    )
                 min_len = min(y_data.shape[0], x_data.shape[0])
                 if self.lag:
                     # CHECK lengths
@@ -333,7 +342,7 @@ class HAPINNTrainer:
             min_steps = self.in_steps + self.out_steps
         else:
             min_steps = max(self.in_steps, self.out_steps)
-   
+
         # Split data into segments for later partitioning.
         # The data split has noise in the edges to avoid the
         # chance of a bias in splitting.
@@ -361,7 +370,14 @@ class HAPINNTrainer:
                         y_data.append(self.y_data[ndx][cndx:])
 
         # Sample Sections for Test Data
-        ndxs = np.random.choice(np.arange(len(data)-1), size=round(len(data) * self.data_split[2]), replace=False)
+        ndxs = np.random.choice(
+            np.arange(
+                len(data) -
+                1),
+            size=round(
+                len(data) *
+                self.data_split[2]),
+            replace=False)
         data = np.array(data)
         test_data = data[ndxs]
         data = np.delete(data, ndxs, axis=0)
@@ -386,7 +402,7 @@ class HAPINNTrainer:
         """
         if len(data) != 2:
             raise ValueError('Data should only have two dict entries.')
-            
+
         # Randomly sample to split into two data dicts
         length = len(data['x'])
         ndxs = np.random.choice(
@@ -427,18 +443,17 @@ class HAPINNTrainer:
                           'test_x': self.processed_test_data['x'],
                           'test_y': self.processed_test_data['y']}
         self.processed_data = processed_data
-        
+
         # Calculate split proportions
         tn = len(processed_data['train_x'])
         vd = len(processed_data['val_x'])
         tt = len(processed_data['test_x'])
         sm = tn + vd + tt
         return (tn / sm, vd / sm, tt / sm)
-        
 
     def torch_train(self, model, loss_func,
                     optimizer, epochs, device, batch_size=None,
-                    verbose=1):
+                    metric_func=None, verbose=1):
         """Trains and evaluates a torch model.
 
         Args:
@@ -448,6 +463,7 @@ class HAPINNTrainer:
             epochs: An integer, the number of training epochs.
             device: A string, the device to use gpu/cpu etc.
             batch_size: An integer, the size of each batch for training.
+            metric_func: A torch loss/metric function.
             verbose: An integer, rates verbosity. 0 None, 1 All.
         Returns:
             A dict of results for train, validation, and test.
@@ -479,17 +495,21 @@ class HAPINNTrainer:
         model.train()
 
         for epoch in range(epochs):
+            start_time = time()
             if verbose:
                 print(f'Epoch {epoch + 1}/{epochs}', end='\r')
 
             model.train(mode=True)
             epoch_loss = 0
+            epoch_metric_loss = 0
             batch_length = len(train_loader)
             for batch_ndx, (data, target) in enumerate(train_loader):
                 data, target = data.to(device), target.to(device)
                 optimizer.zero_grad()
                 output = model(data)
                 loss = loss_func(output, target)
+                if metric_func is not None:
+                    epoch_metric_loss += metric_func(output, target).item()
                 loss.backward()
                 optimizer.step()
                 loss = loss.item()
@@ -497,49 +517,92 @@ class HAPINNTrainer:
                 if verbose:
                     string = (f'Epoch: {epoch + 1}/{epochs} - '
                               f'Batch: {batch_ndx + 1}/{batch_length} - '
-                              f'Loss: {epoch_loss / (batch_ndx + 1):.6f}\t\t')
+                              f'Loss: {epoch_loss / (batch_ndx + 1):.6f}')
+                    if metric_func is not None:
+                        string += (
+                            ' - Metric Loss: '
+                            f'{epoch_metric_loss / (batch_ndx + 1):.6f}'
+                        )
+                    string += '\t\t'
                     str_length = len(string)
                     print(string, end='\r')
             if verbose:
-                string = (f'Epoch: {epoch + 1}/{epochs} - '
-                          f'Batch: {batch_ndx + 1}/{batch_length} - '
-                          f'Loss: {(epoch_loss / (batch_ndx + 1)):.6f} - ')
+                time_taken = time() - start_time
+                string = (
+                    f'Epoch: {epoch + 1}/{epochs} - '
+                    f'Batch: {batch_ndx + 1}/{batch_length} - '
+                    f'{time_taken:.1f}s '
+                    f'{int(1000 * time_taken / (batch_ndx + 1))}ms/step - '
+                    f'Loss: {(epoch_loss / (batch_ndx + 1)):.6f}')
+                if metric_func is not None:
+                    string += (
+                        ' - Metric Loss: '
+                        f'{epoch_metric_loss / (batch_ndx + 1):.6f}'
+                    )
 
             model.train(mode=False)
             epoch_loss = 0
+            epoch_metric_loss = 0
             for batch_idx, (data, target) in enumerate(val_loader):
                 data, target = data.to(device), target.to(device)
                 output = model(data)
                 loss = loss_func(output, target).item()
                 epoch_loss += loss
+                if metric_func is not None:
+                    epoch_metric_loss += metric_func(output, target).item()
             if verbose:
-                string += ('Validation Loss: '
+                string += (' - Validation Loss: '
                            f'{(epoch_loss / (batch_ndx + 1)):.6f}')
+                if metric_func is not None:
+                    string += (
+                        f' - Validation Metric Loss: '
+                        f'{epoch_metric_loss / (batch_ndx + 1):.6f}'
+                    )
                 print(string + " " * (str_length - len(string)))
 
         results = {}
         epoch_loss = 0
+        epoch_metric_loss = 0
         for batch_idx, (data, target) in enumerate(train_loader):
             data, target = data.to(device), target.to(device)
             output = model(data)
             loss = loss_func(output, target).item()
             epoch_loss += loss
-        results['train'] = (epoch_loss / (batch_ndx + 1))
+            if metric_func is not None:
+                epoch_metric_loss += metric_func(output, target).item()
+        if metric_func is None:
+            results['train'] = (epoch_loss / (batch_ndx + 1))
+        else:
+            results['train'] = [(epoch_loss / (batch_ndx + 1)),
+                                (epoch_metric_loss / (batch_ndx + 1))]
         epoch_loss = 0
+        epoch_metric_loss = 0
         for batch_idx, (data, target) in enumerate(val_loader):
             data, target = data.to(device), target.to(device)
             output = model(data)
             loss = loss_func(output, target).item()
             epoch_loss += loss
-        results['val'] = (epoch_loss / (batch_ndx + 1))
+            if metric_func is not None:
+                epoch_metric_loss += metric_func(output, target).item()
+        if metric_func is None:
+            results['val'] = (epoch_loss / (batch_ndx + 1))
+        else:
+            results['val'] = [(epoch_loss / (batch_ndx + 1)),
+                              (epoch_metric_loss / (batch_ndx + 1))]
         epoch_loss = 0
+        epoch_metric_loss = 0
         for batch_idx, (data, target) in enumerate(test_loader):
             data, target = data.to(device), target.to(device)
             output = model(data)
             loss = loss_func(output, target).item()
             epoch_loss += loss
-        results['test'] = (epoch_loss / (batch_ndx + 1))
-
+            if metric_func is not None:
+                epoch_metric_loss += metric_func(output, target).item()
+        if metric_func is None:
+            results['test'] = (epoch_loss / (batch_ndx + 1))
+        else:
+            results['test'] = [(epoch_loss / (batch_ndx + 1)),
+                               (epoch_metric_loss / (batch_ndx + 1))]
         return results
 
     def tf_train(self, model, epochs, batch_size=None, **kwargs):
@@ -587,7 +650,8 @@ class HAPINNTrainer:
         return results
 
     def train(self, model, epochs, batch_size=None,
-              loss_func=None, optimizer=None, device=None):
+              loss_func=None, metric_func=None, optimizer=None,
+              device=None, verbose=1):
         """Trains and evaluates a tensorflow or torch model.
 
         Args:
@@ -595,8 +659,10 @@ class HAPINNTrainer:
             epochs: An integer, the number of training epochs.
             batch_size: An integer, the size of each batch for training.
             loss_func: A torch loss function.
+            metric_func: A torch loss/metric function.
             optimizer: A torch optimizer.
             device: A string, the device to use gpu/cpu etc.
+            verbose: An integer, rates verbosity. 0 None, 1 All.
         Returns:
             A dict of results for train, validation, and test.
         """
@@ -612,9 +678,14 @@ class HAPINNTrainer:
                 optimizer,
                 epochs,
                 device,
-                batch_size=batch_size)
+                batch_size=batch_size,
+                metric_func=metric_func,
+                verbose=verbose
+            )
         else:
-            results = self.tf_train(model, epochs, batch_size=batch_size)
+            results = self.tf_train(
+                model, epochs, batch_size=batch_size, verbose=verbose
+            )
         return results
 
 
@@ -670,6 +741,8 @@ class HAPINNTester:
                           the column names that indicate the
                           wanted columns in x input and y input,
                           respectively.
+        Returns:
+            A number that represents the time interval between data points.
         """
         if (xyparameters is not None
                 and not isinstance(xyparameters, (list, tuple))):
@@ -685,7 +758,7 @@ class HAPINNTester:
         time = datas[0]['Time']
         time_data = hapitime2datetime(time)
         time_deltas = np.vectorize(lambda x: x.total_seconds())(
-             time_data[1:] - time_data[:-1]
+            time_data[1:] - time_data[:-1]
         )
         self.time_interval = np.median(time_deltas)
         split_ndxs = np.nonzero(time_deltas != self.time_interval)[0] + 1
@@ -703,12 +776,16 @@ class HAPINNTester:
 
         # Combine all columns based on X and Y requested parameters
         if xyparameters is None:
-            self.data = extract_format_structured_data(datas, datas.dtype.names)
+            self.data = extract_format_structured_data(
+                datas, datas.dtype.names)
         elif xyparameters[0] == xyparameters[1]:
             self.data = extract_format_structured_data(datas, xyparameters[0])
         else:
             self.data = extract_format_structured_data(datas, xyparameters[0])
-            self.y_data = extract_format_structured_data(datas, xyparameters[1])
+            self.y_data = extract_format_structured_data(
+                datas, xyparameters[1]
+            )
+        return self.time_interval
 
     def prepare_data(self):
         """Prepares the data for testing by
@@ -762,7 +839,13 @@ class HAPINNTester:
                 preds.append(self.postprocess_func(pred))
         return preds
 
-    def forecast_plot(self, preds, pred_ndx, column_name, stride=None):
+    def forecast_plot(
+            self,
+            preds,
+            pred_ndx,
+            column_name,
+            stride=None,
+            return_data=False):
         """Creates a line plot to compare the ground truth and predicted
            values of a specific output column for one of the predicted outputs.
            Used when Trainer had lag=True.
@@ -774,6 +857,11 @@ class HAPINNTester:
             column_name: A string which is a name of a output column.
             stride: A integer, which is the stride used in test method to
                     produce the preds.
+            return_data: A boolean, which if True will return data for plotting
+                         instead of plotting itself.
+        Returns:
+            None or if return_data is True, returns a dict of forecast and
+            truth which both are tuple of (Time, Values)
         """
         if stride is None:
             stride = self.out_steps
@@ -781,25 +869,42 @@ class HAPINNTester:
         if pred_ndx != -1:
             ndx = stride * pred_ndx + self.in_steps
             col_ndx = self.y_data.dtype.names.index(column_name)
-            plt.plot(np.append(
+            forecast = np.append(
                 self.y_data[ndx - self.in_steps:ndx][column_name],
                 preds[pred_ndx][:, col_ndx]
-            ))
-            plt.plot(self.y_data[ndx - self.in_steps:ndx +
-                     self.out_steps][column_name])
+            )
+            truth = self.y_data[ndx - self.in_steps:ndx +
+                                self.out_steps][column_name]
         else:
             if stride != self.out_steps:
                 raise NotImplementedError('stride must match out_steps')
-
             col_ndx = self.y_data.dtype.names.index(column_name)
             forecasts = np.append(
-                self.y_data[:self.in_steps][column_name], np.concatenate(preds)[:, col_ndx]
+                self.y_data[:self.in_steps][column_name],
+                np.concatenate(preds)[:, col_ndx]
             )
+            truth = self.y_data[column_name]
+        forecast_time = np.arange(len(forecasts)) * self.time_interval
+        truth_time = np.arange(len(truth)) * self.time_interval
 
-            plt.plot(forecasts)
-            plt.plot(self.y_data[column_name])
+        if return_data:
+            return {'forecast': (forecast_time, forecast),
+                    'truth': (truth_time, truth)}
+        else:
+            plt.title('Test Forecast')
+            plt.xlabel('Time (Seconds)')
+            plt.ylabel('Value')
+            plt.plot(forecast_time, forecast)
+            plt.plot(truth_time, truth)
+            plt.legend(['forecast', 'truth'])
 
-    def plot(self, preds, pred_ndx, column_name, stride=None):
+    def plot(
+            self,
+            preds,
+            pred_ndx,
+            column_name,
+            stride=None,
+            return_data=False):
         """Creates a line plot to compare the ground truth and predicted
            values of a specific output column for one of the predicted outputs.
            Used when Trainer had lag=False.
@@ -811,6 +916,11 @@ class HAPINNTester:
             column_name: A string which is a name of a output column.
             stride: A integer, which is the stride used in test method to
                     produce the preds.
+            return_data: A boolean, which if True will return data for plotting
+                         instead of plotting itself.
+        Returns:
+            None or if return_data is True, returns a dict of prediction
+            and truth which both are tuple of (Time, Values)
         """
         if self.out_steps > self.in_steps:
             raise Exception('Use forecast_plot instead. out_steps > in_steps.')
@@ -821,14 +931,31 @@ class HAPINNTester:
         if pred_ndx != -1:
             ndx = stride * pred_ndx + self.in_steps
             col_ndx = self.y_data.dtype.names.index(column_name)
-            plt.plot(np.append(self.y_data[ndx - self.out_steps:ndx -
-                     self.in_steps][column_name], preds[pred_ndx][:, col_ndx]))
-            plt.plot(self.y_data[ndx - self.in_steps:ndx][column_name])
+            prediction = np.append(
+                self.y_data[ndx - self.out_steps:
+                            ndx - self.in_steps][column_name],
+                preds[pred_ndx][:, col_ndx]
+            )
+            truth = self.y_data[ndx - self.in_steps:ndx][column_name]
         else:
             if stride != self.out_steps:
                 raise NotImplementedError('stride must match out_steps')
             ndx = stride + self.in_steps
             col_ndx = self.y_data.dtype.names.index(column_name)
-            preds = np.concatenate(preds)
-            plt.plot(preds[:, col_ndx])
-            plt.plot(self.y_data[column_name])
+            prediction = np.concatenate(preds)[:, col_ndx]
+            truth = self.y_data[column_name]
+        prediction_time = (np.arange(len(prediction)) *
+                           self.time_interval).astype('timedelta64[s]')
+        truth_time = (np.arange(len(truth)) *
+                      self.time_interval).astype('timedelta64[s]')
+
+        if return_data:
+            return {'prediction': (prediction_time, prediction),
+                    'truth': (truth_time, truth)}
+        else:
+            plt.title('Test Prediction')
+            plt.xlabel('Time (Seconds)')
+            plt.ylabel('Value')
+            plt.plot(prediction_time, prediction)
+            plt.plot(truth_time, truth)
+            plt.legend(['prediction', 'truth'])
