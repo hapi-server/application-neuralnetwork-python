@@ -62,6 +62,7 @@ splits = (.7, .2, .1)  # Train, Validation, Test
 trainer = HAPINNTrainer(
     splits, in_steps, out_steps,
     preprocess_func=None,
+    preprocess_y_func=None,
     lag=True
 )
 ```
@@ -83,12 +84,19 @@ trainer.set_hapidatas([data], xyparameters=[['scalar', 'vector'], ['vector_0']])
     hapi(): Reading dataset1_scalar-vector_19700101T000000_19700102T000000.npy 
 
 
-    /home/jovyan/hapi_nn.py:152: UserWarning: Time gaps exist in the data.
+    /home/jovyan/hapi_nn.py:198: UserWarning: Time gaps exist in the data.
       warnings.warn('Time gaps exist in the data.')
-    /home/jovyan/hapi_nn.py:190: UserWarning: Removed data gab at index 0. Length of gab (10) was too small. Split size (1) is less than minimum step size (1536).
+    /home/jovyan/hapi_nn.py:239: UserWarning: Removed data gab at index 0. Length of gab (10) was too small. Split size (0) is less than minimum step size (1536).
       warnings.warn(f'Removed data gab at index {ndx}. '
-    /home/jovyan/hapi_nn.py:195: UserWarning: Data points with time gaps that caused too small of splits where removed. Removed 1 out of 2 gaps.
+    /home/jovyan/hapi_nn.py:244: UserWarning: Data points with time gaps that caused too small of splits where removed. Removed 1 out of 2 gaps.
       warnings.warn('Data points with time gaps that caused '
+
+
+
+
+
+    1.0
+
 
 
 Prepare the downloaded data for training
@@ -98,16 +106,24 @@ Prepare the downloaded data for training
 trainer.prepare_data()
 ```
 
-    /home/jovyan/hapi_nn.py:365: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+    /home/jovyan/hapi_nn.py:408: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
       data = np.array(data)
-    /home/jovyan/hapi_nn.py:369: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+    /home/jovyan/hapi_nn.py:419: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+      data = np.array(remerge_data)
+    /home/jovyan/hapi_nn.py:422: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
       y_data = np.array(y_data)
+    /home/jovyan/hapi_nn.py:432: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+      y_data = np.array(remerge_data)
+
+
+    0 3
+    4 5
 
 
 
 
 
-    (0.6990567365901732, 0.19973250739124312, 0.1012107560185837)
+    (0.7222285750587637, 0.20636554221459882, 0.07140588272663745)
 
 
 
@@ -128,7 +144,9 @@ Create Tester
 
 ```python
 tester = HAPINNTester(
-    in_steps, out_steps, preprocess_func=None
+    in_steps, out_steps,
+    preprocess_func=None,
+    preprocess_y_func=None
 )
 ```
 
@@ -144,6 +162,13 @@ tester.set_hapidatas([data], xyparameters=[['scalar', 'vector'], ['vector_0']])
     hapi(): file directory = ./hapicache/hapi-server.org_servers_TestData2.0_hapi
     hapi(): Reading dataset1_scalar-vector_19700102T010000_19700102T040000.pkl
     hapi(): Reading dataset1_scalar-vector_19700102T010000_19700102T040000.npy 
+
+
+
+
+
+    1.0
+
 
 
 Prepare data for testing
@@ -322,16 +347,16 @@ trainer.train(model, epochs, batch_size=batch_size, loss_func=loss_function,
         optimizer=optimizer, device=device)
 ```
 
-    Epoch: 1/2 - Batch: 1552/1552 - Loss: 0.015380 - Validation Loss: 0.000082
-    Epoch: 2/2 - Batch: 1552/1552 - Loss: 0.000582 - Validation Loss: 0.000002
+    Epoch: 1/2 - Batch: 1777/1777 - 57.2s 32ms/step - Loss: 0.014197 - Validation Loss: 0.000046
+    Epoch: 2/2 - Batch: 1777/1777 - 57.4s 32ms/step - Loss: 0.000184 - Validation Loss: 0.000001
 
 
 
 
 
-    {'train': 1.6263104730124096e-05,
-     'val': 2.3210634088444723e-06,
-     'test': 1.1838764875551767e-06}
+    {'train': 5.820209335489791e-06,
+     'val': 8.31759345374067e-07,
+     'test': 2.880931337331819e-07}
 
 
 
@@ -375,7 +400,7 @@ tester.forecast_plot(predictions, 0, 'vector_0')
 
 
     
-![png](Sin%20Wave%20Test%20Example_files/Sin%20Wave%20Test%20Example4_36_0.png)
+![png](Sin%20Wave%20Test%20Example4_files/Sin%20Wave%20Test%20Example4_36_0.png)
     
 
 
@@ -386,11 +411,25 @@ tester.forecast_plot(predictions, -1, 'vector_0')
 
 
     
-![png](Sin%20Wave%20Test%20Example_files/Sin%20Wave%20Test%20Example4_37_0.png)
+![png](Sin%20Wave%20Test%20Example4_files/Sin%20Wave%20Test%20Example4_37_0.png)
     
 
 
 
 ```python
-
+tester.forecast_plot(predictions, -1, 'vector_0', return_data=True)
 ```
+
+
+
+
+    {'forecast': (array([0.0000e+00, 1.0000e+00, 2.0000e+00, ..., 1.1773e+04, 1.1774e+04,
+             1.1775e+04]),
+      array([ 3.13682897e-14,  5.23596397e-03,  1.04717845e-02, ...,
+             -9.30375099e-01, -9.35911536e-01, -9.62406993e-01], dtype=float32)),
+     'truth': (array([0.0000e+00, 1.0000e+00, 2.0000e+00, ..., 1.0797e+04, 1.0798e+04,
+             1.0799e+04]),
+      array([ 3.13682897e-14,  5.23596397e-03,  1.04717845e-02, ...,
+             -1.57073177e-02, -1.04717845e-02, -5.23596397e-03], dtype=float32))}
+
+

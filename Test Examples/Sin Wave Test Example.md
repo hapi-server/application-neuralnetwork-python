@@ -57,11 +57,32 @@ Create Trainer
 
 
 ```python
-splits = (.7, .2, .1)  # Train, Validation, Test
+splits = (.5, .05, .45)  # Train, Validation, Test
+
+means = {}
+stds = {}
+def func(data):
+    global means, stds
+    for name in data.dtype.names:
+        means[name] = data[name].mean()
+        stds[name] = data[name].std()
+        data[name] = (data[name] - means[name]) / stds[name]
+    return data
     
+func = HAPINNTrainer.ignore_gaps(func)
+
+# Just testing on_gaps on top of ignore_gaps
+# Not needed
+func2 = HAPINNTrainer.on_gaps(lambda x: x)
+def func3(data):
+    data = func(data)
+    data = func2(data)
+    return data
+
 trainer = HAPINNTrainer(
     splits, in_steps, out_steps,
-    preprocess_func=None,
+    preprocess_func=func3,
+    preprocess_y_func=func3,
     lag=False
 )
 ```
@@ -83,12 +104,19 @@ trainer.set_hapidatas([data], xyparameters=[['vector_0'], ['vector_1', 'vector_2
     hapi(): Reading dataset1_vector_19700101T000000_19700102T000000.npy 
 
 
-    /home/jovyan/hapi_nn.py:152: UserWarning: Time gaps exist in the data.
+    /home/jovyan/hapi_nn.py:198: UserWarning: Time gaps exist in the data.
       warnings.warn('Time gaps exist in the data.')
-    /home/jovyan/hapi_nn.py:190: UserWarning: Removed data gab at index 0. Length of gab (10) was too small. Split size (1) is less than minimum step size (512).
+    /home/jovyan/hapi_nn.py:239: UserWarning: Removed data gab at index 0. Length of gab (10) was too small. Split size (0) is less than minimum step size (512).
       warnings.warn(f'Removed data gab at index {ndx}. '
-    /home/jovyan/hapi_nn.py:195: UserWarning: Data points with time gaps that caused too small of splits where removed. Removed 1 out of 2 gaps.
+    /home/jovyan/hapi_nn.py:244: UserWarning: Data points with time gaps that caused too small of splits where removed. Removed 1 out of 2 gaps.
       warnings.warn('Data points with time gaps that caused '
+
+
+
+
+
+    1.0
+
 
 
 Prepare the downloaded data for training
@@ -98,16 +126,43 @@ Prepare the downloaded data for training
 trainer.prepare_data()
 ```
 
-    /home/jovyan/hapi_nn.py:365: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+    /home/jovyan/hapi_nn.py:409: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
       data = np.array(data)
-    /home/jovyan/hapi_nn.py:369: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+    /home/jovyan/hapi_nn.py:420: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+      data = np.array(remerge_data)
+    /home/jovyan/hapi_nn.py:423: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
       y_data = np.array(y_data)
+    /home/jovyan/hapi_nn.py:433: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+      y_data = np.array(remerge_data)
+    /home/jovyan/hapi_nn.py:752: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+      data = np.array(np.split(data, split_ndxs))
+    /home/jovyan/hapi_nn.py:767: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+      return np.array([func(x) for x in data])
+    /home/jovyan/hapi_nn.py:752: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+      data = np.array(np.split(data, split_ndxs))
+    /home/jovyan/hapi_nn.py:767: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+      return np.array([func(x) for x in data])
+    /home/jovyan/hapi_nn.py:752: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+      data = np.array(np.split(data, split_ndxs))
+    /home/jovyan/hapi_nn.py:767: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+      return np.array([func(x) for x in data])
+    /home/jovyan/hapi_nn.py:752: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+      data = np.array(np.split(data, split_ndxs))
+    /home/jovyan/hapi_nn.py:767: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+      return np.array([func(x) for x in data])
+
+
+    0 1
+    5 6
+    7 10
+    11 13
+    15 16
 
 
 
 
 
-    (0.6996306783208174, 0.19990151421888464, 0.10046780746029792)
+    (0.5138996778178206, 0.05139633501852866, 0.4347039871636507)
 
 
 
@@ -127,8 +182,25 @@ Create Tester
 
 
 ```python
+# Tester does not have any gaps
+def func(data):
+    global means, stds
+    for name in data.dtype.names:
+        data[name] = (data[name] - means[name]) / stds[name]
+    return data
+
+# If wanted to undo func for output
+def yfunc(data):
+    global means, stds
+    # currently output is not structured
+    data[:, 0] = data[:, 0] *  stds['vector_1'] + means['vector_1']
+    data[:, 1] = data[:, 1] *  stds['vector_2'] + means['vector_2']
+    return data
+
+
 tester = HAPINNTester(
-    in_steps, out_steps, preprocess_func=None
+    in_steps, out_steps, preprocess_func=func,
+    preprocess_y_func=yfunc
 )
 ```
 
@@ -144,6 +216,13 @@ tester.set_hapidatas([data], xyparameters=[['vector_0'], ['vector_1', 'vector_2'
     hapi(): file directory = ./hapicache/hapi-server.org_servers_TestData2.0_hapi
     hapi(): Reading dataset1_vector_19700102T010000_19700102T020000.pkl
     hapi(): Reading dataset1_vector_19700102T010000_19700102T020000.npy 
+
+
+
+
+
+    1.0
+
 
 
 Prepare data for testing
@@ -236,6 +315,7 @@ if hapi_nn.MODEL_ENGINE == 'TORCH':
         
     model = S2S(1, 2, 16)
     loss_function = nn.MSELoss()
+    metric_function = nn.L1Loss()
     optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
     device = 'cpu'
     print(model)
@@ -270,6 +350,7 @@ else:
     device = None
     loss_function = None
     optimizer = None
+    metric_function = None
 ```
 
     S2S(
@@ -293,22 +374,23 @@ else:
 
 
 ```python
-epochs = 1
+epochs = 2
 batch_size = 32
 
 trainer.train(model, epochs, batch_size=batch_size, loss_func=loss_function,
-        optimizer=optimizer, device=device)
+              metric_func=metric_function, optimizer=optimizer, device=device)
 ```
 
-    Epoch: 1/1 - Batch: 1777/1777 - Loss: 0.018618 - Validation Loss: 0.000013
+    Epoch: 1/2 - Batch: 1852/1852 - 34.6s 18ms/step - Loss: 0.026114 - Metric Loss: 0.054106 - Validation Loss: 0.000070 - Validation Metric Loss: 0.002552
+    Epoch: 2/2 - Batch: 1852/1852 - 34.1s 18ms/step - Loss: 0.000287 - Metric Loss: 0.011082 - Validation Loss: 0.000270 - Validation Metric Loss: 0.005419
 
 
 
 
 
-    {'train': 9.24583809796108e-05,
-     'val': 1.3255936285792303e-05,
-     'test': 6.707652634217131e-06}
+    {'train': [0.0018863588636042047, 0.03787980333260275],
+     'val': [0.0002698861616945244, 0.005418521430560631],
+     'test': [0.0008933953704517617, 0.007176460485028397]}
 
 
 
@@ -318,18 +400,31 @@ epochs = 1
 batch_size = 32
 
 trainer.train(model, epochs, batch_size=batch_size, loss_func=loss_function,
-        optimizer=optimizer, device=device)
+              optimizer=optimizer, device=device)
 ```
 
-    Epoch: 1/1 - Batch: 1776/1776 - Loss: 0.016652 - Validation Loss: 0.000016
+    2022-06-29 18:56:10.271048: W tensorflow/core/framework/cpu_allocator_impl.cc:82] Allocation of 116467712 exceeds 10% of free system memory.
+    2022-06-29 18:56:10.381409: W tensorflow/core/framework/cpu_allocator_impl.cc:82] Allocation of 232935424 exceeds 10% of free system memory.
+
+
+    1778/1778 [==============================] - 27s 14ms/step - loss: 0.0075 - mae: 0.0288 - val_loss: 4.6224e-04 - val_mae: 0.0176
+     16/889 [..............................] - ETA: 6s - loss: 4.5615e-04 - mae: 0.0175
+
+    2022-06-29 18:56:37.885233: W tensorflow/core/framework/cpu_allocator_impl.cc:82] Allocation of 116467712 exceeds 10% of free system memory.
+    2022-06-29 18:56:37.971320: W tensorflow/core/framework/cpu_allocator_impl.cc:82] Allocation of 232935424 exceeds 10% of free system memory.
+
+
+    889/889 [==============================] - 7s 7ms/step - loss: 4.5925e-04 - mae: 0.0175
+    254/254 [==============================] - 2s 7ms/step - loss: 4.6224e-04 - mae: 0.0176
+    127/127 [==============================] - 1s 8ms/step - loss: 4.5555e-04 - mae: 0.0174
 
 
 
 
 
-    {'train': 0.00010924271338955952,
-     'val': 1.559062562378827e-05,
-     'test': 7.910044706141553e-06}
+    {'train': [0.0004592504119500518, 0.017533820122480392],
+     'val': [0.00046223547542467713, 0.017617294564843178],
+     'test': [0.00045554927783086896, 0.0174103993922472]}
 
 
 
@@ -373,6 +468,23 @@ tester.plot(predictions, -1, 'vector_2')
     
 ![png](Sin%20Wave%20Test%20Example_files/Sin%20Wave%20Test%20Example_38_0.png)
     
+
+
+
+```python
+tester.plot(predictions, -1, 'vector_2', return_data=True)
+```
+
+
+
+
+    {'prediction': (array([   0,    1,    2, ..., 3581, 3582, 3583], dtype='timedelta64[s]'),
+      array([-0.8712521 , -0.8703499 , -0.8858828 , ..., -0.8900833 ,
+             -0.8948504 , -0.87869054], dtype=float32)),
+     'truth': (array([   0,    1,    2, ..., 3597, 3598, 3599], dtype='timedelta64[s]'),
+      array([-1.        , -0.9999863 , -0.99994516, ..., -0.9998766 ,
+             -0.99994516, -0.9999863 ], dtype=float32))}
+
 
 
 

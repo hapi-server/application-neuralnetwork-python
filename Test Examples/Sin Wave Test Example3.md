@@ -62,6 +62,7 @@ splits = (.7, .2, .1)  # Train, Validation, Test
 trainer = HAPINNTrainer(
     splits, in_steps, out_steps,
     preprocess_func=None,
+    preprocess_y_func=None,
     lag=True
 )
 ```
@@ -83,12 +84,19 @@ trainer.set_hapidatas([data], xyparameters=[['scalar'], ['vector_0', 'vector_1',
     hapi(): Reading dataset1_scalar-vector_19700101T000000_19700102T000000.npy 
 
 
-    /home/jovyan/hapi_nn.py:152: UserWarning: Time gaps exist in the data.
+    /home/jovyan/hapi_nn.py:198: UserWarning: Time gaps exist in the data.
       warnings.warn('Time gaps exist in the data.')
-    /home/jovyan/hapi_nn.py:190: UserWarning: Removed data gab at index 0. Length of gab (10) was too small. Split size (1) is less than minimum step size (1024).
+    /home/jovyan/hapi_nn.py:239: UserWarning: Removed data gab at index 0. Length of gab (10) was too small. Split size (0) is less than minimum step size (1024).
       warnings.warn(f'Removed data gab at index {ndx}. '
-    /home/jovyan/hapi_nn.py:195: UserWarning: Data points with time gaps that caused too small of splits where removed. Removed 1 out of 2 gaps.
+    /home/jovyan/hapi_nn.py:244: UserWarning: Data points with time gaps that caused too small of splits where removed. Removed 1 out of 2 gaps.
       warnings.warn('Data points with time gaps that caused '
+
+
+
+
+
+    1.0
+
 
 
 Prepare the downloaded data for training
@@ -98,16 +106,23 @@ Prepare the downloaded data for training
 trainer.prepare_data()
 ```
 
-    /home/jovyan/hapi_nn.py:365: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+    /home/jovyan/hapi_nn.py:408: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
       data = np.array(data)
-    /home/jovyan/hapi_nn.py:369: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+    /home/jovyan/hapi_nn.py:419: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+      data = np.array(remerge_data)
+    /home/jovyan/hapi_nn.py:422: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
       y_data = np.array(y_data)
+    /home/jovyan/hapi_nn.py:432: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+      y_data = np.array(remerge_data)
+
+
+    0 17
 
 
 
 
 
-    (0.6990103694357923, 0.1997266359132069, 0.1012629946510008)
+    (0.7150495819560567, 0.20430682481042192, 0.08064359323352129)
 
 
 
@@ -128,7 +143,9 @@ Create Tester
 
 ```python
 tester = HAPINNTester(
-    in_steps, out_steps, preprocess_func=None
+    in_steps, out_steps,
+    preprocess_func=None,
+    preprocess_y_func=None
 )
 ```
 
@@ -144,6 +161,13 @@ tester.set_hapidatas([data], xyparameters=[['scalar'], ['vector_0', 'vector_1', 
     hapi(): file directory = ./hapicache/hapi-server.org_servers_TestData2.0_hapi
     hapi(): Reading dataset1_scalar-vector_19700102T010000_19700102T040000.pkl
     hapi(): Reading dataset1_scalar-vector_19700102T010000_19700102T040000.npy 
+
+
+
+
+
+    1.0
+
 
 
 Prepare data for testing
@@ -318,15 +342,15 @@ trainer.train(model, epochs, batch_size=batch_size, loss_func=loss_function,
         optimizer=optimizer, device=device)
 ```
 
-    Epoch: 1/1 - Batch: 1663/1663 - Loss: 0.014664 - Validation Loss: 0.000005
+    Epoch: 1/1 - Batch: 1839/1839 - 40.4s 21ms/step - Loss: 0.018690 - Validation Loss: 0.000063
 
 
 
 
 
-    {'train': 3.585389048027077e-05,
-     'val': 5.126605448698775e-06,
-     'test': 2.600351153455408e-06}
+    {'train': 0.00044427027017695505,
+     'val': 6.322163116682398e-05,
+     'test': 2.4383337366206813e-05}
 
 
 
@@ -373,7 +397,7 @@ tester.forecast_plot(predictions, 0, 'vector_0')
 
 
     
-![png](Sin%20Wave%20Test%20Example_files/Sin%20Wave%20Test%20Example3_36_0.png)
+![png](Sin%20Wave%20Test%20Example3_files/Sin%20Wave%20Test%20Example3_36_0.png)
     
 
 
@@ -384,7 +408,7 @@ tester.forecast_plot(predictions, -1, 'vector_0')
 
 
     
-![png](Sin%20Wave%20Test%20Example_files/Sin%20Wave%20Test%20Example3_37_0.png)
+![png](Sin%20Wave%20Test%20Example3_files/Sin%20Wave%20Test%20Example3_37_0.png)
     
 
 
@@ -395,7 +419,7 @@ tester.forecast_plot(predictions, -1, 'vector_1')
 
 
     
-![png](Sin%20Wave%20Test%20Example_files/Sin%20Wave%20Test%20Example3_38_0.png)
+![png](Sin%20Wave%20Test%20Example3_files/Sin%20Wave%20Test%20Example3_38_0.png)
     
 
 
@@ -406,8 +430,27 @@ tester.forecast_plot(predictions, -1, 'vector_2')
 
 
     
-![png](Sin%20Wave%20Test%20Example_files/Sin%20Wave%20Test%20Example3_39_0.png)
+![png](Sin%20Wave%20Test%20Example3_files/Sin%20Wave%20Test%20Example3_39_0.png)
     
+
+
+
+```python
+tester.forecast_plot(predictions, -1, 'vector_2', return_data=True)
+```
+
+
+
+
+    {'forecast': (array([0.0000e+00, 1.0000e+00, 2.0000e+00, ..., 1.1261e+04, 1.1262e+04,
+             1.1263e+04]),
+      array([-1.        , -0.9999863 , -0.99994516, ...,  0.7610756 ,
+              0.7640818 ,  0.7228854 ], dtype=float32)),
+     'truth': (array([0.0000e+00, 1.0000e+00, 2.0000e+00, ..., 1.0797e+04, 1.0798e+04,
+             1.0799e+04]),
+      array([-1.        , -0.9999863 , -0.99994516, ..., -0.9998766 ,
+             -0.99994516, -0.9999863 ], dtype=float32))}
+
 
 
 
