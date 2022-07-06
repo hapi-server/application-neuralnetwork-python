@@ -1,0 +1,3457 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>hapi_nn API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>hapi_nn</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python"># Author: Travis Hammond
+
+import warnings
+from time import time
+from os import listdir
+from datetime import datetime
+from os.path import dirname, basename
+import numpy as np
+import numpy.lib.recfunctions as rf
+import matplotlib.pyplot as plt
+
+from hapiclient import hapitime2datetime
+
+MODEL_ENGINE = &#39;TORCH&#39;
+# MODEL_ENGINE = &#39;TENSORFLOW&#39;
+
+
+# If not on time axis, push to metdata or force to time
+# TODO: RETURN metadata (time range, data name, etc.)
+def pyspedas_plotdata_to_hapidata(pyspedas_plotdata):
+    &#34;&#34;&#34;Converts a PySpedas variable to HAPI Data
+
+    Args:
+        pyspedas_plotdata: A PySpedas Variable with time.
+    Returns:
+        A structured numpy array following HAPI data format.
+    &#34;&#34;&#34;
+    time = np.array(
+        [datetime.fromtimestamp(time).isoformat(&#39;T&#39;, &#39;milliseconds&#39;) + &#39;Z&#39;
+         for time in pyspedas_plotdata.times], dtype=[(&#39;Time&#39;, &#39;S24&#39;)]
+    )
+    columns = [time]
+    for ndx, field in enumerate(pyspedas_plotdata._fields[1:]):
+        if pyspedas_plotdata[ndx + 1].shape[0] == time.shape[0]:
+            if pyspedas_plotdata[ndx + 1].ndim == 1:
+                columns.append(
+                    pyspedas_plotdata[ndx + 1].astype(
+                        [(field, pyspedas_plotdata[ndx + 1].dtype)])
+                )
+            else:
+                shape = pyspedas_plotdata[ndx + 1].shape[1:]
+                columns.append(
+                    np.array(
+                        [(e,)
+                         for e in np.reshape(
+                             pyspedas_plotdata[ndx + 1],
+                             (-1, np.prod(shape)))],
+                        [(field, (pyspedas_plotdata[ndx + 1].dtype, shape))])
+                )
+        else:
+            warnings.warn(f&#39;{field} does not have the same time axis&#39;)
+    return rf.merge_arrays(columns, flatten=True)
+
+
+def extract_format_structured_data(data, parameters):
+    &#34;&#34;&#34;Extracts elements/columns out of structured data.
+       A helper function.
+
+    Args:
+        data: A numpy structured array.
+        parameters: A list of strings, which specific the columns and
+                    subelements.
+    Returns:
+        A new structured array with only the specified columns and subelements.
+    &#34;&#34;&#34;
+    new_data = []
+    for dat in data:
+        for param in parameters:
+            if param in dat.dtype.names:
+                dp = dat[param]
+                if len(dp.shape) &gt; 1:
+                    for ndx in range(dp.shape[1]):
+                        new_data.append(np.array(
+                            dp[:, ndx], dtype=[(param + f&#39;_{ndx}&#39;, dp.dtype)]
+                        ))
+                else:
+                    new_data.append(dat[[param]])
+            elif &#39;_&#39; in param:
+                base_param, ndx = param.rsplit(&#39;_&#39;, 1)
+                ndx = int(ndx)
+                dp = dat[base_param]
+                if base_param in dat.dtype.names and len(
+                        dat.dtype[base_param].shape) &gt; 0:
+                    new_data.append(np.array(
+                        dp[:, ndx], dtype=[(base_param + f&#39;_{ndx}&#39;, dp.dtype)]
+                    ))
+    return rf.merge_arrays(new_data, flatten=True)
+
+
+class HAPINNTrainer:
+    &#34;&#34;&#34;A class for preparing HAPI data and putting it in
+       a form that can be used to train time series neural networks.
+    &#34;&#34;&#34;
+
+    def __init__(self, data_split, in_steps, out_steps,
+                 preprocess_func=None, preprocess_y_func=None, lag=True):
+        &#34;&#34;&#34;Initalizes PyTorch or Tensorflow Modules as well
+           as other parameters.
+
+        Args:
+            data_split: A list or tuple of three values that sum to 1,
+                        where each value represents that percentage of
+                        the data split among train, validation, and test
+                        sets, respectively. Note, train and validation
+                        can have overlap, while test has no overlap.
+                        Also note, test proportions are before windowing,
+                        so the proportions after windowing for test can
+                        vary by several percent. Furthermore, the precision
+                        of the test proportion is limited to .05
+                        (Ex. .17 ~&gt; .15 or .20). Lastly, the larger the data
+                        or the smaller the in_steps and out_steps,
+                        the less data will be lost due to splitting.
+                        Splitting of the data makes the windowing
+                        function generate less data points.
+                        Recommended Split: [.7, .2, .1]
+            in_steps: An integer, which represents the number of
+                      data points from the time series data to
+                      include as input into a model
+            out_steps: An integer, which represents the number of
+                       data points the model should output
+            preprocess_func: A function that is called on the
+                             different input data splits, which
+                             should be used to normalize the data,
+                             fix invalid values, and other processing
+                             before the data is more heavely formatted
+                             for training.
+            preprocess_y_func: A function that is called on the
+                               different output data splits, which
+                               should be used to normalize the data,
+                               fix invalid values, and other processing
+                               before the data is more heavely formatted
+                               for training.
+            lag: A boolean, which determines if the input should lag one
+                 timestep behind the expected output. Defaults to True.
+                 True implies the model is used for forecasting.
+        &#34;&#34;&#34;
+        global torch, nn, tf, TensorDataset, DataLoader
+        if MODEL_ENGINE == &#39;TORCH&#39;:
+            import torch
+            import torch.nn as nn
+            from torch.utils.data import TensorDataset, DataLoader
+        elif MODEL_ENGINE == &#39;TENSORFLOW&#39;:
+            import tensorflow as tf
+
+        if abs(sum(data_split) - 1) &gt; 1e-9:
+            raise ValueError(
+                &#39;data_split values should be equal to 1.&#39;
+            )
+        if len(data_split) != 3:
+            raise ValueError(&#39;data_split should have 3 values.&#39;)
+        if data_split[2] &gt;= .5:
+            raise ValueError(&#39;Test split for the data should be less than .5&#39;)
+        self.data_split = data_split
+        if not isinstance(in_steps, int):
+            raise TypeError(&#39;in_steps must be an int.&#39;)
+        if not isinstance(out_steps, int):
+            raise TypeError(&#39;out_steps must be an int.&#39;)
+        if not lag and out_steps &gt; in_steps:
+            raise ValueError(&#39;out_steps must be less than &#39;
+                             &#39;in_steps if not lagging data&#39;)
+        self.in_steps = in_steps
+        self.out_steps = out_steps
+        self.data = None
+        self.y_data = None
+        self.split_ndxs = None
+        self.processed_data = None
+        self.processed_test_data = None
+        self.preprocess_func = preprocess_func
+        self.preprocess_y_func = preprocess_y_func
+        self.lag = lag
+        self.time_interval = None
+
+    def set_hapidatas(self, datas, xyparameters=None):
+        &#34;&#34;&#34;Gives the Trainer the HAPI data and checks
+           that the datas can be used for training.
+
+        Args:
+            datas: A list or tuple of hapi data, which
+                   has same data columns and same intervals.
+                   The datas should not have same columns besides
+                   for time. datas can have time gaps, however,
+                   the gaps must be the same across all datas.
+            xyparameters: A list or tuple of lists which contain
+                          the column names that indicate the
+                          wanted columns in x input and y input,
+                          respectively.
+        Returns:
+            A number that represents the time interval between data points.
+        &#34;&#34;&#34;
+        if (xyparameters is not None
+                and not isinstance(xyparameters, (list, tuple))):
+            raise ValueError(
+                &#39;xyparameters should be None, list type, or tuple type.&#39;
+            )
+        datas = datas if isinstance(datas, (list, tuple)) else [datas]
+        self.processed_data = None
+        self.processed_test_data = None
+
+        # Calculate time interval and split on inconsistencies for
+        # gaps in the data
+        time = datas[0][&#39;Time&#39;]
+        time_data = hapitime2datetime(time)
+        time_deltas = np.vectorize(lambda x: x.total_seconds())(
+            time_data[1:] - time_data[:-1]
+        )
+        self.time_interval = np.median(time_deltas)
+        split_ndxs = np.nonzero(time_deltas != self.time_interval)[0] + 1
+        if len(split_ndxs) &gt; 0:
+            warnings.warn(&#39;Time gaps exist in the data.&#39;)
+
+        # Make sure time columns are same for all data and then
+        # remove the time column
+        for ndx in range(len(datas)):
+            if all(time != datas[ndx][&#39;Time&#39;]):
+                raise NotImplementedError(
+                    &#39;Time columns must be the same.&#39;
+                )
+            datas[ndx] = datas[ndx][list(datas[ndx].dtype.names[1:])]
+
+        # Combine all columns based on X and Y requested parameters
+        if xyparameters is None:
+            self.data = extract_format_structured_data(
+                datas, datas.dtype.names)
+        elif xyparameters[0] == xyparameters[1]:
+            self.data = extract_format_structured_data(datas, xyparameters[0])
+        else:
+            self.data = extract_format_structured_data(datas, xyparameters[0])
+            self.y_data = extract_format_structured_data(
+                datas, xyparameters[1]
+            )
+
+        # Split Data on time gaps
+        self.data = np.split(self.data, split_ndxs)
+        if self.y_data is not None:
+            self.y_data = np.split(self.y_data, split_ndxs)
+
+        # Filter out too small of gaps and send warning if too small
+        if self.lag:
+            min_steps = self.in_steps + self.out_steps
+        else:
+            min_steps = max(self.in_steps, self.out_steps)
+        data = []
+        data_ndxs = []
+        for ndx, split in enumerate(self.data):
+            split_size = int(len(split) / 20)
+            if split_size &gt;= min_steps:
+                data.append(split)
+                data_ndxs.append(ndx)
+            else:
+                warnings.warn(f&#39;Removed data gab at index {ndx}. &#39;
+                              f&#39;Length of gab ({len(split)}) was too small. &#39;
+                              f&#39;Split size ({split_size}) is less than &#39;
+                              f&#39;minimum step size ({min_steps}).&#39;)
+        if len(self.data) &gt; len(data):
+            warnings.warn(&#39;Data points with time gaps that caused &#39;
+                          &#39;too small of splits where removed. Removed &#39;
+                          f&#39;{len(self.data) - len(data)} out of &#39;
+                          f&#39;{len(self.data)} gaps.&#39;)
+            self.data = data
+            if self.y_data is not None:
+                self.y_data = [self.y_data[ndx] for ndx in data_ndxs]
+        avg_size = int(sum([len(x) for x in data]) / len(data) * .10)
+        if avg_size &lt; self.in_steps + self.out_steps:
+            warnings.warn(&#39;in_steps and out_steps sum to a value greater than &#39;
+                          f&#39;10% of the average data gap size ({avg_size}). &#39;
+                          &#39;This may reduce the precision of the test split &#39;
+                          &#39;and lead to increased data lost from splits.&#39;)
+        return self.time_interval
+
+    def prepare_data(self):
+        &#34;&#34;&#34;Prepares the data for training by
+           processing it and partitioning it.
+
+        Returns:
+            A list of the actual resulting partition proportions is returned.
+        &#34;&#34;&#34;
+        self.process_data()
+        return self.partition_data()
+
+    def save_prepared_data(self, path):
+        &#34;&#34;&#34;Saves the data that is prepared for training.
+           The data will be saved as npy files and each file
+           represents a value in the processed_data dict.
+
+        Args:
+            path: A string that has the path and prefix of the
+                  files that will be saved.
+        &#34;&#34;&#34;
+        if self.processed_data is None:
+            raise ValueError(
+                &#39;Data must first be prepared (processed and then partitioned).&#39;
+            )
+        if &#39;train_x&#39; not in self.processed_data:
+            raise ValueError(&#39;Data must first be partitioned.&#39;)
+        for key in self.processed_data:
+            np.save(path + &#39;_&#39; + key, self.processed_data[key])
+
+    def load_prepared_data(self, path):
+        &#34;&#34;&#34;Loads the data that was prepared for training.
+
+        Args:
+            path: A string that has the path and prefix of the
+                  files that will be loaded.
+        &#34;&#34;&#34;
+        self.processed_data = {}
+        for di in listdir(dirname(path)):
+            if basename(path) + &#39;_&#39; in di:
+                self.processed_data[di.split(&#39;_&#39;, 1)[1].split(&#39;.&#39;, 1)[
+                    0]] = np.load(di)
+
+    def get_prepared_data(self):
+        &#34;&#34;&#34;Returns the processed data that is prepared for training.
+
+        Returns:
+            The processed data if it is prepared and partitioned else
+            it will return None
+        &#34;&#34;&#34;
+        if self.processed_data is not None or &#39;train_x&#39; in self.processed_data:
+            return self.processed_data
+        return None
+
+    def _process_data(self, data, y_data):
+        &#34;&#34;&#34;Processes data and optionally y_data.
+           Used internally by process_data method.
+        &#34;&#34;&#34;
+        if self.preprocess_func is None:
+            preprocessed_data_all = data
+        else:
+            preprocessed_data_all = self.preprocess_func(data)
+        if self.preprocess_y_func is None:
+            preprocessed_y_data_all = y_data
+        else:
+            preprocessed_y_data_all = self.preprocess_y_func(y_data)
+
+        x_datas = []
+        y_datas = []
+        for ndx in range(len(preprocessed_data_all)):
+            preprocessed_data = rf.structured_to_unstructured(
+                preprocessed_data_all[ndx]
+            ).astype(np.float32)
+
+            if preprocessed_y_data_all is not None:
+                preprocessed_y_data = rf.structured_to_unstructured(
+                    preprocessed_y_data_all[ndx]
+                ).astype(np.float32)
+
+            # Group Data into In and Out Blocks
+            x_data = np.swapaxes(np.lib.stride_tricks.sliding_window_view(
+                preprocessed_data, self.in_steps, axis=0
+            ), 1, 2)
+            y_data = np.swapaxes(
+                np.lib.stride_tricks.sliding_window_view(
+                    preprocessed_y_data, self.out_steps, axis=0), 1, 2
+            )
+            min_len = min(y_data.shape[0], x_data.shape[0])
+            if self.lag:
+                # CHECK lengths
+                y_data = y_data[self.in_steps:min_len]
+                x_data = x_data[:min_len - self.in_steps]
+            else:
+                y_data = y_data[:min_len]
+                x_data = x_data[:min_len]
+            x_datas.append(x_data)
+            y_datas.append(y_data)
+        return {&#39;x&#39;: np.vstack(x_datas), &#39;y&#39;: np.vstack(y_datas)}
+
+    def process_data(self):
+        &#34;&#34;&#34;Processes the data that was set with set_hapidatas method.
+           This method also preforms part of the test partitioning.
+        &#34;&#34;&#34;
+        if self.data is None:
+            raise ValueError(&#39;Data must first be set.&#39;)
+
+        # Min steps needed to get one output from windowing
+        if self.lag:
+            min_steps = self.in_steps + self.out_steps
+        else:
+            min_steps = max(self.in_steps, self.out_steps)
+
+        # Split data into segments for later partitioning.
+        # The data split has noise in the edges to avoid the
+        # chance of a bias in splitting.
+        # NEED TO IMPROVE SPLIT ALGO:
+        # Tests should be pulled from several different places
+        # Currently, only test splits come from test proportion divided by 5%
+        # So 10% test split would result in two test splits
+        data = []
+        y_data = []
+        for ndx in range(len(self.data)):
+            # Split Data into Sections
+            split_stride = int(len(self.data[ndx]) / 20)
+            num_splits = int(len(self.data[ndx]) / split_stride)
+            ends = np.random.randint(split_stride - min_steps / num_splits,
+                                     split_stride + min_steps / num_splits,
+                                     num_splits)
+            cndx = 0
+            for end in ends:
+                if len(self.data[ndx]) - cndx &lt; min_steps:
+                    break
+                data.append(self.data[ndx][cndx:cndx + end])
+                if self.y_data is not None:
+                    y_data.append(self.y_data[ndx][cndx:cndx + end])
+                cndx += end
+            else:
+                if len(self.data[ndx]) - cndx &gt;= min_steps:
+                    data.append(self.data[ndx][cndx:])
+                    if self.y_data is not None:
+                        y_data.append(self.y_data[ndx][cndx:])
+
+        # Sample Sections for Test Data
+        ndxs = np.random.choice(
+            np.arange(
+                len(data) -
+                1),
+            size=round(
+                len(data) *
+                self.data_split[2]),
+            replace=False)
+        data = np.array(data)
+        test_data = data[ndxs]
+        remerge_data = []
+        last_ndx = 0
+        for ndx in sorted(ndxs):
+            if last_ndx != ndx:
+                print(last_ndx, ndx)
+                remerge_data.append(np.concatenate(data[last_ndx:ndx]))
+            last_ndx = ndx + 1
+        if ndx + 1 &lt; len(data):
+            remerge_data.append(np.concatenate(data[ndx + 1:]))
+        data = np.array(remerge_data)
+
+        if self.y_data is not None:
+            y_data = np.array(y_data)
+            y_test_data = y_data[ndxs]
+            remerge_data = []
+            last_ndx = 0
+            for ndx in sorted(ndxs):
+                if last_ndx != ndx:
+                    remerge_data.append(np.concatenate(y_data[last_ndx:ndx]))
+                last_ndx = ndx + 1
+            if ndx + 1 &lt; len(y_data):
+                remerge_data.append(np.concatenate(y_data[ndx + 1:]))
+            y_data = np.array(remerge_data)
+
+        # Process the data
+        if self.y_data is None:
+            self.processed_data = self._process_data(data, data.copy())
+            self.processed_test_data = self._process_data(
+                test_data, test_data.copy())
+        else:
+            self.processed_data = self._process_data(data, y_data)
+            self.processed_test_data = self._process_data(
+                test_data, y_test_data
+            )
+
+    def _partition_data(self, data, split):
+        &#34;&#34;&#34;Partitions data given the percentage of the left split result.
+           Used internally by partition_data method.
+        &#34;&#34;&#34;
+        if len(data) != 2:
+            raise ValueError(&#39;Data should only have two dict entries.&#39;)
+
+        # Randomly sample to split into two data dicts
+        length = len(data[&#39;x&#39;])
+        ndxs = np.random.choice(
+            np.arange(length),
+            size=int(split * length),
+            replace=False
+        )
+        data1 = {&#39;x&#39;: data[&#39;x&#39;][ndxs], &#39;y&#39;: data[&#39;y&#39;][ndxs]}
+        data2 = {
+            &#39;x&#39;: np.delete(data[&#39;x&#39;], ndxs, axis=0),
+            &#39;y&#39;: np.delete(data[&#39;y&#39;], ndxs, axis=0)
+        }
+        return data1, data2
+
+    def partition_data(self):
+        &#34;&#34;&#34;Partitions the data that was processed by process_data method.
+
+        Returns:
+            A list of the actual resulting partition proportions is returned.
+        &#34;&#34;&#34;
+        if self.processed_data is None:
+            raise ValueError(&#39;Data must first be processed.&#39;)
+        if self.processed_test_data is None:
+            raise ValueError(&#39;Test data must first be processed.&#39;)
+        if &#39;train_x&#39; in self.processed_data:
+            raise ValueError(
+                &#39;Data is already partitioned. Reprocess first if need be.&#39;)
+
+        # Split data and make final dict for training
+        train_val_split = self._partition_data(
+            self.processed_data, self.data_split[0] /
+            (self.data_split[0] + self.data_split[1])
+        )
+        processed_data = {&#39;train_x&#39;: train_val_split[0][&#39;x&#39;],
+                          &#39;train_y&#39;: train_val_split[0][&#39;y&#39;],
+                          &#39;val_x&#39;: train_val_split[1][&#39;x&#39;],
+                          &#39;val_y&#39;: train_val_split[1][&#39;y&#39;],
+                          &#39;test_x&#39;: self.processed_test_data[&#39;x&#39;],
+                          &#39;test_y&#39;: self.processed_test_data[&#39;y&#39;]}
+        self.processed_data = processed_data
+
+        # Calculate split proportions
+        tn = len(processed_data[&#39;train_x&#39;])
+        vd = len(processed_data[&#39;val_x&#39;])
+        tt = len(processed_data[&#39;test_x&#39;])
+        sm = tn + vd + tt
+        return (tn / sm, vd / sm, tt / sm)
+
+    def torch_train(self, model, loss_func,
+                    optimizer, epochs, device, batch_size=None,
+                    metric_func=None, verbose=1):
+        &#34;&#34;&#34;Trains and evaluates a torch model.
+
+        Args:
+            model: A PyTorch Module.
+            loss_func: A torch loss function.
+            optimizer: A torch optimizer.
+            epochs: An integer, the number of training epochs.
+            device: A string, the device to use gpu/cpu etc.
+            batch_size: An integer, the size of each batch for training.
+            metric_func: A torch loss/metric function.
+            verbose: An integer, rates verbosity. 0 None, 1 All.
+        Returns:
+            A dict of results for train, validation, and test.
+        &#34;&#34;&#34;
+        assert MODEL_ENGINE == &#39;TORCH&#39;
+        if self.processed_data is None:
+            raise ValueError(
+                &#39;Data must first be prepared (processed and then partitioned).&#39;
+            )
+        if &#39;train_x&#39; not in self.processed_data:
+            raise ValueError(&#39;Data must first be partitioned.&#39;)
+
+        train_loader = DataLoader(
+            TensorDataset(torch.Tensor(self.processed_data[&#39;train_x&#39;]),
+                          torch.Tensor(self.processed_data[&#39;train_y&#39;])),
+            batch_size=batch_size, shuffle=True
+        )
+        val_loader = DataLoader(
+            TensorDataset(torch.Tensor(self.processed_data[&#39;val_x&#39;]),
+                          torch.Tensor(self.processed_data[&#39;val_y&#39;])),
+            batch_size=batch_size * 2, shuffle=False
+        )
+        test_loader = DataLoader(
+            TensorDataset(torch.Tensor(self.processed_data[&#39;test_x&#39;]),
+                          torch.Tensor(self.processed_data[&#39;test_y&#39;])),
+            batch_size=batch_size * 2, shuffle=False
+        )
+
+        model.train()
+
+        for epoch in range(epochs):
+            start_time = time()
+            if verbose:
+                print(f&#39;Epoch {epoch + 1}/{epochs}&#39;, end=&#39;\r&#39;)
+
+            model.train(mode=True)
+            epoch_loss = 0
+            epoch_metric_loss = 0
+            batch_length = len(train_loader)
+            for batch_ndx, (data, target) in enumerate(train_loader):
+                data, target = data.to(device), target.to(device)
+                optimizer.zero_grad()
+                output = model(data)
+                loss = loss_func(output, target)
+                if metric_func is not None:
+                    epoch_metric_loss += metric_func(output, target).item()
+                loss.backward()
+                optimizer.step()
+                loss = loss.item()
+                epoch_loss += loss
+                if verbose:
+                    string = (f&#39;Epoch: {epoch + 1}/{epochs} - &#39;
+                              f&#39;Batch: {batch_ndx + 1}/{batch_length} - &#39;
+                              f&#39;Loss: {epoch_loss / (batch_ndx + 1):.6f}&#39;)
+                    if metric_func is not None:
+                        string += (
+                            &#39; - Metric Loss: &#39;
+                            f&#39;{epoch_metric_loss / (batch_ndx + 1):.6f}&#39;
+                        )
+                    string += &#39;\t\t&#39;
+                    str_length = len(string)
+                    print(string, end=&#39;\r&#39;)
+            if verbose:
+                time_taken = time() - start_time
+                string = (
+                    f&#39;Epoch: {epoch + 1}/{epochs} - &#39;
+                    f&#39;Batch: {batch_ndx + 1}/{batch_length} - &#39;
+                    f&#39;{time_taken:.1f}s &#39;
+                    f&#39;{int(1000 * time_taken / (batch_ndx + 1))}ms/step - &#39;
+                    f&#39;Loss: {(epoch_loss / (batch_ndx + 1)):.6f}&#39;)
+                if metric_func is not None:
+                    string += (
+                        &#39; - Metric Loss: &#39;
+                        f&#39;{epoch_metric_loss / (batch_ndx + 1):.6f}&#39;
+                    )
+
+            model.train(mode=False)
+            epoch_loss = 0
+            epoch_metric_loss = 0
+            for batch_idx, (data, target) in enumerate(val_loader):
+                data, target = data.to(device), target.to(device)
+                output = model(data)
+                loss = loss_func(output, target).item()
+                epoch_loss += loss
+                if metric_func is not None:
+                    epoch_metric_loss += metric_func(output, target).item()
+            if verbose:
+                string += (&#39; - Validation Loss: &#39;
+                           f&#39;{(epoch_loss / (batch_ndx + 1)):.6f}&#39;)
+                if metric_func is not None:
+                    string += (
+                        f&#39; - Validation Metric Loss: &#39;
+                        f&#39;{epoch_metric_loss / (batch_ndx + 1):.6f}&#39;
+                    )
+                print(string + &#34; &#34; * (str_length - len(string)))
+
+        results = {}
+        epoch_loss = 0
+        epoch_metric_loss = 0
+        for batch_idx, (data, target) in enumerate(train_loader):
+            data, target = data.to(device), target.to(device)
+            output = model(data)
+            loss = loss_func(output, target).item()
+            epoch_loss += loss
+            if metric_func is not None:
+                epoch_metric_loss += metric_func(output, target).item()
+        if metric_func is None:
+            results[&#39;train&#39;] = (epoch_loss / (batch_ndx + 1))
+        else:
+            results[&#39;train&#39;] = [(epoch_loss / (batch_ndx + 1)),
+                                (epoch_metric_loss / (batch_ndx + 1))]
+        epoch_loss = 0
+        epoch_metric_loss = 0
+        for batch_idx, (data, target) in enumerate(val_loader):
+            data, target = data.to(device), target.to(device)
+            output = model(data)
+            loss = loss_func(output, target).item()
+            epoch_loss += loss
+            if metric_func is not None:
+                epoch_metric_loss += metric_func(output, target).item()
+        if metric_func is None:
+            results[&#39;val&#39;] = (epoch_loss / (batch_ndx + 1))
+        else:
+            results[&#39;val&#39;] = [(epoch_loss / (batch_ndx + 1)),
+                              (epoch_metric_loss / (batch_ndx + 1))]
+        epoch_loss = 0
+        epoch_metric_loss = 0
+        for batch_idx, (data, target) in enumerate(test_loader):
+            data, target = data.to(device), target.to(device)
+            output = model(data)
+            loss = loss_func(output, target).item()
+            epoch_loss += loss
+            if metric_func is not None:
+                epoch_metric_loss += metric_func(output, target).item()
+        if metric_func is None:
+            results[&#39;test&#39;] = (epoch_loss / (batch_ndx + 1))
+        else:
+            results[&#39;test&#39;] = [(epoch_loss / (batch_ndx + 1)),
+                               (epoch_metric_loss / (batch_ndx + 1))]
+        return results
+
+    def tf_train(self, model, epochs, batch_size=None, **kwargs):
+        &#34;&#34;&#34;Trains and evaluates a tensorflow model.
+
+        Args:
+            model: A TensorFLow/Keras Model.
+            epochs: An integer, the number of training epochs.
+            device: A string, the device to use gpu/cpu etc.
+            kwargs: Keyword arguments for Keras fit model method.
+        Returns:
+            A dict of results for train, validation, and test.
+        &#34;&#34;&#34;
+        assert MODEL_ENGINE == &#39;TENSORFLOW&#39;
+        if self.processed_data is None:
+            raise ValueError(
+                &#39;Data must first be prepared (processed and then partitioned).&#39;
+            )
+        if &#39;train_x&#39; not in self.processed_data:
+            raise ValueError(&#39;Data must first be partitioned.&#39;)
+
+        model.fit(self.processed_data[&#39;train_x&#39;],
+                  self.processed_data[&#39;train_y&#39;],
+                  validation_data=(self.processed_data[&#39;val_x&#39;],
+                                   self.processed_data[&#39;val_y&#39;]),
+                  epochs=epochs, batch_size=batch_size, **kwargs)
+
+        if batch_size is None:
+            batch_size = 256
+        verbose = kwargs[&#39;verbose&#39;] if &#39;verbose&#39; in kwargs else &#39;auto&#39;
+        results = {
+            &#39;train&#39;: model.evaluate(self.processed_data[&#39;train_x&#39;],
+                                    self.processed_data[&#39;train_y&#39;],
+                                    batch_size=batch_size * 2,
+                                    verbose=verbose),
+            &#39;val&#39;: model.evaluate(self.processed_data[&#39;val_x&#39;],
+                                  self.processed_data[&#39;val_y&#39;],
+                                  batch_size=batch_size * 2,
+                                  verbose=verbose),
+            &#39;test&#39;: model.evaluate(self.processed_data[&#39;test_x&#39;],
+                                   self.processed_data[&#39;test_y&#39;],
+                                   batch_size=batch_size * 2,
+                                   verbose=verbose),
+        }
+        return results
+
+    def train(self, model, epochs, batch_size=None,
+              loss_func=None, metric_func=None, optimizer=None,
+              device=None, verbose=1):
+        &#34;&#34;&#34;Trains and evaluates a tensorflow or torch model.
+
+        Args:
+            model: A PyTorch/TensorFlow Model.
+            epochs: An integer, the number of training epochs.
+            batch_size: An integer, the size of each batch for training.
+            loss_func: A torch loss function.
+            metric_func: A torch loss/metric function.
+            optimizer: A torch optimizer.
+            device: A string, the device to use gpu/cpu etc.
+            verbose: An integer, rates verbosity. 0 None, 1 All.
+        Returns:
+            A dict of results for train, validation, and test.
+        &#34;&#34;&#34;
+        if MODEL_ENGINE == &#39;TORCH&#39;:
+            if None in [loss_func, optimizer, device]:
+                raise ValueError(
+                    &#39;loss_func, optimizer, and device must be &#39;
+                    &#39;supplied for using PyTorch for models&#39;
+                )
+            results = self.torch_train(
+                model,
+                loss_func,
+                optimizer,
+                epochs,
+                device,
+                batch_size=batch_size,
+                metric_func=metric_func,
+                verbose=verbose
+            )
+        else:
+            results = self.tf_train(
+                model, epochs, batch_size=batch_size, verbose=verbose
+            )
+        return results
+
+    @staticmethod
+    def ignore_gaps(func):
+        &#34;&#34;&#34;Wraps a preprocess function to ignore gaps.
+           Useful when not accessing neighbor elements.
+
+        Args:
+            func: A preprocess function that handles structured data
+        Returns:
+            A wrapped preprocess function
+        &#34;&#34;&#34;
+        def ig_func(data):
+            split_ndxs = np.cumsum([len(x) for x in data])[:-1]
+            data = np.hstack(data)
+            data = func(data)
+            # if dtype=object, there can be a problem if array does not need to
+            # be an object
+            data = np.array(np.split(data, split_ndxs))
+            return data
+        return ig_func
+
+    @staticmethod
+    def on_gaps(func):
+        &#34;&#34;&#34;Wraps a preprocess function to apply itself on every array
+           that was split because of gaps.
+           Useful when accessing neighbor elements.
+        Args:
+            func: A preprocess function that handles structured data
+        Returns:
+            A wrapped preprocess function
+        &#34;&#34;&#34;
+        def g_func(data):
+            return np.array([func(x) for x in data])
+        return g_func
+
+
+class HAPINNTester:
+    def __init__(self, in_steps, out_steps,
+                 preprocess_func=None, preprocess_y_func=None):
+        &#34;&#34;&#34;Initalizes PyTorch or Tensorflow Modules as well
+           as other parameters.
+
+        Args:
+            in_steps: An integer, which represents the number of
+                      data points from the time series data to
+                      include as input into a model
+            preprocess_func: A function that is called on
+                             the inputs to the model, which
+                             should be used to normalize the data,
+                             fix invalid values, and other processing
+            preprocess_y_func: A function that is called on the
+                               outputs of the model, which
+                               should be used to denormalize the data
+                               etc.
+        &#34;&#34;&#34;
+        global torch, nn, tf, TensorDataset, DataLoader
+        if MODEL_ENGINE == &#39;TORCH&#39;:
+            import torch
+            import torch.nn as nn
+            from torch.utils.data import TensorDataset, DataLoader
+        elif MODEL_ENGINE == &#39;TENSORFLOW&#39;:
+            import tensorflow as tf
+        if not isinstance(in_steps, int):
+            raise TypeError(&#39;in_steps must be an int.&#39;)
+        self.in_steps = in_steps
+        self.out_steps = out_steps
+        self.data = None
+        self.y_data = None
+        self.processed_data = None
+        self.preprocess_func = (
+            lambda x: x) if preprocess_func is None else preprocess_func
+        self.preprocess_y_func = (
+            lambda x: x) if preprocess_y_func is None else preprocess_y_func
+        self.time_interval = None
+
+    def set_hapidatas(self, datas, xyparameters=None):
+        &#34;&#34;&#34;Gives the Trainer the HAPI data and checks
+           that the datas can be used for training.
+
+        Args:
+            datas: A list or tuple of hapi data, which
+                   has same data columns and same intervals.
+                   The datas should not have same columns besides
+                   for time. Note, datas cannot have time gaps.
+            xyparameters: A list or tuple of lists which contain
+                          the column names that indicate the
+                          wanted columns in x input and y input,
+                          respectively.
+        Returns:
+            A number that represents the time interval between data points.
+        &#34;&#34;&#34;
+        if (xyparameters is not None
+                and not isinstance(xyparameters, (list, tuple))):
+            raise ValueError(
+                &#39;xyparameters should be None, list type, or tuple type.&#39;
+            )
+        datas = datas if isinstance(datas, (list, tuple)) else [datas]
+        self.processed_data = None
+        self.processed_test_data = None
+
+        # Calculate time interval and split on inconsistencies for
+        # gaps in the data
+        time = datas[0][&#39;Time&#39;]
+        time_data = hapitime2datetime(time)
+        time_deltas = np.vectorize(lambda x: x.total_seconds())(
+            time_data[1:] - time_data[:-1]
+        )
+        self.time_interval = np.median(time_deltas)
+        split_ndxs = np.nonzero(time_deltas != self.time_interval)[0] + 1
+        if len(split_ndxs) &gt; 0:
+            warnings.warn(&#39;Time gaps exist in the data.&#39;)
+
+        # Make sure time columns are same for all data and then
+        # remove the time column
+        for ndx in range(len(datas)):
+            if all(time != datas[ndx][&#39;Time&#39;]):
+                raise NotImplementedError(
+                    &#39;Time columns must be the same.&#39;
+                )
+            datas[ndx] = datas[ndx][list(datas[ndx].dtype.names[1:])]
+
+        # Combine all columns based on X and Y requested parameters
+        if xyparameters is None:
+            self.data = extract_format_structured_data(
+                datas, datas.dtype.names)
+        elif xyparameters[0] == xyparameters[1]:
+            self.data = extract_format_structured_data(datas, xyparameters[0])
+        else:
+            self.data = extract_format_structured_data(datas, xyparameters[0])
+            self.y_data = extract_format_structured_data(
+                datas, xyparameters[1]
+            )
+        return self.time_interval
+
+    def prepare_data(self):
+        &#34;&#34;&#34;Prepares the data for testing by
+           processing it with preprocessing and
+           reformatting.
+        &#34;&#34;&#34;
+        self.processed_data = rf.structured_to_unstructured(
+            self.preprocess_func(self.data)
+        ).astype(np.float32)
+        if self.y_data is None:
+            self.processed_y_data = self.preprocess_y_func(self.processed_data)
+        else:
+            self.processed_y_data = self.preprocess_y_func(
+                rf.structured_to_unstructured(
+                    self.preprocess_func(self.y_data)
+                ).astype(np.float32))
+
+    def test(self, model, stride=None):
+        &#34;&#34;&#34;Tests the model by giving it all inputs
+           gathered with the provided stride.
+           Useful for then plotting the outputs and
+           comparing them to the expected.
+
+        Args:
+            model: A PyTorch or TensorFlow model
+            stride: An integer, which defaults to out_steps
+        Returns:
+            A list of predictions.
+        &#34;&#34;&#34;
+        if self.data is None:
+            raise ValueError(&#39;Data must first be set.&#39;)
+        if self.processed_data is None:
+            raise ValueError(&#39;Data was not prepared for testing.&#39;)
+        if stride is None:
+            stride = self.out_steps
+
+        preds = []
+
+        if MODEL_ENGINE == &#39;TORCH&#39;:
+            # OPTIMIZE
+            for ndx in range(self.in_steps, len(self.processed_data), stride):
+                pred = model(torch.Tensor(np.expand_dims(
+                    self.processed_data[ndx - self.in_steps:ndx], axis=0
+                ))).detach().numpy()[0]
+                preds.append(self.preprocess_y_func(pred))
+        else:
+            # OPTIMIZE
+            for ndx in range(self.in_steps, len(self.processed_data), stride):
+                pred = model(np.expand_dims(
+                    self.processed_data[ndx - self.in_steps:ndx], axis=0
+                )).numpy()[0]
+                preds.append(self.preprocess_y_func(pred))
+        return preds
+
+    def forecast_plot(
+            self,
+            preds,
+            pred_ndx,
+            column_name,
+            stride=None,
+            return_data=False):
+        &#34;&#34;&#34;Creates a line plot to compare the ground truth and predicted
+           values of a specific output column for one of the predicted outputs.
+           Used when Trainer had lag=True.
+
+        Args:
+            preds: A list of predictions from test method.
+            pred_ndx: An index for indexing the preds. If -1, displays
+                      results for all preds.
+            column_name: A string which is a name of a output column.
+            stride: A integer, which is the stride used in test method to
+                    produce the preds.
+            return_data: A boolean, which if True will return data for plotting
+                         instead of plotting itself.
+        Returns:
+            None or if return_data is True, returns a dict of forecast and
+            truth which both are tuple of (Time, Values)
+        &#34;&#34;&#34;
+        if stride is None:
+            stride = self.out_steps
+
+        if pred_ndx != -1:
+            ndx = stride * pred_ndx + self.in_steps
+            col_ndx = self.y_data.dtype.names.index(column_name)
+            forecast = preds[pred_ndx][:, col_ndx]
+            truth = self.processed_y_data[ndx - self.in_steps:ndx +
+                                          self.out_steps][:, col_ndx]
+            forecast_time = np.arange(
+                ndx, len(forecast) + ndx
+            ) * self.time_interval
+            truth_time = np.arange(
+                ndx - self.in_steps, ndx + self.out_steps
+            ) * self.time_interval
+        else:
+            if stride != self.out_steps:
+                raise NotImplementedError(&#39;stride must match out_steps&#39;)
+            col_ndx = self.y_data.dtype.names.index(column_name)
+            forecast = np.concatenate(preds)[:, col_ndx]
+            truth = self.processed_y_data[:, col_ndx]
+            forecast_time = np.arange(
+                self.in_steps, len(forecast) + self.in_steps
+            ) * self.time_interval
+            truth_time = np.arange(len(truth)) * self.time_interval
+        forecast_time = forecast_time.astype(&#39;timedelta64[s]&#39;)
+        truth_time = truth_time.astype(&#39;timedelta64[s]&#39;)
+
+        if return_data:
+            return {&#39;forecast&#39;: (forecast_time, forecast),
+                    &#39;truth&#39;: (truth_time, truth)}
+        else:
+            plt.title(&#39;Test Forecast&#39;)
+            plt.xlabel(&#39;Time (Seconds)&#39;)
+            plt.ylabel(&#39;Value&#39;)
+            plt.plot(forecast_time, forecast)
+            plt.plot(truth_time, truth)
+            plt.legend([&#39;forecast&#39;, &#39;truth&#39;])
+
+    def plot(
+            self,
+            preds,
+            pred_ndx,
+            column_name,
+            stride=None,
+            return_data=False):
+        &#34;&#34;&#34;Creates a line plot to compare the ground truth and predicted
+           values of a specific output column for one of the predicted outputs.
+           Used when Trainer had lag=False.
+
+        Args:
+            preds: A list of predictions from test method.
+            pred_ndx: An index for indexing the preds. If -1, displays
+                      results for all preds.
+            column_name: A string which is a name of a output column.
+            stride: A integer, which is the stride used in test method to
+                    produce the preds.
+            return_data: A boolean, which if True will return data for plotting
+                         instead of plotting itself.
+        Returns:
+            None or if return_data is True, returns a dict of prediction
+            and truth which both are tuple of (Time, Values)
+        &#34;&#34;&#34;
+        if self.out_steps &gt; self.in_steps:
+            raise Exception(&#39;Use forecast_plot instead. out_steps &gt; in_steps.&#39;)
+
+        if stride is None:
+            stride = self.out_steps
+
+        if pred_ndx != -1:
+            ndx = stride * pred_ndx + self.in_steps
+            col_ndx = self.y_data.dtype.names.index(column_name)
+            prediction = preds[pred_ndx][:, col_ndx]
+            truth = self.processed_y_data[ndx - self.in_steps:ndx][:, col_ndx]
+            prediction_time = np.arange(
+                ndx - self.in_steps, len(prediction) + (ndx - self.in_steps)
+            ) * self.time_interval
+            truth_time = np.arange(
+                ndx - self.in_steps, ndx
+            ) * self.time_interval
+        else:
+            if stride != self.out_steps:
+                raise NotImplementedError(&#39;stride must match out_steps&#39;)
+            ndx = stride + self.in_steps
+            col_ndx = self.y_data.dtype.names.index(column_name)
+            prediction = np.concatenate(preds)[:, col_ndx]
+            truth = self.processed_y_data[:, col_ndx]
+            prediction_time = np.arange(len(prediction)) * self.time_interval
+            truth_time = np.arange(len(truth)) * self.time_interval
+
+        if return_data:
+            return {&#39;prediction&#39;: (prediction_time, prediction),
+                    &#39;truth&#39;: (truth_time, truth)}
+        else:
+            plt.title(&#39;Test Prediction&#39;)
+            plt.xlabel(&#39;Time (Seconds)&#39;)
+            plt.ylabel(&#39;Value&#39;)
+            plt.plot(prediction_time, prediction)
+            plt.plot(truth_time, truth)
+            plt.legend([&#39;prediction&#39;, &#39;truth&#39;])</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="hapi_nn.extract_format_structured_data"><code class="name flex">
+<span>def <span class="ident">extract_format_structured_data</span></span>(<span>data, parameters)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Extracts elements/columns out of structured data.
+A helper function.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>data</code></strong></dt>
+<dd>A numpy structured array.</dd>
+<dt><strong><code>parameters</code></strong></dt>
+<dd>A list of strings, which specific the columns and
+subelements.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>A new structured array with only the specified columns and subelements.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def extract_format_structured_data(data, parameters):
+    &#34;&#34;&#34;Extracts elements/columns out of structured data.
+       A helper function.
+
+    Args:
+        data: A numpy structured array.
+        parameters: A list of strings, which specific the columns and
+                    subelements.
+    Returns:
+        A new structured array with only the specified columns and subelements.
+    &#34;&#34;&#34;
+    new_data = []
+    for dat in data:
+        for param in parameters:
+            if param in dat.dtype.names:
+                dp = dat[param]
+                if len(dp.shape) &gt; 1:
+                    for ndx in range(dp.shape[1]):
+                        new_data.append(np.array(
+                            dp[:, ndx], dtype=[(param + f&#39;_{ndx}&#39;, dp.dtype)]
+                        ))
+                else:
+                    new_data.append(dat[[param]])
+            elif &#39;_&#39; in param:
+                base_param, ndx = param.rsplit(&#39;_&#39;, 1)
+                ndx = int(ndx)
+                dp = dat[base_param]
+                if base_param in dat.dtype.names and len(
+                        dat.dtype[base_param].shape) &gt; 0:
+                    new_data.append(np.array(
+                        dp[:, ndx], dtype=[(base_param + f&#39;_{ndx}&#39;, dp.dtype)]
+                    ))
+    return rf.merge_arrays(new_data, flatten=True)</code></pre>
+</details>
+</dd>
+<dt id="hapi_nn.pyspedas_plotdata_to_hapidata"><code class="name flex">
+<span>def <span class="ident">pyspedas_plotdata_to_hapidata</span></span>(<span>pyspedas_plotdata)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Converts a PySpedas variable to HAPI Data</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>pyspedas_plotdata</code></strong></dt>
+<dd>A PySpedas Variable with time.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>A structured numpy array following HAPI data format.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pyspedas_plotdata_to_hapidata(pyspedas_plotdata):
+    &#34;&#34;&#34;Converts a PySpedas variable to HAPI Data
+
+    Args:
+        pyspedas_plotdata: A PySpedas Variable with time.
+    Returns:
+        A structured numpy array following HAPI data format.
+    &#34;&#34;&#34;
+    time = np.array(
+        [datetime.fromtimestamp(time).isoformat(&#39;T&#39;, &#39;milliseconds&#39;) + &#39;Z&#39;
+         for time in pyspedas_plotdata.times], dtype=[(&#39;Time&#39;, &#39;S24&#39;)]
+    )
+    columns = [time]
+    for ndx, field in enumerate(pyspedas_plotdata._fields[1:]):
+        if pyspedas_plotdata[ndx + 1].shape[0] == time.shape[0]:
+            if pyspedas_plotdata[ndx + 1].ndim == 1:
+                columns.append(
+                    pyspedas_plotdata[ndx + 1].astype(
+                        [(field, pyspedas_plotdata[ndx + 1].dtype)])
+                )
+            else:
+                shape = pyspedas_plotdata[ndx + 1].shape[1:]
+                columns.append(
+                    np.array(
+                        [(e,)
+                         for e in np.reshape(
+                             pyspedas_plotdata[ndx + 1],
+                             (-1, np.prod(shape)))],
+                        [(field, (pyspedas_plotdata[ndx + 1].dtype, shape))])
+                )
+        else:
+            warnings.warn(f&#39;{field} does not have the same time axis&#39;)
+    return rf.merge_arrays(columns, flatten=True)</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="hapi_nn.HAPINNTester"><code class="flex name class">
+<span>class <span class="ident">HAPINNTester</span></span>
+<span>(</span><span>in_steps, out_steps, preprocess_func=None, preprocess_y_func=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Initalizes PyTorch or Tensorflow Modules as well
+as other parameters.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>in_steps</code></strong></dt>
+<dd>An integer, which represents the number of
+data points from the time series data to
+include as input into a model</dd>
+<dt><strong><code>preprocess_func</code></strong></dt>
+<dd>A function that is called on
+the inputs to the model, which
+should be used to normalize the data,
+fix invalid values, and other processing</dd>
+<dt><strong><code>preprocess_y_func</code></strong></dt>
+<dd>A function that is called on the
+outputs of the model, which
+should be used to denormalize the data
+etc.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class HAPINNTester:
+    def __init__(self, in_steps, out_steps,
+                 preprocess_func=None, preprocess_y_func=None):
+        &#34;&#34;&#34;Initalizes PyTorch or Tensorflow Modules as well
+           as other parameters.
+
+        Args:
+            in_steps: An integer, which represents the number of
+                      data points from the time series data to
+                      include as input into a model
+            preprocess_func: A function that is called on
+                             the inputs to the model, which
+                             should be used to normalize the data,
+                             fix invalid values, and other processing
+            preprocess_y_func: A function that is called on the
+                               outputs of the model, which
+                               should be used to denormalize the data
+                               etc.
+        &#34;&#34;&#34;
+        global torch, nn, tf, TensorDataset, DataLoader
+        if MODEL_ENGINE == &#39;TORCH&#39;:
+            import torch
+            import torch.nn as nn
+            from torch.utils.data import TensorDataset, DataLoader
+        elif MODEL_ENGINE == &#39;TENSORFLOW&#39;:
+            import tensorflow as tf
+        if not isinstance(in_steps, int):
+            raise TypeError(&#39;in_steps must be an int.&#39;)
+        self.in_steps = in_steps
+        self.out_steps = out_steps
+        self.data = None
+        self.y_data = None
+        self.processed_data = None
+        self.preprocess_func = (
+            lambda x: x) if preprocess_func is None else preprocess_func
+        self.preprocess_y_func = (
+            lambda x: x) if preprocess_y_func is None else preprocess_y_func
+        self.time_interval = None
+
+    def set_hapidatas(self, datas, xyparameters=None):
+        &#34;&#34;&#34;Gives the Trainer the HAPI data and checks
+           that the datas can be used for training.
+
+        Args:
+            datas: A list or tuple of hapi data, which
+                   has same data columns and same intervals.
+                   The datas should not have same columns besides
+                   for time. Note, datas cannot have time gaps.
+            xyparameters: A list or tuple of lists which contain
+                          the column names that indicate the
+                          wanted columns in x input and y input,
+                          respectively.
+        Returns:
+            A number that represents the time interval between data points.
+        &#34;&#34;&#34;
+        if (xyparameters is not None
+                and not isinstance(xyparameters, (list, tuple))):
+            raise ValueError(
+                &#39;xyparameters should be None, list type, or tuple type.&#39;
+            )
+        datas = datas if isinstance(datas, (list, tuple)) else [datas]
+        self.processed_data = None
+        self.processed_test_data = None
+
+        # Calculate time interval and split on inconsistencies for
+        # gaps in the data
+        time = datas[0][&#39;Time&#39;]
+        time_data = hapitime2datetime(time)
+        time_deltas = np.vectorize(lambda x: x.total_seconds())(
+            time_data[1:] - time_data[:-1]
+        )
+        self.time_interval = np.median(time_deltas)
+        split_ndxs = np.nonzero(time_deltas != self.time_interval)[0] + 1
+        if len(split_ndxs) &gt; 0:
+            warnings.warn(&#39;Time gaps exist in the data.&#39;)
+
+        # Make sure time columns are same for all data and then
+        # remove the time column
+        for ndx in range(len(datas)):
+            if all(time != datas[ndx][&#39;Time&#39;]):
+                raise NotImplementedError(
+                    &#39;Time columns must be the same.&#39;
+                )
+            datas[ndx] = datas[ndx][list(datas[ndx].dtype.names[1:])]
+
+        # Combine all columns based on X and Y requested parameters
+        if xyparameters is None:
+            self.data = extract_format_structured_data(
+                datas, datas.dtype.names)
+        elif xyparameters[0] == xyparameters[1]:
+            self.data = extract_format_structured_data(datas, xyparameters[0])
+        else:
+            self.data = extract_format_structured_data(datas, xyparameters[0])
+            self.y_data = extract_format_structured_data(
+                datas, xyparameters[1]
+            )
+        return self.time_interval
+
+    def prepare_data(self):
+        &#34;&#34;&#34;Prepares the data for testing by
+           processing it with preprocessing and
+           reformatting.
+        &#34;&#34;&#34;
+        self.processed_data = rf.structured_to_unstructured(
+            self.preprocess_func(self.data)
+        ).astype(np.float32)
+        if self.y_data is None:
+            self.processed_y_data = self.preprocess_y_func(self.processed_data)
+        else:
+            self.processed_y_data = self.preprocess_y_func(
+                rf.structured_to_unstructured(
+                    self.preprocess_func(self.y_data)
+                ).astype(np.float32))
+
+    def test(self, model, stride=None):
+        &#34;&#34;&#34;Tests the model by giving it all inputs
+           gathered with the provided stride.
+           Useful for then plotting the outputs and
+           comparing them to the expected.
+
+        Args:
+            model: A PyTorch or TensorFlow model
+            stride: An integer, which defaults to out_steps
+        Returns:
+            A list of predictions.
+        &#34;&#34;&#34;
+        if self.data is None:
+            raise ValueError(&#39;Data must first be set.&#39;)
+        if self.processed_data is None:
+            raise ValueError(&#39;Data was not prepared for testing.&#39;)
+        if stride is None:
+            stride = self.out_steps
+
+        preds = []
+
+        if MODEL_ENGINE == &#39;TORCH&#39;:
+            # OPTIMIZE
+            for ndx in range(self.in_steps, len(self.processed_data), stride):
+                pred = model(torch.Tensor(np.expand_dims(
+                    self.processed_data[ndx - self.in_steps:ndx], axis=0
+                ))).detach().numpy()[0]
+                preds.append(self.preprocess_y_func(pred))
+        else:
+            # OPTIMIZE
+            for ndx in range(self.in_steps, len(self.processed_data), stride):
+                pred = model(np.expand_dims(
+                    self.processed_data[ndx - self.in_steps:ndx], axis=0
+                )).numpy()[0]
+                preds.append(self.preprocess_y_func(pred))
+        return preds
+
+    def forecast_plot(
+            self,
+            preds,
+            pred_ndx,
+            column_name,
+            stride=None,
+            return_data=False):
+        &#34;&#34;&#34;Creates a line plot to compare the ground truth and predicted
+           values of a specific output column for one of the predicted outputs.
+           Used when Trainer had lag=True.
+
+        Args:
+            preds: A list of predictions from test method.
+            pred_ndx: An index for indexing the preds. If -1, displays
+                      results for all preds.
+            column_name: A string which is a name of a output column.
+            stride: A integer, which is the stride used in test method to
+                    produce the preds.
+            return_data: A boolean, which if True will return data for plotting
+                         instead of plotting itself.
+        Returns:
+            None or if return_data is True, returns a dict of forecast and
+            truth which both are tuple of (Time, Values)
+        &#34;&#34;&#34;
+        if stride is None:
+            stride = self.out_steps
+
+        if pred_ndx != -1:
+            ndx = stride * pred_ndx + self.in_steps
+            col_ndx = self.y_data.dtype.names.index(column_name)
+            forecast = preds[pred_ndx][:, col_ndx]
+            truth = self.processed_y_data[ndx - self.in_steps:ndx +
+                                          self.out_steps][:, col_ndx]
+            forecast_time = np.arange(
+                ndx, len(forecast) + ndx
+            ) * self.time_interval
+            truth_time = np.arange(
+                ndx - self.in_steps, ndx + self.out_steps
+            ) * self.time_interval
+        else:
+            if stride != self.out_steps:
+                raise NotImplementedError(&#39;stride must match out_steps&#39;)
+            col_ndx = self.y_data.dtype.names.index(column_name)
+            forecast = np.concatenate(preds)[:, col_ndx]
+            truth = self.processed_y_data[:, col_ndx]
+            forecast_time = np.arange(
+                self.in_steps, len(forecast) + self.in_steps
+            ) * self.time_interval
+            truth_time = np.arange(len(truth)) * self.time_interval
+        forecast_time = forecast_time.astype(&#39;timedelta64[s]&#39;)
+        truth_time = truth_time.astype(&#39;timedelta64[s]&#39;)
+
+        if return_data:
+            return {&#39;forecast&#39;: (forecast_time, forecast),
+                    &#39;truth&#39;: (truth_time, truth)}
+        else:
+            plt.title(&#39;Test Forecast&#39;)
+            plt.xlabel(&#39;Time (Seconds)&#39;)
+            plt.ylabel(&#39;Value&#39;)
+            plt.plot(forecast_time, forecast)
+            plt.plot(truth_time, truth)
+            plt.legend([&#39;forecast&#39;, &#39;truth&#39;])
+
+    def plot(
+            self,
+            preds,
+            pred_ndx,
+            column_name,
+            stride=None,
+            return_data=False):
+        &#34;&#34;&#34;Creates a line plot to compare the ground truth and predicted
+           values of a specific output column for one of the predicted outputs.
+           Used when Trainer had lag=False.
+
+        Args:
+            preds: A list of predictions from test method.
+            pred_ndx: An index for indexing the preds. If -1, displays
+                      results for all preds.
+            column_name: A string which is a name of a output column.
+            stride: A integer, which is the stride used in test method to
+                    produce the preds.
+            return_data: A boolean, which if True will return data for plotting
+                         instead of plotting itself.
+        Returns:
+            None or if return_data is True, returns a dict of prediction
+            and truth which both are tuple of (Time, Values)
+        &#34;&#34;&#34;
+        if self.out_steps &gt; self.in_steps:
+            raise Exception(&#39;Use forecast_plot instead. out_steps &gt; in_steps.&#39;)
+
+        if stride is None:
+            stride = self.out_steps
+
+        if pred_ndx != -1:
+            ndx = stride * pred_ndx + self.in_steps
+            col_ndx = self.y_data.dtype.names.index(column_name)
+            prediction = preds[pred_ndx][:, col_ndx]
+            truth = self.processed_y_data[ndx - self.in_steps:ndx][:, col_ndx]
+            prediction_time = np.arange(
+                ndx - self.in_steps, len(prediction) + (ndx - self.in_steps)
+            ) * self.time_interval
+            truth_time = np.arange(
+                ndx - self.in_steps, ndx
+            ) * self.time_interval
+        else:
+            if stride != self.out_steps:
+                raise NotImplementedError(&#39;stride must match out_steps&#39;)
+            ndx = stride + self.in_steps
+            col_ndx = self.y_data.dtype.names.index(column_name)
+            prediction = np.concatenate(preds)[:, col_ndx]
+            truth = self.processed_y_data[:, col_ndx]
+            prediction_time = np.arange(len(prediction)) * self.time_interval
+            truth_time = np.arange(len(truth)) * self.time_interval
+
+        if return_data:
+            return {&#39;prediction&#39;: (prediction_time, prediction),
+                    &#39;truth&#39;: (truth_time, truth)}
+        else:
+            plt.title(&#39;Test Prediction&#39;)
+            plt.xlabel(&#39;Time (Seconds)&#39;)
+            plt.ylabel(&#39;Value&#39;)
+            plt.plot(prediction_time, prediction)
+            plt.plot(truth_time, truth)
+            plt.legend([&#39;prediction&#39;, &#39;truth&#39;])</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="hapi_nn.HAPINNTester.forecast_plot"><code class="name flex">
+<span>def <span class="ident">forecast_plot</span></span>(<span>self, preds, pred_ndx, column_name, stride=None, return_data=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Creates a line plot to compare the ground truth and predicted
+values of a specific output column for one of the predicted outputs.
+Used when Trainer had lag=True.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>preds</code></strong></dt>
+<dd>A list of predictions from test method.</dd>
+<dt><strong><code>pred_ndx</code></strong></dt>
+<dd>An index for indexing the preds. If -1, displays
+results for all preds.</dd>
+<dt><strong><code>column_name</code></strong></dt>
+<dd>A string which is a name of a output column.</dd>
+<dt><strong><code>stride</code></strong></dt>
+<dd>A integer, which is the stride used in test method to
+produce the preds.</dd>
+<dt><strong><code>return_data</code></strong></dt>
+<dd>A boolean, which if True will return data for plotting
+instead of plotting itself.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>None or if return_data is True, returns a dict of forecast and
+truth which both are tuple of (Time, Values)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def forecast_plot(
+        self,
+        preds,
+        pred_ndx,
+        column_name,
+        stride=None,
+        return_data=False):
+    &#34;&#34;&#34;Creates a line plot to compare the ground truth and predicted
+       values of a specific output column for one of the predicted outputs.
+       Used when Trainer had lag=True.
+
+    Args:
+        preds: A list of predictions from test method.
+        pred_ndx: An index for indexing the preds. If -1, displays
+                  results for all preds.
+        column_name: A string which is a name of a output column.
+        stride: A integer, which is the stride used in test method to
+                produce the preds.
+        return_data: A boolean, which if True will return data for plotting
+                     instead of plotting itself.
+    Returns:
+        None or if return_data is True, returns a dict of forecast and
+        truth which both are tuple of (Time, Values)
+    &#34;&#34;&#34;
+    if stride is None:
+        stride = self.out_steps
+
+    if pred_ndx != -1:
+        ndx = stride * pred_ndx + self.in_steps
+        col_ndx = self.y_data.dtype.names.index(column_name)
+        forecast = preds[pred_ndx][:, col_ndx]
+        truth = self.processed_y_data[ndx - self.in_steps:ndx +
+                                      self.out_steps][:, col_ndx]
+        forecast_time = np.arange(
+            ndx, len(forecast) + ndx
+        ) * self.time_interval
+        truth_time = np.arange(
+            ndx - self.in_steps, ndx + self.out_steps
+        ) * self.time_interval
+    else:
+        if stride != self.out_steps:
+            raise NotImplementedError(&#39;stride must match out_steps&#39;)
+        col_ndx = self.y_data.dtype.names.index(column_name)
+        forecast = np.concatenate(preds)[:, col_ndx]
+        truth = self.processed_y_data[:, col_ndx]
+        forecast_time = np.arange(
+            self.in_steps, len(forecast) + self.in_steps
+        ) * self.time_interval
+        truth_time = np.arange(len(truth)) * self.time_interval
+    forecast_time = forecast_time.astype(&#39;timedelta64[s]&#39;)
+    truth_time = truth_time.astype(&#39;timedelta64[s]&#39;)
+
+    if return_data:
+        return {&#39;forecast&#39;: (forecast_time, forecast),
+                &#39;truth&#39;: (truth_time, truth)}
+    else:
+        plt.title(&#39;Test Forecast&#39;)
+        plt.xlabel(&#39;Time (Seconds)&#39;)
+        plt.ylabel(&#39;Value&#39;)
+        plt.plot(forecast_time, forecast)
+        plt.plot(truth_time, truth)
+        plt.legend([&#39;forecast&#39;, &#39;truth&#39;])</code></pre>
+</details>
+</dd>
+<dt id="hapi_nn.HAPINNTester.plot"><code class="name flex">
+<span>def <span class="ident">plot</span></span>(<span>self, preds, pred_ndx, column_name, stride=None, return_data=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Creates a line plot to compare the ground truth and predicted
+values of a specific output column for one of the predicted outputs.
+Used when Trainer had lag=False.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>preds</code></strong></dt>
+<dd>A list of predictions from test method.</dd>
+<dt><strong><code>pred_ndx</code></strong></dt>
+<dd>An index for indexing the preds. If -1, displays
+results for all preds.</dd>
+<dt><strong><code>column_name</code></strong></dt>
+<dd>A string which is a name of a output column.</dd>
+<dt><strong><code>stride</code></strong></dt>
+<dd>A integer, which is the stride used in test method to
+produce the preds.</dd>
+<dt><strong><code>return_data</code></strong></dt>
+<dd>A boolean, which if True will return data for plotting
+instead of plotting itself.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>None or if return_data is True, returns a dict of prediction
+and truth which both are tuple of (Time, Values)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot(
+        self,
+        preds,
+        pred_ndx,
+        column_name,
+        stride=None,
+        return_data=False):
+    &#34;&#34;&#34;Creates a line plot to compare the ground truth and predicted
+       values of a specific output column for one of the predicted outputs.
+       Used when Trainer had lag=False.
+
+    Args:
+        preds: A list of predictions from test method.
+        pred_ndx: An index for indexing the preds. If -1, displays
+                  results for all preds.
+        column_name: A string which is a name of a output column.
+        stride: A integer, which is the stride used in test method to
+                produce the preds.
+        return_data: A boolean, which if True will return data for plotting
+                     instead of plotting itself.
+    Returns:
+        None or if return_data is True, returns a dict of prediction
+        and truth which both are tuple of (Time, Values)
+    &#34;&#34;&#34;
+    if self.out_steps &gt; self.in_steps:
+        raise Exception(&#39;Use forecast_plot instead. out_steps &gt; in_steps.&#39;)
+
+    if stride is None:
+        stride = self.out_steps
+
+    if pred_ndx != -1:
+        ndx = stride * pred_ndx + self.in_steps
+        col_ndx = self.y_data.dtype.names.index(column_name)
+        prediction = preds[pred_ndx][:, col_ndx]
+        truth = self.processed_y_data[ndx - self.in_steps:ndx][:, col_ndx]
+        prediction_time = np.arange(
+            ndx - self.in_steps, len(prediction) + (ndx - self.in_steps)
+        ) * self.time_interval
+        truth_time = np.arange(
+            ndx - self.in_steps, ndx
+        ) * self.time_interval
+    else:
+        if stride != self.out_steps:
+            raise NotImplementedError(&#39;stride must match out_steps&#39;)
+        ndx = stride + self.in_steps
+        col_ndx = self.y_data.dtype.names.index(column_name)
+        prediction = np.concatenate(preds)[:, col_ndx]
+        truth = self.processed_y_data[:, col_ndx]
+        prediction_time = np.arange(len(prediction)) * self.time_interval
+        truth_time = np.arange(len(truth)) * self.time_interval
+
+    if return_data:
+        return {&#39;prediction&#39;: (prediction_time, prediction),
+                &#39;truth&#39;: (truth_time, truth)}
+    else:
+        plt.title(&#39;Test Prediction&#39;)
+        plt.xlabel(&#39;Time (Seconds)&#39;)
+        plt.ylabel(&#39;Value&#39;)
+        plt.plot(prediction_time, prediction)
+        plt.plot(truth_time, truth)
+        plt.legend([&#39;prediction&#39;, &#39;truth&#39;])</code></pre>
+</details>
+</dd>
+<dt id="hapi_nn.HAPINNTester.prepare_data"><code class="name flex">
+<span>def <span class="ident">prepare_data</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Prepares the data for testing by
+processing it with preprocessing and
+reformatting.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def prepare_data(self):
+    &#34;&#34;&#34;Prepares the data for testing by
+       processing it with preprocessing and
+       reformatting.
+    &#34;&#34;&#34;
+    self.processed_data = rf.structured_to_unstructured(
+        self.preprocess_func(self.data)
+    ).astype(np.float32)
+    if self.y_data is None:
+        self.processed_y_data = self.preprocess_y_func(self.processed_data)
+    else:
+        self.processed_y_data = self.preprocess_y_func(
+            rf.structured_to_unstructured(
+                self.preprocess_func(self.y_data)
+            ).astype(np.float32))</code></pre>
+</details>
+</dd>
+<dt id="hapi_nn.HAPINNTester.set_hapidatas"><code class="name flex">
+<span>def <span class="ident">set_hapidatas</span></span>(<span>self, datas, xyparameters=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Gives the Trainer the HAPI data and checks
+that the datas can be used for training.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>datas</code></strong></dt>
+<dd>A list or tuple of hapi data, which
+has same data columns and same intervals.
+The datas should not have same columns besides
+for time. Note, datas cannot have time gaps.</dd>
+<dt><strong><code>xyparameters</code></strong></dt>
+<dd>A list or tuple of lists which contain
+the column names that indicate the
+wanted columns in x input and y input,
+respectively.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>A number that represents the time interval between data points.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_hapidatas(self, datas, xyparameters=None):
+    &#34;&#34;&#34;Gives the Trainer the HAPI data and checks
+       that the datas can be used for training.
+
+    Args:
+        datas: A list or tuple of hapi data, which
+               has same data columns and same intervals.
+               The datas should not have same columns besides
+               for time. Note, datas cannot have time gaps.
+        xyparameters: A list or tuple of lists which contain
+                      the column names that indicate the
+                      wanted columns in x input and y input,
+                      respectively.
+    Returns:
+        A number that represents the time interval between data points.
+    &#34;&#34;&#34;
+    if (xyparameters is not None
+            and not isinstance(xyparameters, (list, tuple))):
+        raise ValueError(
+            &#39;xyparameters should be None, list type, or tuple type.&#39;
+        )
+    datas = datas if isinstance(datas, (list, tuple)) else [datas]
+    self.processed_data = None
+    self.processed_test_data = None
+
+    # Calculate time interval and split on inconsistencies for
+    # gaps in the data
+    time = datas[0][&#39;Time&#39;]
+    time_data = hapitime2datetime(time)
+    time_deltas = np.vectorize(lambda x: x.total_seconds())(
+        time_data[1:] - time_data[:-1]
+    )
+    self.time_interval = np.median(time_deltas)
+    split_ndxs = np.nonzero(time_deltas != self.time_interval)[0] + 1
+    if len(split_ndxs) &gt; 0:
+        warnings.warn(&#39;Time gaps exist in the data.&#39;)
+
+    # Make sure time columns are same for all data and then
+    # remove the time column
+    for ndx in range(len(datas)):
+        if all(time != datas[ndx][&#39;Time&#39;]):
+            raise NotImplementedError(
+                &#39;Time columns must be the same.&#39;
+            )
+        datas[ndx] = datas[ndx][list(datas[ndx].dtype.names[1:])]
+
+    # Combine all columns based on X and Y requested parameters
+    if xyparameters is None:
+        self.data = extract_format_structured_data(
+            datas, datas.dtype.names)
+    elif xyparameters[0] == xyparameters[1]:
+        self.data = extract_format_structured_data(datas, xyparameters[0])
+    else:
+        self.data = extract_format_structured_data(datas, xyparameters[0])
+        self.y_data = extract_format_structured_data(
+            datas, xyparameters[1]
+        )
+    return self.time_interval</code></pre>
+</details>
+</dd>
+<dt id="hapi_nn.HAPINNTester.test"><code class="name flex">
+<span>def <span class="ident">test</span></span>(<span>self, model, stride=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Tests the model by giving it all inputs
+gathered with the provided stride.
+Useful for then plotting the outputs and
+comparing them to the expected.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>model</code></strong></dt>
+<dd>A PyTorch or TensorFlow model</dd>
+<dt><strong><code>stride</code></strong></dt>
+<dd>An integer, which defaults to out_steps</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>A list of predictions.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def test(self, model, stride=None):
+    &#34;&#34;&#34;Tests the model by giving it all inputs
+       gathered with the provided stride.
+       Useful for then plotting the outputs and
+       comparing them to the expected.
+
+    Args:
+        model: A PyTorch or TensorFlow model
+        stride: An integer, which defaults to out_steps
+    Returns:
+        A list of predictions.
+    &#34;&#34;&#34;
+    if self.data is None:
+        raise ValueError(&#39;Data must first be set.&#39;)
+    if self.processed_data is None:
+        raise ValueError(&#39;Data was not prepared for testing.&#39;)
+    if stride is None:
+        stride = self.out_steps
+
+    preds = []
+
+    if MODEL_ENGINE == &#39;TORCH&#39;:
+        # OPTIMIZE
+        for ndx in range(self.in_steps, len(self.processed_data), stride):
+            pred = model(torch.Tensor(np.expand_dims(
+                self.processed_data[ndx - self.in_steps:ndx], axis=0
+            ))).detach().numpy()[0]
+            preds.append(self.preprocess_y_func(pred))
+    else:
+        # OPTIMIZE
+        for ndx in range(self.in_steps, len(self.processed_data), stride):
+            pred = model(np.expand_dims(
+                self.processed_data[ndx - self.in_steps:ndx], axis=0
+            )).numpy()[0]
+            preds.append(self.preprocess_y_func(pred))
+    return preds</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="hapi_nn.HAPINNTrainer"><code class="flex name class">
+<span>class <span class="ident">HAPINNTrainer</span></span>
+<span>(</span><span>data_split, in_steps, out_steps, preprocess_func=None, preprocess_y_func=None, lag=True)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A class for preparing HAPI data and putting it in
+a form that can be used to train time series neural networks.</p>
+<p>Initalizes PyTorch or Tensorflow Modules as well
+as other parameters.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>data_split</code></strong></dt>
+<dd>A list or tuple of three values that sum to 1,
+where each value represents that percentage of
+the data split among train, validation, and test
+sets, respectively. Note, train and validation
+can have overlap, while test has no overlap.
+Also note, test proportions are before windowing,
+so the proportions after windowing for test can
+vary by several percent. Furthermore, the precision
+of the test proportion is limited to .05
+(Ex. .17 ~&gt; .15 or .20). Lastly, the larger the data
+or the smaller the in_steps and out_steps,
+the less data will be lost due to splitting.
+Splitting of the data makes the windowing
+function generate less data points.
+Recommended Split: [.7, .2, .1]</dd>
+<dt><strong><code>in_steps</code></strong></dt>
+<dd>An integer, which represents the number of
+data points from the time series data to
+include as input into a model</dd>
+<dt><strong><code>out_steps</code></strong></dt>
+<dd>An integer, which represents the number of
+data points the model should output</dd>
+<dt><strong><code>preprocess_func</code></strong></dt>
+<dd>A function that is called on the
+different input data splits, which
+should be used to normalize the data,
+fix invalid values, and other processing
+before the data is more heavely formatted
+for training.</dd>
+<dt><strong><code>preprocess_y_func</code></strong></dt>
+<dd>A function that is called on the
+different output data splits, which
+should be used to normalize the data,
+fix invalid values, and other processing
+before the data is more heavely formatted
+for training.</dd>
+<dt><strong><code>lag</code></strong></dt>
+<dd>A boolean, which determines if the input should lag one
+timestep behind the expected output. Defaults to True.
+True implies the model is used for forecasting.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class HAPINNTrainer:
+    &#34;&#34;&#34;A class for preparing HAPI data and putting it in
+       a form that can be used to train time series neural networks.
+    &#34;&#34;&#34;
+
+    def __init__(self, data_split, in_steps, out_steps,
+                 preprocess_func=None, preprocess_y_func=None, lag=True):
+        &#34;&#34;&#34;Initalizes PyTorch or Tensorflow Modules as well
+           as other parameters.
+
+        Args:
+            data_split: A list or tuple of three values that sum to 1,
+                        where each value represents that percentage of
+                        the data split among train, validation, and test
+                        sets, respectively. Note, train and validation
+                        can have overlap, while test has no overlap.
+                        Also note, test proportions are before windowing,
+                        so the proportions after windowing for test can
+                        vary by several percent. Furthermore, the precision
+                        of the test proportion is limited to .05
+                        (Ex. .17 ~&gt; .15 or .20). Lastly, the larger the data
+                        or the smaller the in_steps and out_steps,
+                        the less data will be lost due to splitting.
+                        Splitting of the data makes the windowing
+                        function generate less data points.
+                        Recommended Split: [.7, .2, .1]
+            in_steps: An integer, which represents the number of
+                      data points from the time series data to
+                      include as input into a model
+            out_steps: An integer, which represents the number of
+                       data points the model should output
+            preprocess_func: A function that is called on the
+                             different input data splits, which
+                             should be used to normalize the data,
+                             fix invalid values, and other processing
+                             before the data is more heavely formatted
+                             for training.
+            preprocess_y_func: A function that is called on the
+                               different output data splits, which
+                               should be used to normalize the data,
+                               fix invalid values, and other processing
+                               before the data is more heavely formatted
+                               for training.
+            lag: A boolean, which determines if the input should lag one
+                 timestep behind the expected output. Defaults to True.
+                 True implies the model is used for forecasting.
+        &#34;&#34;&#34;
+        global torch, nn, tf, TensorDataset, DataLoader
+        if MODEL_ENGINE == &#39;TORCH&#39;:
+            import torch
+            import torch.nn as nn
+            from torch.utils.data import TensorDataset, DataLoader
+        elif MODEL_ENGINE == &#39;TENSORFLOW&#39;:
+            import tensorflow as tf
+
+        if abs(sum(data_split) - 1) &gt; 1e-9:
+            raise ValueError(
+                &#39;data_split values should be equal to 1.&#39;
+            )
+        if len(data_split) != 3:
+            raise ValueError(&#39;data_split should have 3 values.&#39;)
+        if data_split[2] &gt;= .5:
+            raise ValueError(&#39;Test split for the data should be less than .5&#39;)
+        self.data_split = data_split
+        if not isinstance(in_steps, int):
+            raise TypeError(&#39;in_steps must be an int.&#39;)
+        if not isinstance(out_steps, int):
+            raise TypeError(&#39;out_steps must be an int.&#39;)
+        if not lag and out_steps &gt; in_steps:
+            raise ValueError(&#39;out_steps must be less than &#39;
+                             &#39;in_steps if not lagging data&#39;)
+        self.in_steps = in_steps
+        self.out_steps = out_steps
+        self.data = None
+        self.y_data = None
+        self.split_ndxs = None
+        self.processed_data = None
+        self.processed_test_data = None
+        self.preprocess_func = preprocess_func
+        self.preprocess_y_func = preprocess_y_func
+        self.lag = lag
+        self.time_interval = None
+
+    def set_hapidatas(self, datas, xyparameters=None):
+        &#34;&#34;&#34;Gives the Trainer the HAPI data and checks
+           that the datas can be used for training.
+
+        Args:
+            datas: A list or tuple of hapi data, which
+                   has same data columns and same intervals.
+                   The datas should not have same columns besides
+                   for time. datas can have time gaps, however,
+                   the gaps must be the same across all datas.
+            xyparameters: A list or tuple of lists which contain
+                          the column names that indicate the
+                          wanted columns in x input and y input,
+                          respectively.
+        Returns:
+            A number that represents the time interval between data points.
+        &#34;&#34;&#34;
+        if (xyparameters is not None
+                and not isinstance(xyparameters, (list, tuple))):
+            raise ValueError(
+                &#39;xyparameters should be None, list type, or tuple type.&#39;
+            )
+        datas = datas if isinstance(datas, (list, tuple)) else [datas]
+        self.processed_data = None
+        self.processed_test_data = None
+
+        # Calculate time interval and split on inconsistencies for
+        # gaps in the data
+        time = datas[0][&#39;Time&#39;]
+        time_data = hapitime2datetime(time)
+        time_deltas = np.vectorize(lambda x: x.total_seconds())(
+            time_data[1:] - time_data[:-1]
+        )
+        self.time_interval = np.median(time_deltas)
+        split_ndxs = np.nonzero(time_deltas != self.time_interval)[0] + 1
+        if len(split_ndxs) &gt; 0:
+            warnings.warn(&#39;Time gaps exist in the data.&#39;)
+
+        # Make sure time columns are same for all data and then
+        # remove the time column
+        for ndx in range(len(datas)):
+            if all(time != datas[ndx][&#39;Time&#39;]):
+                raise NotImplementedError(
+                    &#39;Time columns must be the same.&#39;
+                )
+            datas[ndx] = datas[ndx][list(datas[ndx].dtype.names[1:])]
+
+        # Combine all columns based on X and Y requested parameters
+        if xyparameters is None:
+            self.data = extract_format_structured_data(
+                datas, datas.dtype.names)
+        elif xyparameters[0] == xyparameters[1]:
+            self.data = extract_format_structured_data(datas, xyparameters[0])
+        else:
+            self.data = extract_format_structured_data(datas, xyparameters[0])
+            self.y_data = extract_format_structured_data(
+                datas, xyparameters[1]
+            )
+
+        # Split Data on time gaps
+        self.data = np.split(self.data, split_ndxs)
+        if self.y_data is not None:
+            self.y_data = np.split(self.y_data, split_ndxs)
+
+        # Filter out too small of gaps and send warning if too small
+        if self.lag:
+            min_steps = self.in_steps + self.out_steps
+        else:
+            min_steps = max(self.in_steps, self.out_steps)
+        data = []
+        data_ndxs = []
+        for ndx, split in enumerate(self.data):
+            split_size = int(len(split) / 20)
+            if split_size &gt;= min_steps:
+                data.append(split)
+                data_ndxs.append(ndx)
+            else:
+                warnings.warn(f&#39;Removed data gab at index {ndx}. &#39;
+                              f&#39;Length of gab ({len(split)}) was too small. &#39;
+                              f&#39;Split size ({split_size}) is less than &#39;
+                              f&#39;minimum step size ({min_steps}).&#39;)
+        if len(self.data) &gt; len(data):
+            warnings.warn(&#39;Data points with time gaps that caused &#39;
+                          &#39;too small of splits where removed. Removed &#39;
+                          f&#39;{len(self.data) - len(data)} out of &#39;
+                          f&#39;{len(self.data)} gaps.&#39;)
+            self.data = data
+            if self.y_data is not None:
+                self.y_data = [self.y_data[ndx] for ndx in data_ndxs]
+        avg_size = int(sum([len(x) for x in data]) / len(data) * .10)
+        if avg_size &lt; self.in_steps + self.out_steps:
+            warnings.warn(&#39;in_steps and out_steps sum to a value greater than &#39;
+                          f&#39;10% of the average data gap size ({avg_size}). &#39;
+                          &#39;This may reduce the precision of the test split &#39;
+                          &#39;and lead to increased data lost from splits.&#39;)
+        return self.time_interval
+
+    def prepare_data(self):
+        &#34;&#34;&#34;Prepares the data for training by
+           processing it and partitioning it.
+
+        Returns:
+            A list of the actual resulting partition proportions is returned.
+        &#34;&#34;&#34;
+        self.process_data()
+        return self.partition_data()
+
+    def save_prepared_data(self, path):
+        &#34;&#34;&#34;Saves the data that is prepared for training.
+           The data will be saved as npy files and each file
+           represents a value in the processed_data dict.
+
+        Args:
+            path: A string that has the path and prefix of the
+                  files that will be saved.
+        &#34;&#34;&#34;
+        if self.processed_data is None:
+            raise ValueError(
+                &#39;Data must first be prepared (processed and then partitioned).&#39;
+            )
+        if &#39;train_x&#39; not in self.processed_data:
+            raise ValueError(&#39;Data must first be partitioned.&#39;)
+        for key in self.processed_data:
+            np.save(path + &#39;_&#39; + key, self.processed_data[key])
+
+    def load_prepared_data(self, path):
+        &#34;&#34;&#34;Loads the data that was prepared for training.
+
+        Args:
+            path: A string that has the path and prefix of the
+                  files that will be loaded.
+        &#34;&#34;&#34;
+        self.processed_data = {}
+        for di in listdir(dirname(path)):
+            if basename(path) + &#39;_&#39; in di:
+                self.processed_data[di.split(&#39;_&#39;, 1)[1].split(&#39;.&#39;, 1)[
+                    0]] = np.load(di)
+
+    def get_prepared_data(self):
+        &#34;&#34;&#34;Returns the processed data that is prepared for training.
+
+        Returns:
+            The processed data if it is prepared and partitioned else
+            it will return None
+        &#34;&#34;&#34;
+        if self.processed_data is not None or &#39;train_x&#39; in self.processed_data:
+            return self.processed_data
+        return None
+
+    def _process_data(self, data, y_data):
+        &#34;&#34;&#34;Processes data and optionally y_data.
+           Used internally by process_data method.
+        &#34;&#34;&#34;
+        if self.preprocess_func is None:
+            preprocessed_data_all = data
+        else:
+            preprocessed_data_all = self.preprocess_func(data)
+        if self.preprocess_y_func is None:
+            preprocessed_y_data_all = y_data
+        else:
+            preprocessed_y_data_all = self.preprocess_y_func(y_data)
+
+        x_datas = []
+        y_datas = []
+        for ndx in range(len(preprocessed_data_all)):
+            preprocessed_data = rf.structured_to_unstructured(
+                preprocessed_data_all[ndx]
+            ).astype(np.float32)
+
+            if preprocessed_y_data_all is not None:
+                preprocessed_y_data = rf.structured_to_unstructured(
+                    preprocessed_y_data_all[ndx]
+                ).astype(np.float32)
+
+            # Group Data into In and Out Blocks
+            x_data = np.swapaxes(np.lib.stride_tricks.sliding_window_view(
+                preprocessed_data, self.in_steps, axis=0
+            ), 1, 2)
+            y_data = np.swapaxes(
+                np.lib.stride_tricks.sliding_window_view(
+                    preprocessed_y_data, self.out_steps, axis=0), 1, 2
+            )
+            min_len = min(y_data.shape[0], x_data.shape[0])
+            if self.lag:
+                # CHECK lengths
+                y_data = y_data[self.in_steps:min_len]
+                x_data = x_data[:min_len - self.in_steps]
+            else:
+                y_data = y_data[:min_len]
+                x_data = x_data[:min_len]
+            x_datas.append(x_data)
+            y_datas.append(y_data)
+        return {&#39;x&#39;: np.vstack(x_datas), &#39;y&#39;: np.vstack(y_datas)}
+
+    def process_data(self):
+        &#34;&#34;&#34;Processes the data that was set with set_hapidatas method.
+           This method also preforms part of the test partitioning.
+        &#34;&#34;&#34;
+        if self.data is None:
+            raise ValueError(&#39;Data must first be set.&#39;)
+
+        # Min steps needed to get one output from windowing
+        if self.lag:
+            min_steps = self.in_steps + self.out_steps
+        else:
+            min_steps = max(self.in_steps, self.out_steps)
+
+        # Split data into segments for later partitioning.
+        # The data split has noise in the edges to avoid the
+        # chance of a bias in splitting.
+        # NEED TO IMPROVE SPLIT ALGO:
+        # Tests should be pulled from several different places
+        # Currently, only test splits come from test proportion divided by 5%
+        # So 10% test split would result in two test splits
+        data = []
+        y_data = []
+        for ndx in range(len(self.data)):
+            # Split Data into Sections
+            split_stride = int(len(self.data[ndx]) / 20)
+            num_splits = int(len(self.data[ndx]) / split_stride)
+            ends = np.random.randint(split_stride - min_steps / num_splits,
+                                     split_stride + min_steps / num_splits,
+                                     num_splits)
+            cndx = 0
+            for end in ends:
+                if len(self.data[ndx]) - cndx &lt; min_steps:
+                    break
+                data.append(self.data[ndx][cndx:cndx + end])
+                if self.y_data is not None:
+                    y_data.append(self.y_data[ndx][cndx:cndx + end])
+                cndx += end
+            else:
+                if len(self.data[ndx]) - cndx &gt;= min_steps:
+                    data.append(self.data[ndx][cndx:])
+                    if self.y_data is not None:
+                        y_data.append(self.y_data[ndx][cndx:])
+
+        # Sample Sections for Test Data
+        ndxs = np.random.choice(
+            np.arange(
+                len(data) -
+                1),
+            size=round(
+                len(data) *
+                self.data_split[2]),
+            replace=False)
+        data = np.array(data)
+        test_data = data[ndxs]
+        remerge_data = []
+        last_ndx = 0
+        for ndx in sorted(ndxs):
+            if last_ndx != ndx:
+                print(last_ndx, ndx)
+                remerge_data.append(np.concatenate(data[last_ndx:ndx]))
+            last_ndx = ndx + 1
+        if ndx + 1 &lt; len(data):
+            remerge_data.append(np.concatenate(data[ndx + 1:]))
+        data = np.array(remerge_data)
+
+        if self.y_data is not None:
+            y_data = np.array(y_data)
+            y_test_data = y_data[ndxs]
+            remerge_data = []
+            last_ndx = 0
+            for ndx in sorted(ndxs):
+                if last_ndx != ndx:
+                    remerge_data.append(np.concatenate(y_data[last_ndx:ndx]))
+                last_ndx = ndx + 1
+            if ndx + 1 &lt; len(y_data):
+                remerge_data.append(np.concatenate(y_data[ndx + 1:]))
+            y_data = np.array(remerge_data)
+
+        # Process the data
+        if self.y_data is None:
+            self.processed_data = self._process_data(data, data.copy())
+            self.processed_test_data = self._process_data(
+                test_data, test_data.copy())
+        else:
+            self.processed_data = self._process_data(data, y_data)
+            self.processed_test_data = self._process_data(
+                test_data, y_test_data
+            )
+
+    def _partition_data(self, data, split):
+        &#34;&#34;&#34;Partitions data given the percentage of the left split result.
+           Used internally by partition_data method.
+        &#34;&#34;&#34;
+        if len(data) != 2:
+            raise ValueError(&#39;Data should only have two dict entries.&#39;)
+
+        # Randomly sample to split into two data dicts
+        length = len(data[&#39;x&#39;])
+        ndxs = np.random.choice(
+            np.arange(length),
+            size=int(split * length),
+            replace=False
+        )
+        data1 = {&#39;x&#39;: data[&#39;x&#39;][ndxs], &#39;y&#39;: data[&#39;y&#39;][ndxs]}
+        data2 = {
+            &#39;x&#39;: np.delete(data[&#39;x&#39;], ndxs, axis=0),
+            &#39;y&#39;: np.delete(data[&#39;y&#39;], ndxs, axis=0)
+        }
+        return data1, data2
+
+    def partition_data(self):
+        &#34;&#34;&#34;Partitions the data that was processed by process_data method.
+
+        Returns:
+            A list of the actual resulting partition proportions is returned.
+        &#34;&#34;&#34;
+        if self.processed_data is None:
+            raise ValueError(&#39;Data must first be processed.&#39;)
+        if self.processed_test_data is None:
+            raise ValueError(&#39;Test data must first be processed.&#39;)
+        if &#39;train_x&#39; in self.processed_data:
+            raise ValueError(
+                &#39;Data is already partitioned. Reprocess first if need be.&#39;)
+
+        # Split data and make final dict for training
+        train_val_split = self._partition_data(
+            self.processed_data, self.data_split[0] /
+            (self.data_split[0] + self.data_split[1])
+        )
+        processed_data = {&#39;train_x&#39;: train_val_split[0][&#39;x&#39;],
+                          &#39;train_y&#39;: train_val_split[0][&#39;y&#39;],
+                          &#39;val_x&#39;: train_val_split[1][&#39;x&#39;],
+                          &#39;val_y&#39;: train_val_split[1][&#39;y&#39;],
+                          &#39;test_x&#39;: self.processed_test_data[&#39;x&#39;],
+                          &#39;test_y&#39;: self.processed_test_data[&#39;y&#39;]}
+        self.processed_data = processed_data
+
+        # Calculate split proportions
+        tn = len(processed_data[&#39;train_x&#39;])
+        vd = len(processed_data[&#39;val_x&#39;])
+        tt = len(processed_data[&#39;test_x&#39;])
+        sm = tn + vd + tt
+        return (tn / sm, vd / sm, tt / sm)
+
+    def torch_train(self, model, loss_func,
+                    optimizer, epochs, device, batch_size=None,
+                    metric_func=None, verbose=1):
+        &#34;&#34;&#34;Trains and evaluates a torch model.
+
+        Args:
+            model: A PyTorch Module.
+            loss_func: A torch loss function.
+            optimizer: A torch optimizer.
+            epochs: An integer, the number of training epochs.
+            device: A string, the device to use gpu/cpu etc.
+            batch_size: An integer, the size of each batch for training.
+            metric_func: A torch loss/metric function.
+            verbose: An integer, rates verbosity. 0 None, 1 All.
+        Returns:
+            A dict of results for train, validation, and test.
+        &#34;&#34;&#34;
+        assert MODEL_ENGINE == &#39;TORCH&#39;
+        if self.processed_data is None:
+            raise ValueError(
+                &#39;Data must first be prepared (processed and then partitioned).&#39;
+            )
+        if &#39;train_x&#39; not in self.processed_data:
+            raise ValueError(&#39;Data must first be partitioned.&#39;)
+
+        train_loader = DataLoader(
+            TensorDataset(torch.Tensor(self.processed_data[&#39;train_x&#39;]),
+                          torch.Tensor(self.processed_data[&#39;train_y&#39;])),
+            batch_size=batch_size, shuffle=True
+        )
+        val_loader = DataLoader(
+            TensorDataset(torch.Tensor(self.processed_data[&#39;val_x&#39;]),
+                          torch.Tensor(self.processed_data[&#39;val_y&#39;])),
+            batch_size=batch_size * 2, shuffle=False
+        )
+        test_loader = DataLoader(
+            TensorDataset(torch.Tensor(self.processed_data[&#39;test_x&#39;]),
+                          torch.Tensor(self.processed_data[&#39;test_y&#39;])),
+            batch_size=batch_size * 2, shuffle=False
+        )
+
+        model.train()
+
+        for epoch in range(epochs):
+            start_time = time()
+            if verbose:
+                print(f&#39;Epoch {epoch + 1}/{epochs}&#39;, end=&#39;\r&#39;)
+
+            model.train(mode=True)
+            epoch_loss = 0
+            epoch_metric_loss = 0
+            batch_length = len(train_loader)
+            for batch_ndx, (data, target) in enumerate(train_loader):
+                data, target = data.to(device), target.to(device)
+                optimizer.zero_grad()
+                output = model(data)
+                loss = loss_func(output, target)
+                if metric_func is not None:
+                    epoch_metric_loss += metric_func(output, target).item()
+                loss.backward()
+                optimizer.step()
+                loss = loss.item()
+                epoch_loss += loss
+                if verbose:
+                    string = (f&#39;Epoch: {epoch + 1}/{epochs} - &#39;
+                              f&#39;Batch: {batch_ndx + 1}/{batch_length} - &#39;
+                              f&#39;Loss: {epoch_loss / (batch_ndx + 1):.6f}&#39;)
+                    if metric_func is not None:
+                        string += (
+                            &#39; - Metric Loss: &#39;
+                            f&#39;{epoch_metric_loss / (batch_ndx + 1):.6f}&#39;
+                        )
+                    string += &#39;\t\t&#39;
+                    str_length = len(string)
+                    print(string, end=&#39;\r&#39;)
+            if verbose:
+                time_taken = time() - start_time
+                string = (
+                    f&#39;Epoch: {epoch + 1}/{epochs} - &#39;
+                    f&#39;Batch: {batch_ndx + 1}/{batch_length} - &#39;
+                    f&#39;{time_taken:.1f}s &#39;
+                    f&#39;{int(1000 * time_taken / (batch_ndx + 1))}ms/step - &#39;
+                    f&#39;Loss: {(epoch_loss / (batch_ndx + 1)):.6f}&#39;)
+                if metric_func is not None:
+                    string += (
+                        &#39; - Metric Loss: &#39;
+                        f&#39;{epoch_metric_loss / (batch_ndx + 1):.6f}&#39;
+                    )
+
+            model.train(mode=False)
+            epoch_loss = 0
+            epoch_metric_loss = 0
+            for batch_idx, (data, target) in enumerate(val_loader):
+                data, target = data.to(device), target.to(device)
+                output = model(data)
+                loss = loss_func(output, target).item()
+                epoch_loss += loss
+                if metric_func is not None:
+                    epoch_metric_loss += metric_func(output, target).item()
+            if verbose:
+                string += (&#39; - Validation Loss: &#39;
+                           f&#39;{(epoch_loss / (batch_ndx + 1)):.6f}&#39;)
+                if metric_func is not None:
+                    string += (
+                        f&#39; - Validation Metric Loss: &#39;
+                        f&#39;{epoch_metric_loss / (batch_ndx + 1):.6f}&#39;
+                    )
+                print(string + &#34; &#34; * (str_length - len(string)))
+
+        results = {}
+        epoch_loss = 0
+        epoch_metric_loss = 0
+        for batch_idx, (data, target) in enumerate(train_loader):
+            data, target = data.to(device), target.to(device)
+            output = model(data)
+            loss = loss_func(output, target).item()
+            epoch_loss += loss
+            if metric_func is not None:
+                epoch_metric_loss += metric_func(output, target).item()
+        if metric_func is None:
+            results[&#39;train&#39;] = (epoch_loss / (batch_ndx + 1))
+        else:
+            results[&#39;train&#39;] = [(epoch_loss / (batch_ndx + 1)),
+                                (epoch_metric_loss / (batch_ndx + 1))]
+        epoch_loss = 0
+        epoch_metric_loss = 0
+        for batch_idx, (data, target) in enumerate(val_loader):
+            data, target = data.to(device), target.to(device)
+            output = model(data)
+            loss = loss_func(output, target).item()
+            epoch_loss += loss
+            if metric_func is not None:
+                epoch_metric_loss += metric_func(output, target).item()
+        if metric_func is None:
+            results[&#39;val&#39;] = (epoch_loss / (batch_ndx + 1))
+        else:
+            results[&#39;val&#39;] = [(epoch_loss / (batch_ndx + 1)),
+                              (epoch_metric_loss / (batch_ndx + 1))]
+        epoch_loss = 0
+        epoch_metric_loss = 0
+        for batch_idx, (data, target) in enumerate(test_loader):
+            data, target = data.to(device), target.to(device)
+            output = model(data)
+            loss = loss_func(output, target).item()
+            epoch_loss += loss
+            if metric_func is not None:
+                epoch_metric_loss += metric_func(output, target).item()
+        if metric_func is None:
+            results[&#39;test&#39;] = (epoch_loss / (batch_ndx + 1))
+        else:
+            results[&#39;test&#39;] = [(epoch_loss / (batch_ndx + 1)),
+                               (epoch_metric_loss / (batch_ndx + 1))]
+        return results
+
+    def tf_train(self, model, epochs, batch_size=None, **kwargs):
+        &#34;&#34;&#34;Trains and evaluates a tensorflow model.
+
+        Args:
+            model: A TensorFLow/Keras Model.
+            epochs: An integer, the number of training epochs.
+            device: A string, the device to use gpu/cpu etc.
+            kwargs: Keyword arguments for Keras fit model method.
+        Returns:
+            A dict of results for train, validation, and test.
+        &#34;&#34;&#34;
+        assert MODEL_ENGINE == &#39;TENSORFLOW&#39;
+        if self.processed_data is None:
+            raise ValueError(
+                &#39;Data must first be prepared (processed and then partitioned).&#39;
+            )
+        if &#39;train_x&#39; not in self.processed_data:
+            raise ValueError(&#39;Data must first be partitioned.&#39;)
+
+        model.fit(self.processed_data[&#39;train_x&#39;],
+                  self.processed_data[&#39;train_y&#39;],
+                  validation_data=(self.processed_data[&#39;val_x&#39;],
+                                   self.processed_data[&#39;val_y&#39;]),
+                  epochs=epochs, batch_size=batch_size, **kwargs)
+
+        if batch_size is None:
+            batch_size = 256
+        verbose = kwargs[&#39;verbose&#39;] if &#39;verbose&#39; in kwargs else &#39;auto&#39;
+        results = {
+            &#39;train&#39;: model.evaluate(self.processed_data[&#39;train_x&#39;],
+                                    self.processed_data[&#39;train_y&#39;],
+                                    batch_size=batch_size * 2,
+                                    verbose=verbose),
+            &#39;val&#39;: model.evaluate(self.processed_data[&#39;val_x&#39;],
+                                  self.processed_data[&#39;val_y&#39;],
+                                  batch_size=batch_size * 2,
+                                  verbose=verbose),
+            &#39;test&#39;: model.evaluate(self.processed_data[&#39;test_x&#39;],
+                                   self.processed_data[&#39;test_y&#39;],
+                                   batch_size=batch_size * 2,
+                                   verbose=verbose),
+        }
+        return results
+
+    def train(self, model, epochs, batch_size=None,
+              loss_func=None, metric_func=None, optimizer=None,
+              device=None, verbose=1):
+        &#34;&#34;&#34;Trains and evaluates a tensorflow or torch model.
+
+        Args:
+            model: A PyTorch/TensorFlow Model.
+            epochs: An integer, the number of training epochs.
+            batch_size: An integer, the size of each batch for training.
+            loss_func: A torch loss function.
+            metric_func: A torch loss/metric function.
+            optimizer: A torch optimizer.
+            device: A string, the device to use gpu/cpu etc.
+            verbose: An integer, rates verbosity. 0 None, 1 All.
+        Returns:
+            A dict of results for train, validation, and test.
+        &#34;&#34;&#34;
+        if MODEL_ENGINE == &#39;TORCH&#39;:
+            if None in [loss_func, optimizer, device]:
+                raise ValueError(
+                    &#39;loss_func, optimizer, and device must be &#39;
+                    &#39;supplied for using PyTorch for models&#39;
+                )
+            results = self.torch_train(
+                model,
+                loss_func,
+                optimizer,
+                epochs,
+                device,
+                batch_size=batch_size,
+                metric_func=metric_func,
+                verbose=verbose
+            )
+        else:
+            results = self.tf_train(
+                model, epochs, batch_size=batch_size, verbose=verbose
+            )
+        return results
+
+    @staticmethod
+    def ignore_gaps(func):
+        &#34;&#34;&#34;Wraps a preprocess function to ignore gaps.
+           Useful when not accessing neighbor elements.
+
+        Args:
+            func: A preprocess function that handles structured data
+        Returns:
+            A wrapped preprocess function
+        &#34;&#34;&#34;
+        def ig_func(data):
+            split_ndxs = np.cumsum([len(x) for x in data])[:-1]
+            data = np.hstack(data)
+            data = func(data)
+            # if dtype=object, there can be a problem if array does not need to
+            # be an object
+            data = np.array(np.split(data, split_ndxs))
+            return data
+        return ig_func
+
+    @staticmethod
+    def on_gaps(func):
+        &#34;&#34;&#34;Wraps a preprocess function to apply itself on every array
+           that was split because of gaps.
+           Useful when accessing neighbor elements.
+        Args:
+            func: A preprocess function that handles structured data
+        Returns:
+            A wrapped preprocess function
+        &#34;&#34;&#34;
+        def g_func(data):
+            return np.array([func(x) for x in data])
+        return g_func</code></pre>
+</details>
+<h3>Static methods</h3>
+<dl>
+<dt id="hapi_nn.HAPINNTrainer.ignore_gaps"><code class="name flex">
+<span>def <span class="ident">ignore_gaps</span></span>(<span>func)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Wraps a preprocess function to ignore gaps.
+Useful when not accessing neighbor elements.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>func</code></strong></dt>
+<dd>A preprocess function that handles structured data</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>A wrapped preprocess function</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def ignore_gaps(func):
+    &#34;&#34;&#34;Wraps a preprocess function to ignore gaps.
+       Useful when not accessing neighbor elements.
+
+    Args:
+        func: A preprocess function that handles structured data
+    Returns:
+        A wrapped preprocess function
+    &#34;&#34;&#34;
+    def ig_func(data):
+        split_ndxs = np.cumsum([len(x) for x in data])[:-1]
+        data = np.hstack(data)
+        data = func(data)
+        # if dtype=object, there can be a problem if array does not need to
+        # be an object
+        data = np.array(np.split(data, split_ndxs))
+        return data
+    return ig_func</code></pre>
+</details>
+</dd>
+<dt id="hapi_nn.HAPINNTrainer.on_gaps"><code class="name flex">
+<span>def <span class="ident">on_gaps</span></span>(<span>func)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Wraps a preprocess function to apply itself on every array
+that was split because of gaps.
+Useful when accessing neighbor elements.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>func</code></strong></dt>
+<dd>A preprocess function that handles structured data</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>A wrapped preprocess function</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def on_gaps(func):
+    &#34;&#34;&#34;Wraps a preprocess function to apply itself on every array
+       that was split because of gaps.
+       Useful when accessing neighbor elements.
+    Args:
+        func: A preprocess function that handles structured data
+    Returns:
+        A wrapped preprocess function
+    &#34;&#34;&#34;
+    def g_func(data):
+        return np.array([func(x) for x in data])
+    return g_func</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="hapi_nn.HAPINNTrainer.get_prepared_data"><code class="name flex">
+<span>def <span class="ident">get_prepared_data</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns the processed data that is prepared for training.</p>
+<h2 id="returns">Returns</h2>
+<p>The processed data if it is prepared and partitioned else
+it will return None</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_prepared_data(self):
+    &#34;&#34;&#34;Returns the processed data that is prepared for training.
+
+    Returns:
+        The processed data if it is prepared and partitioned else
+        it will return None
+    &#34;&#34;&#34;
+    if self.processed_data is not None or &#39;train_x&#39; in self.processed_data:
+        return self.processed_data
+    return None</code></pre>
+</details>
+</dd>
+<dt id="hapi_nn.HAPINNTrainer.load_prepared_data"><code class="name flex">
+<span>def <span class="ident">load_prepared_data</span></span>(<span>self, path)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Loads the data that was prepared for training.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>path</code></strong></dt>
+<dd>A string that has the path and prefix of the
+files that will be loaded.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def load_prepared_data(self, path):
+    &#34;&#34;&#34;Loads the data that was prepared for training.
+
+    Args:
+        path: A string that has the path and prefix of the
+              files that will be loaded.
+    &#34;&#34;&#34;
+    self.processed_data = {}
+    for di in listdir(dirname(path)):
+        if basename(path) + &#39;_&#39; in di:
+            self.processed_data[di.split(&#39;_&#39;, 1)[1].split(&#39;.&#39;, 1)[
+                0]] = np.load(di)</code></pre>
+</details>
+</dd>
+<dt id="hapi_nn.HAPINNTrainer.partition_data"><code class="name flex">
+<span>def <span class="ident">partition_data</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Partitions the data that was processed by process_data method.</p>
+<h2 id="returns">Returns</h2>
+<p>A list of the actual resulting partition proportions is returned.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def partition_data(self):
+    &#34;&#34;&#34;Partitions the data that was processed by process_data method.
+
+    Returns:
+        A list of the actual resulting partition proportions is returned.
+    &#34;&#34;&#34;
+    if self.processed_data is None:
+        raise ValueError(&#39;Data must first be processed.&#39;)
+    if self.processed_test_data is None:
+        raise ValueError(&#39;Test data must first be processed.&#39;)
+    if &#39;train_x&#39; in self.processed_data:
+        raise ValueError(
+            &#39;Data is already partitioned. Reprocess first if need be.&#39;)
+
+    # Split data and make final dict for training
+    train_val_split = self._partition_data(
+        self.processed_data, self.data_split[0] /
+        (self.data_split[0] + self.data_split[1])
+    )
+    processed_data = {&#39;train_x&#39;: train_val_split[0][&#39;x&#39;],
+                      &#39;train_y&#39;: train_val_split[0][&#39;y&#39;],
+                      &#39;val_x&#39;: train_val_split[1][&#39;x&#39;],
+                      &#39;val_y&#39;: train_val_split[1][&#39;y&#39;],
+                      &#39;test_x&#39;: self.processed_test_data[&#39;x&#39;],
+                      &#39;test_y&#39;: self.processed_test_data[&#39;y&#39;]}
+    self.processed_data = processed_data
+
+    # Calculate split proportions
+    tn = len(processed_data[&#39;train_x&#39;])
+    vd = len(processed_data[&#39;val_x&#39;])
+    tt = len(processed_data[&#39;test_x&#39;])
+    sm = tn + vd + tt
+    return (tn / sm, vd / sm, tt / sm)</code></pre>
+</details>
+</dd>
+<dt id="hapi_nn.HAPINNTrainer.prepare_data"><code class="name flex">
+<span>def <span class="ident">prepare_data</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Prepares the data for training by
+processing it and partitioning it.</p>
+<h2 id="returns">Returns</h2>
+<p>A list of the actual resulting partition proportions is returned.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def prepare_data(self):
+    &#34;&#34;&#34;Prepares the data for training by
+       processing it and partitioning it.
+
+    Returns:
+        A list of the actual resulting partition proportions is returned.
+    &#34;&#34;&#34;
+    self.process_data()
+    return self.partition_data()</code></pre>
+</details>
+</dd>
+<dt id="hapi_nn.HAPINNTrainer.process_data"><code class="name flex">
+<span>def <span class="ident">process_data</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Processes the data that was set with set_hapidatas method.
+This method also preforms part of the test partitioning.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def process_data(self):
+    &#34;&#34;&#34;Processes the data that was set with set_hapidatas method.
+       This method also preforms part of the test partitioning.
+    &#34;&#34;&#34;
+    if self.data is None:
+        raise ValueError(&#39;Data must first be set.&#39;)
+
+    # Min steps needed to get one output from windowing
+    if self.lag:
+        min_steps = self.in_steps + self.out_steps
+    else:
+        min_steps = max(self.in_steps, self.out_steps)
+
+    # Split data into segments for later partitioning.
+    # The data split has noise in the edges to avoid the
+    # chance of a bias in splitting.
+    # NEED TO IMPROVE SPLIT ALGO:
+    # Tests should be pulled from several different places
+    # Currently, only test splits come from test proportion divided by 5%
+    # So 10% test split would result in two test splits
+    data = []
+    y_data = []
+    for ndx in range(len(self.data)):
+        # Split Data into Sections
+        split_stride = int(len(self.data[ndx]) / 20)
+        num_splits = int(len(self.data[ndx]) / split_stride)
+        ends = np.random.randint(split_stride - min_steps / num_splits,
+                                 split_stride + min_steps / num_splits,
+                                 num_splits)
+        cndx = 0
+        for end in ends:
+            if len(self.data[ndx]) - cndx &lt; min_steps:
+                break
+            data.append(self.data[ndx][cndx:cndx + end])
+            if self.y_data is not None:
+                y_data.append(self.y_data[ndx][cndx:cndx + end])
+            cndx += end
+        else:
+            if len(self.data[ndx]) - cndx &gt;= min_steps:
+                data.append(self.data[ndx][cndx:])
+                if self.y_data is not None:
+                    y_data.append(self.y_data[ndx][cndx:])
+
+    # Sample Sections for Test Data
+    ndxs = np.random.choice(
+        np.arange(
+            len(data) -
+            1),
+        size=round(
+            len(data) *
+            self.data_split[2]),
+        replace=False)
+    data = np.array(data)
+    test_data = data[ndxs]
+    remerge_data = []
+    last_ndx = 0
+    for ndx in sorted(ndxs):
+        if last_ndx != ndx:
+            print(last_ndx, ndx)
+            remerge_data.append(np.concatenate(data[last_ndx:ndx]))
+        last_ndx = ndx + 1
+    if ndx + 1 &lt; len(data):
+        remerge_data.append(np.concatenate(data[ndx + 1:]))
+    data = np.array(remerge_data)
+
+    if self.y_data is not None:
+        y_data = np.array(y_data)
+        y_test_data = y_data[ndxs]
+        remerge_data = []
+        last_ndx = 0
+        for ndx in sorted(ndxs):
+            if last_ndx != ndx:
+                remerge_data.append(np.concatenate(y_data[last_ndx:ndx]))
+            last_ndx = ndx + 1
+        if ndx + 1 &lt; len(y_data):
+            remerge_data.append(np.concatenate(y_data[ndx + 1:]))
+        y_data = np.array(remerge_data)
+
+    # Process the data
+    if self.y_data is None:
+        self.processed_data = self._process_data(data, data.copy())
+        self.processed_test_data = self._process_data(
+            test_data, test_data.copy())
+    else:
+        self.processed_data = self._process_data(data, y_data)
+        self.processed_test_data = self._process_data(
+            test_data, y_test_data
+        )</code></pre>
+</details>
+</dd>
+<dt id="hapi_nn.HAPINNTrainer.save_prepared_data"><code class="name flex">
+<span>def <span class="ident">save_prepared_data</span></span>(<span>self, path)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Saves the data that is prepared for training.
+The data will be saved as npy files and each file
+represents a value in the processed_data dict.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>path</code></strong></dt>
+<dd>A string that has the path and prefix of the
+files that will be saved.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def save_prepared_data(self, path):
+    &#34;&#34;&#34;Saves the data that is prepared for training.
+       The data will be saved as npy files and each file
+       represents a value in the processed_data dict.
+
+    Args:
+        path: A string that has the path and prefix of the
+              files that will be saved.
+    &#34;&#34;&#34;
+    if self.processed_data is None:
+        raise ValueError(
+            &#39;Data must first be prepared (processed and then partitioned).&#39;
+        )
+    if &#39;train_x&#39; not in self.processed_data:
+        raise ValueError(&#39;Data must first be partitioned.&#39;)
+    for key in self.processed_data:
+        np.save(path + &#39;_&#39; + key, self.processed_data[key])</code></pre>
+</details>
+</dd>
+<dt id="hapi_nn.HAPINNTrainer.set_hapidatas"><code class="name flex">
+<span>def <span class="ident">set_hapidatas</span></span>(<span>self, datas, xyparameters=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Gives the Trainer the HAPI data and checks
+that the datas can be used for training.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>datas</code></strong></dt>
+<dd>A list or tuple of hapi data, which
+has same data columns and same intervals.
+The datas should not have same columns besides
+for time. datas can have time gaps, however,
+the gaps must be the same across all datas.</dd>
+<dt><strong><code>xyparameters</code></strong></dt>
+<dd>A list or tuple of lists which contain
+the column names that indicate the
+wanted columns in x input and y input,
+respectively.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>A number that represents the time interval between data points.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_hapidatas(self, datas, xyparameters=None):
+    &#34;&#34;&#34;Gives the Trainer the HAPI data and checks
+       that the datas can be used for training.
+
+    Args:
+        datas: A list or tuple of hapi data, which
+               has same data columns and same intervals.
+               The datas should not have same columns besides
+               for time. datas can have time gaps, however,
+               the gaps must be the same across all datas.
+        xyparameters: A list or tuple of lists which contain
+                      the column names that indicate the
+                      wanted columns in x input and y input,
+                      respectively.
+    Returns:
+        A number that represents the time interval between data points.
+    &#34;&#34;&#34;
+    if (xyparameters is not None
+            and not isinstance(xyparameters, (list, tuple))):
+        raise ValueError(
+            &#39;xyparameters should be None, list type, or tuple type.&#39;
+        )
+    datas = datas if isinstance(datas, (list, tuple)) else [datas]
+    self.processed_data = None
+    self.processed_test_data = None
+
+    # Calculate time interval and split on inconsistencies for
+    # gaps in the data
+    time = datas[0][&#39;Time&#39;]
+    time_data = hapitime2datetime(time)
+    time_deltas = np.vectorize(lambda x: x.total_seconds())(
+        time_data[1:] - time_data[:-1]
+    )
+    self.time_interval = np.median(time_deltas)
+    split_ndxs = np.nonzero(time_deltas != self.time_interval)[0] + 1
+    if len(split_ndxs) &gt; 0:
+        warnings.warn(&#39;Time gaps exist in the data.&#39;)
+
+    # Make sure time columns are same for all data and then
+    # remove the time column
+    for ndx in range(len(datas)):
+        if all(time != datas[ndx][&#39;Time&#39;]):
+            raise NotImplementedError(
+                &#39;Time columns must be the same.&#39;
+            )
+        datas[ndx] = datas[ndx][list(datas[ndx].dtype.names[1:])]
+
+    # Combine all columns based on X and Y requested parameters
+    if xyparameters is None:
+        self.data = extract_format_structured_data(
+            datas, datas.dtype.names)
+    elif xyparameters[0] == xyparameters[1]:
+        self.data = extract_format_structured_data(datas, xyparameters[0])
+    else:
+        self.data = extract_format_structured_data(datas, xyparameters[0])
+        self.y_data = extract_format_structured_data(
+            datas, xyparameters[1]
+        )
+
+    # Split Data on time gaps
+    self.data = np.split(self.data, split_ndxs)
+    if self.y_data is not None:
+        self.y_data = np.split(self.y_data, split_ndxs)
+
+    # Filter out too small of gaps and send warning if too small
+    if self.lag:
+        min_steps = self.in_steps + self.out_steps
+    else:
+        min_steps = max(self.in_steps, self.out_steps)
+    data = []
+    data_ndxs = []
+    for ndx, split in enumerate(self.data):
+        split_size = int(len(split) / 20)
+        if split_size &gt;= min_steps:
+            data.append(split)
+            data_ndxs.append(ndx)
+        else:
+            warnings.warn(f&#39;Removed data gab at index {ndx}. &#39;
+                          f&#39;Length of gab ({len(split)}) was too small. &#39;
+                          f&#39;Split size ({split_size}) is less than &#39;
+                          f&#39;minimum step size ({min_steps}).&#39;)
+    if len(self.data) &gt; len(data):
+        warnings.warn(&#39;Data points with time gaps that caused &#39;
+                      &#39;too small of splits where removed. Removed &#39;
+                      f&#39;{len(self.data) - len(data)} out of &#39;
+                      f&#39;{len(self.data)} gaps.&#39;)
+        self.data = data
+        if self.y_data is not None:
+            self.y_data = [self.y_data[ndx] for ndx in data_ndxs]
+    avg_size = int(sum([len(x) for x in data]) / len(data) * .10)
+    if avg_size &lt; self.in_steps + self.out_steps:
+        warnings.warn(&#39;in_steps and out_steps sum to a value greater than &#39;
+                      f&#39;10% of the average data gap size ({avg_size}). &#39;
+                      &#39;This may reduce the precision of the test split &#39;
+                      &#39;and lead to increased data lost from splits.&#39;)
+    return self.time_interval</code></pre>
+</details>
+</dd>
+<dt id="hapi_nn.HAPINNTrainer.tf_train"><code class="name flex">
+<span>def <span class="ident">tf_train</span></span>(<span>self, model, epochs, batch_size=None, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Trains and evaluates a tensorflow model.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>model</code></strong></dt>
+<dd>A TensorFLow/Keras Model.</dd>
+<dt><strong><code>epochs</code></strong></dt>
+<dd>An integer, the number of training epochs.</dd>
+<dt><strong><code>device</code></strong></dt>
+<dd>A string, the device to use gpu/cpu etc.</dd>
+<dt><strong><code>kwargs</code></strong></dt>
+<dd>Keyword arguments for Keras fit model method.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>A dict of results for train, validation, and test.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def tf_train(self, model, epochs, batch_size=None, **kwargs):
+    &#34;&#34;&#34;Trains and evaluates a tensorflow model.
+
+    Args:
+        model: A TensorFLow/Keras Model.
+        epochs: An integer, the number of training epochs.
+        device: A string, the device to use gpu/cpu etc.
+        kwargs: Keyword arguments for Keras fit model method.
+    Returns:
+        A dict of results for train, validation, and test.
+    &#34;&#34;&#34;
+    assert MODEL_ENGINE == &#39;TENSORFLOW&#39;
+    if self.processed_data is None:
+        raise ValueError(
+            &#39;Data must first be prepared (processed and then partitioned).&#39;
+        )
+    if &#39;train_x&#39; not in self.processed_data:
+        raise ValueError(&#39;Data must first be partitioned.&#39;)
+
+    model.fit(self.processed_data[&#39;train_x&#39;],
+              self.processed_data[&#39;train_y&#39;],
+              validation_data=(self.processed_data[&#39;val_x&#39;],
+                               self.processed_data[&#39;val_y&#39;]),
+              epochs=epochs, batch_size=batch_size, **kwargs)
+
+    if batch_size is None:
+        batch_size = 256
+    verbose = kwargs[&#39;verbose&#39;] if &#39;verbose&#39; in kwargs else &#39;auto&#39;
+    results = {
+        &#39;train&#39;: model.evaluate(self.processed_data[&#39;train_x&#39;],
+                                self.processed_data[&#39;train_y&#39;],
+                                batch_size=batch_size * 2,
+                                verbose=verbose),
+        &#39;val&#39;: model.evaluate(self.processed_data[&#39;val_x&#39;],
+                              self.processed_data[&#39;val_y&#39;],
+                              batch_size=batch_size * 2,
+                              verbose=verbose),
+        &#39;test&#39;: model.evaluate(self.processed_data[&#39;test_x&#39;],
+                               self.processed_data[&#39;test_y&#39;],
+                               batch_size=batch_size * 2,
+                               verbose=verbose),
+    }
+    return results</code></pre>
+</details>
+</dd>
+<dt id="hapi_nn.HAPINNTrainer.torch_train"><code class="name flex">
+<span>def <span class="ident">torch_train</span></span>(<span>self, model, loss_func, optimizer, epochs, device, batch_size=None, metric_func=None, verbose=1)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Trains and evaluates a torch model.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>model</code></strong></dt>
+<dd>A PyTorch Module.</dd>
+<dt><strong><code>loss_func</code></strong></dt>
+<dd>A torch loss function.</dd>
+<dt><strong><code>optimizer</code></strong></dt>
+<dd>A torch optimizer.</dd>
+<dt><strong><code>epochs</code></strong></dt>
+<dd>An integer, the number of training epochs.</dd>
+<dt><strong><code>device</code></strong></dt>
+<dd>A string, the device to use gpu/cpu etc.</dd>
+<dt><strong><code>batch_size</code></strong></dt>
+<dd>An integer, the size of each batch for training.</dd>
+<dt><strong><code>metric_func</code></strong></dt>
+<dd>A torch loss/metric function.</dd>
+<dt><strong><code>verbose</code></strong></dt>
+<dd>An integer, rates verbosity. 0 None, 1 All.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>A dict of results for train, validation, and test.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def torch_train(self, model, loss_func,
+                optimizer, epochs, device, batch_size=None,
+                metric_func=None, verbose=1):
+    &#34;&#34;&#34;Trains and evaluates a torch model.
+
+    Args:
+        model: A PyTorch Module.
+        loss_func: A torch loss function.
+        optimizer: A torch optimizer.
+        epochs: An integer, the number of training epochs.
+        device: A string, the device to use gpu/cpu etc.
+        batch_size: An integer, the size of each batch for training.
+        metric_func: A torch loss/metric function.
+        verbose: An integer, rates verbosity. 0 None, 1 All.
+    Returns:
+        A dict of results for train, validation, and test.
+    &#34;&#34;&#34;
+    assert MODEL_ENGINE == &#39;TORCH&#39;
+    if self.processed_data is None:
+        raise ValueError(
+            &#39;Data must first be prepared (processed and then partitioned).&#39;
+        )
+    if &#39;train_x&#39; not in self.processed_data:
+        raise ValueError(&#39;Data must first be partitioned.&#39;)
+
+    train_loader = DataLoader(
+        TensorDataset(torch.Tensor(self.processed_data[&#39;train_x&#39;]),
+                      torch.Tensor(self.processed_data[&#39;train_y&#39;])),
+        batch_size=batch_size, shuffle=True
+    )
+    val_loader = DataLoader(
+        TensorDataset(torch.Tensor(self.processed_data[&#39;val_x&#39;]),
+                      torch.Tensor(self.processed_data[&#39;val_y&#39;])),
+        batch_size=batch_size * 2, shuffle=False
+    )
+    test_loader = DataLoader(
+        TensorDataset(torch.Tensor(self.processed_data[&#39;test_x&#39;]),
+                      torch.Tensor(self.processed_data[&#39;test_y&#39;])),
+        batch_size=batch_size * 2, shuffle=False
+    )
+
+    model.train()
+
+    for epoch in range(epochs):
+        start_time = time()
+        if verbose:
+            print(f&#39;Epoch {epoch + 1}/{epochs}&#39;, end=&#39;\r&#39;)
+
+        model.train(mode=True)
+        epoch_loss = 0
+        epoch_metric_loss = 0
+        batch_length = len(train_loader)
+        for batch_ndx, (data, target) in enumerate(train_loader):
+            data, target = data.to(device), target.to(device)
+            optimizer.zero_grad()
+            output = model(data)
+            loss = loss_func(output, target)
+            if metric_func is not None:
+                epoch_metric_loss += metric_func(output, target).item()
+            loss.backward()
+            optimizer.step()
+            loss = loss.item()
+            epoch_loss += loss
+            if verbose:
+                string = (f&#39;Epoch: {epoch + 1}/{epochs} - &#39;
+                          f&#39;Batch: {batch_ndx + 1}/{batch_length} - &#39;
+                          f&#39;Loss: {epoch_loss / (batch_ndx + 1):.6f}&#39;)
+                if metric_func is not None:
+                    string += (
+                        &#39; - Metric Loss: &#39;
+                        f&#39;{epoch_metric_loss / (batch_ndx + 1):.6f}&#39;
+                    )
+                string += &#39;\t\t&#39;
+                str_length = len(string)
+                print(string, end=&#39;\r&#39;)
+        if verbose:
+            time_taken = time() - start_time
+            string = (
+                f&#39;Epoch: {epoch + 1}/{epochs} - &#39;
+                f&#39;Batch: {batch_ndx + 1}/{batch_length} - &#39;
+                f&#39;{time_taken:.1f}s &#39;
+                f&#39;{int(1000 * time_taken / (batch_ndx + 1))}ms/step - &#39;
+                f&#39;Loss: {(epoch_loss / (batch_ndx + 1)):.6f}&#39;)
+            if metric_func is not None:
+                string += (
+                    &#39; - Metric Loss: &#39;
+                    f&#39;{epoch_metric_loss / (batch_ndx + 1):.6f}&#39;
+                )
+
+        model.train(mode=False)
+        epoch_loss = 0
+        epoch_metric_loss = 0
+        for batch_idx, (data, target) in enumerate(val_loader):
+            data, target = data.to(device), target.to(device)
+            output = model(data)
+            loss = loss_func(output, target).item()
+            epoch_loss += loss
+            if metric_func is not None:
+                epoch_metric_loss += metric_func(output, target).item()
+        if verbose:
+            string += (&#39; - Validation Loss: &#39;
+                       f&#39;{(epoch_loss / (batch_ndx + 1)):.6f}&#39;)
+            if metric_func is not None:
+                string += (
+                    f&#39; - Validation Metric Loss: &#39;
+                    f&#39;{epoch_metric_loss / (batch_ndx + 1):.6f}&#39;
+                )
+            print(string + &#34; &#34; * (str_length - len(string)))
+
+    results = {}
+    epoch_loss = 0
+    epoch_metric_loss = 0
+    for batch_idx, (data, target) in enumerate(train_loader):
+        data, target = data.to(device), target.to(device)
+        output = model(data)
+        loss = loss_func(output, target).item()
+        epoch_loss += loss
+        if metric_func is not None:
+            epoch_metric_loss += metric_func(output, target).item()
+    if metric_func is None:
+        results[&#39;train&#39;] = (epoch_loss / (batch_ndx + 1))
+    else:
+        results[&#39;train&#39;] = [(epoch_loss / (batch_ndx + 1)),
+                            (epoch_metric_loss / (batch_ndx + 1))]
+    epoch_loss = 0
+    epoch_metric_loss = 0
+    for batch_idx, (data, target) in enumerate(val_loader):
+        data, target = data.to(device), target.to(device)
+        output = model(data)
+        loss = loss_func(output, target).item()
+        epoch_loss += loss
+        if metric_func is not None:
+            epoch_metric_loss += metric_func(output, target).item()
+    if metric_func is None:
+        results[&#39;val&#39;] = (epoch_loss / (batch_ndx + 1))
+    else:
+        results[&#39;val&#39;] = [(epoch_loss / (batch_ndx + 1)),
+                          (epoch_metric_loss / (batch_ndx + 1))]
+    epoch_loss = 0
+    epoch_metric_loss = 0
+    for batch_idx, (data, target) in enumerate(test_loader):
+        data, target = data.to(device), target.to(device)
+        output = model(data)
+        loss = loss_func(output, target).item()
+        epoch_loss += loss
+        if metric_func is not None:
+            epoch_metric_loss += metric_func(output, target).item()
+    if metric_func is None:
+        results[&#39;test&#39;] = (epoch_loss / (batch_ndx + 1))
+    else:
+        results[&#39;test&#39;] = [(epoch_loss / (batch_ndx + 1)),
+                           (epoch_metric_loss / (batch_ndx + 1))]
+    return results</code></pre>
+</details>
+</dd>
+<dt id="hapi_nn.HAPINNTrainer.train"><code class="name flex">
+<span>def <span class="ident">train</span></span>(<span>self, model, epochs, batch_size=None, loss_func=None, metric_func=None, optimizer=None, device=None, verbose=1)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Trains and evaluates a tensorflow or torch model.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>model</code></strong></dt>
+<dd>A PyTorch/TensorFlow Model.</dd>
+<dt><strong><code>epochs</code></strong></dt>
+<dd>An integer, the number of training epochs.</dd>
+<dt><strong><code>batch_size</code></strong></dt>
+<dd>An integer, the size of each batch for training.</dd>
+<dt><strong><code>loss_func</code></strong></dt>
+<dd>A torch loss function.</dd>
+<dt><strong><code>metric_func</code></strong></dt>
+<dd>A torch loss/metric function.</dd>
+<dt><strong><code>optimizer</code></strong></dt>
+<dd>A torch optimizer.</dd>
+<dt><strong><code>device</code></strong></dt>
+<dd>A string, the device to use gpu/cpu etc.</dd>
+<dt><strong><code>verbose</code></strong></dt>
+<dd>An integer, rates verbosity. 0 None, 1 All.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>A dict of results for train, validation, and test.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def train(self, model, epochs, batch_size=None,
+          loss_func=None, metric_func=None, optimizer=None,
+          device=None, verbose=1):
+    &#34;&#34;&#34;Trains and evaluates a tensorflow or torch model.
+
+    Args:
+        model: A PyTorch/TensorFlow Model.
+        epochs: An integer, the number of training epochs.
+        batch_size: An integer, the size of each batch for training.
+        loss_func: A torch loss function.
+        metric_func: A torch loss/metric function.
+        optimizer: A torch optimizer.
+        device: A string, the device to use gpu/cpu etc.
+        verbose: An integer, rates verbosity. 0 None, 1 All.
+    Returns:
+        A dict of results for train, validation, and test.
+    &#34;&#34;&#34;
+    if MODEL_ENGINE == &#39;TORCH&#39;:
+        if None in [loss_func, optimizer, device]:
+            raise ValueError(
+                &#39;loss_func, optimizer, and device must be &#39;
+                &#39;supplied for using PyTorch for models&#39;
+            )
+        results = self.torch_train(
+            model,
+            loss_func,
+            optimizer,
+            epochs,
+            device,
+            batch_size=batch_size,
+            metric_func=metric_func,
+            verbose=verbose
+        )
+    else:
+        results = self.tf_train(
+            model, epochs, batch_size=batch_size, verbose=verbose
+        )
+    return results</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="hapi_nn.extract_format_structured_data" href="#hapi_nn.extract_format_structured_data">extract_format_structured_data</a></code></li>
+<li><code><a title="hapi_nn.pyspedas_plotdata_to_hapidata" href="#hapi_nn.pyspedas_plotdata_to_hapidata">pyspedas_plotdata_to_hapidata</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="hapi_nn.HAPINNTester" href="#hapi_nn.HAPINNTester">HAPINNTester</a></code></h4>
+<ul class="">
+<li><code><a title="hapi_nn.HAPINNTester.forecast_plot" href="#hapi_nn.HAPINNTester.forecast_plot">forecast_plot</a></code></li>
+<li><code><a title="hapi_nn.HAPINNTester.plot" href="#hapi_nn.HAPINNTester.plot">plot</a></code></li>
+<li><code><a title="hapi_nn.HAPINNTester.prepare_data" href="#hapi_nn.HAPINNTester.prepare_data">prepare_data</a></code></li>
+<li><code><a title="hapi_nn.HAPINNTester.set_hapidatas" href="#hapi_nn.HAPINNTester.set_hapidatas">set_hapidatas</a></code></li>
+<li><code><a title="hapi_nn.HAPINNTester.test" href="#hapi_nn.HAPINNTester.test">test</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="hapi_nn.HAPINNTrainer" href="#hapi_nn.HAPINNTrainer">HAPINNTrainer</a></code></h4>
+<ul class="two-column">
+<li><code><a title="hapi_nn.HAPINNTrainer.get_prepared_data" href="#hapi_nn.HAPINNTrainer.get_prepared_data">get_prepared_data</a></code></li>
+<li><code><a title="hapi_nn.HAPINNTrainer.ignore_gaps" href="#hapi_nn.HAPINNTrainer.ignore_gaps">ignore_gaps</a></code></li>
+<li><code><a title="hapi_nn.HAPINNTrainer.load_prepared_data" href="#hapi_nn.HAPINNTrainer.load_prepared_data">load_prepared_data</a></code></li>
+<li><code><a title="hapi_nn.HAPINNTrainer.on_gaps" href="#hapi_nn.HAPINNTrainer.on_gaps">on_gaps</a></code></li>
+<li><code><a title="hapi_nn.HAPINNTrainer.partition_data" href="#hapi_nn.HAPINNTrainer.partition_data">partition_data</a></code></li>
+<li><code><a title="hapi_nn.HAPINNTrainer.prepare_data" href="#hapi_nn.HAPINNTrainer.prepare_data">prepare_data</a></code></li>
+<li><code><a title="hapi_nn.HAPINNTrainer.process_data" href="#hapi_nn.HAPINNTrainer.process_data">process_data</a></code></li>
+<li><code><a title="hapi_nn.HAPINNTrainer.save_prepared_data" href="#hapi_nn.HAPINNTrainer.save_prepared_data">save_prepared_data</a></code></li>
+<li><code><a title="hapi_nn.HAPINNTrainer.set_hapidatas" href="#hapi_nn.HAPINNTrainer.set_hapidatas">set_hapidatas</a></code></li>
+<li><code><a title="hapi_nn.HAPINNTrainer.tf_train" href="#hapi_nn.HAPINNTrainer.tf_train">tf_train</a></code></li>
+<li><code><a title="hapi_nn.HAPINNTrainer.torch_train" href="#hapi_nn.HAPINNTrainer.torch_train">torch_train</a></code></li>
+<li><code><a title="hapi_nn.HAPINNTrainer.train" href="#hapi_nn.HAPINNTrainer.train">train</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

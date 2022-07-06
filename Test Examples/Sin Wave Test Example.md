@@ -104,11 +104,11 @@ trainer.set_hapidatas([data], xyparameters=[['vector_0'], ['vector_1', 'vector_2
     hapi(): Reading dataset1_vector_19700101T000000_19700102T000000.npy 
 
 
-    /home/jovyan/hapi_nn.py:198: UserWarning: Time gaps exist in the data.
+    /home/jovyan/HAPI_NN/hapi_nn.py:209: UserWarning: Time gaps exist in the data.
       warnings.warn('Time gaps exist in the data.')
-    /home/jovyan/hapi_nn.py:239: UserWarning: Removed data gab at index 0. Length of gab (10) was too small. Split size (0) is less than minimum step size (512).
+    /home/jovyan/HAPI_NN/hapi_nn.py:250: UserWarning: Removed data gab at index 0. Length of gab (10) was too small. Split size (0) is less than minimum step size (512).
       warnings.warn(f'Removed data gab at index {ndx}. '
-    /home/jovyan/hapi_nn.py:244: UserWarning: Data points with time gaps that caused too small of splits where removed. Removed 1 out of 2 gaps.
+    /home/jovyan/HAPI_NN/hapi_nn.py:255: UserWarning: Data points with time gaps that caused too small of splits where removed. Removed 1 out of 2 gaps.
       warnings.warn('Data points with time gaps that caused '
 
 
@@ -126,43 +126,43 @@ Prepare the downloaded data for training
 trainer.prepare_data()
 ```
 
-    /home/jovyan/hapi_nn.py:409: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+    /home/jovyan/HAPI_NN/hapi_nn.py:419: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
       data = np.array(data)
-    /home/jovyan/hapi_nn.py:420: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+    /home/jovyan/HAPI_NN/hapi_nn.py:430: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
       data = np.array(remerge_data)
-    /home/jovyan/hapi_nn.py:423: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+    /home/jovyan/HAPI_NN/hapi_nn.py:433: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
       y_data = np.array(y_data)
-    /home/jovyan/hapi_nn.py:433: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+    /home/jovyan/HAPI_NN/hapi_nn.py:443: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
       y_data = np.array(remerge_data)
-    /home/jovyan/hapi_nn.py:752: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+    /home/jovyan/HAPI_NN/hapi_nn.py:764: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
       data = np.array(np.split(data, split_ndxs))
-    /home/jovyan/hapi_nn.py:767: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+    /home/jovyan/HAPI_NN/hapi_nn.py:779: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
       return np.array([func(x) for x in data])
-    /home/jovyan/hapi_nn.py:752: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+    /home/jovyan/HAPI_NN/hapi_nn.py:764: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
       data = np.array(np.split(data, split_ndxs))
-    /home/jovyan/hapi_nn.py:767: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+    /home/jovyan/HAPI_NN/hapi_nn.py:779: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
       return np.array([func(x) for x in data])
-    /home/jovyan/hapi_nn.py:752: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+    /home/jovyan/HAPI_NN/hapi_nn.py:764: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
       data = np.array(np.split(data, split_ndxs))
-    /home/jovyan/hapi_nn.py:767: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+    /home/jovyan/HAPI_NN/hapi_nn.py:779: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
       return np.array([func(x) for x in data])
-    /home/jovyan/hapi_nn.py:752: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+    /home/jovyan/HAPI_NN/hapi_nn.py:764: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
       data = np.array(np.split(data, split_ndxs))
-    /home/jovyan/hapi_nn.py:767: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+    /home/jovyan/HAPI_NN/hapi_nn.py:779: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
       return np.array([func(x) for x in data])
 
 
-    0 1
-    5 6
-    7 10
-    11 13
-    15 16
+    2 3
+    4 5
+    7 8
+    9 14
+    16 17
 
 
 
 
 
-    (0.5138996778178206, 0.05139633501852866, 0.4347039871636507)
+    (0.5125960744457855, 0.05126087785047322, 0.43614304770374135)
 
 
 
@@ -381,16 +381,16 @@ trainer.train(model, epochs, batch_size=batch_size, loss_func=loss_function,
               metric_func=metric_function, optimizer=optimizer, device=device)
 ```
 
-    Epoch: 1/2 - Batch: 1852/1852 - 34.6s 18ms/step - Loss: 0.026114 - Metric Loss: 0.054106 - Validation Loss: 0.000070 - Validation Metric Loss: 0.002552
-    Epoch: 2/2 - Batch: 1852/1852 - 34.1s 18ms/step - Loss: 0.000287 - Metric Loss: 0.011082 - Validation Loss: 0.000270 - Validation Metric Loss: 0.005419
+    Epoch: 1/2 - Batch: 1261/1261 - 24.4s 19ms/step - Loss: 0.033535 - Metric Loss: 0.065474 - Validation Loss: 0.000018 - Validation Metric Loss: 0.000540
+    Epoch: 2/2 - Batch: 1261/1261 - 24.5s 19ms/step - Loss: 0.000308 - Metric Loss: 0.011578 - Validation Loss: 0.000002 - Validation Metric Loss: 0.000238
 
 
 
 
 
-    {'train': [0.0018863588636042047, 0.03787980333260275],
-     'val': [0.0002698861616945244, 0.005418521430560631],
-     'test': [0.0008933953704517617, 0.007176460485028397]}
+    {'train': [4.076269602746567e-05, 0.004687965188388145],
+     'val': [2.06429439668472e-06, 0.0002379226801114882],
+     'test': [0.000150579351758803, 0.007208811088179332]}
 
 
 
@@ -478,12 +478,14 @@ tester.plot(predictions, -1, 'vector_2', return_data=True)
 
 
 
-    {'prediction': (array([   0,    1,    2, ..., 3581, 3582, 3583], dtype='timedelta64[s]'),
-      array([-0.8712521 , -0.8703499 , -0.8858828 , ..., -0.8900833 ,
-             -0.8948504 , -0.87869054], dtype=float32)),
-     'truth': (array([   0,    1,    2, ..., 3597, 3598, 3599], dtype='timedelta64[s]'),
-      array([-1.        , -0.9999863 , -0.99994516, ..., -0.9998766 ,
-             -0.99994516, -0.9999863 ], dtype=float32))}
+    {'prediction': (array([0.000e+00, 1.000e+00, 2.000e+00, ..., 3.581e+03, 3.582e+03,
+             3.583e+03]),
+      array([-0.95717376, -0.9783135 , -1.0007764 , ..., -1.0132554 ,
+             -1.0266743 , -0.9949336 ], dtype=float32)),
+     'truth': (array([0.000e+00, 1.000e+00, 2.000e+00, ..., 3.597e+03, 3.598e+03,
+             3.599e+03]),
+      array([-1.       , -0.9999863, -0.9999451, ..., -0.9998766, -0.9999451,
+             -0.9999863], dtype=float32))}
 
 
 

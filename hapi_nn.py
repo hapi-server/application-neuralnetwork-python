@@ -3,6 +3,7 @@
 import warnings
 from time import time
 from os import listdir
+from datetime import datetime
 from os.path import dirname, basename
 import numpy as np
 import numpy.lib.recfunctions as rf
@@ -14,7 +15,54 @@ MODEL_ENGINE = 'TORCH'
 # MODEL_ENGINE = 'TENSORFLOW'
 
 
+# If not on time axis, push to metdata or force to time
+# TODO: RETURN metadata (time range, data name, etc.)
+def pyspedas_plotdata_to_hapidata(pyspedas_plotdata):
+    """Converts a PySpedas variable to HAPI Data
+
+    Args:
+        pyspedas_plotdata: A PySpedas Variable with time.
+    Returns:
+        A structured numpy array following HAPI data format.
+    """
+    time = np.array(
+        [datetime.fromtimestamp(time).isoformat('T', 'milliseconds') + 'Z'
+         for time in pyspedas_plotdata.times], dtype=[('Time', 'S24')]
+    )
+    columns = [time]
+    for ndx, field in enumerate(pyspedas_plotdata._fields[1:]):
+        if pyspedas_plotdata[ndx + 1].shape[0] == time.shape[0]:
+            if pyspedas_plotdata[ndx + 1].ndim == 1:
+                columns.append(
+                    pyspedas_plotdata[ndx + 1].astype(
+                        [(field, pyspedas_plotdata[ndx + 1].dtype)])
+                )
+            else:
+                shape = pyspedas_plotdata[ndx + 1].shape[1:]
+                columns.append(
+                    np.array(
+                        [(e,)
+                         for e in np.reshape(
+                             pyspedas_plotdata[ndx + 1],
+                             (-1, np.prod(shape)))],
+                        [(field, (pyspedas_plotdata[ndx + 1].dtype, shape))])
+                )
+        else:
+            warnings.warn(f'{field} does not have the same time axis')
+    return rf.merge_arrays(columns, flatten=True)
+
+
 def extract_format_structured_data(data, parameters):
+    """Extracts elements/columns out of structured data.
+       A helper function.
+
+    Args:
+        data: A numpy structured array.
+        parameters: A list of strings, which specific the columns and
+                    subelements.
+    Returns:
+        A new structured array with only the specified columns and subelements.
+    """
     new_data = []
     for dat in data:
         for param in parameters:
@@ -45,7 +93,7 @@ class HAPINNTrainer:
     """
 
     def __init__(self, data_split, in_steps, out_steps,
-                 preprocess_func=None, lag=True):
+                 preprocess_func=None, preprocess_y_func=None, lag=True):
         """Initalizes PyTorch or Tensorflow Modules as well
            as other parameters.
 
@@ -58,8 +106,8 @@ class HAPINNTrainer:
                         Also note, test proportions are before windowing,
                         so the proportions after windowing for test can
                         vary by several percent. Furthermore, the precision
-                        of the test proportion is limited to tenths
-                        (Ex. .15 ~> .1 or .2). Lastly, the larger the data
+                        of the test proportion is limited to .05
+                        (Ex. .17 ~> .15 or .20). Lastly, the larger the data
                         or the smaller the in_steps and out_steps,
                         the less data will be lost due to splitting.
                         Splitting of the data makes the windowing
@@ -71,11 +119,17 @@ class HAPINNTrainer:
             out_steps: An integer, which represents the number of
                        data points the model should output
             preprocess_func: A function that is called on the
-                             different data splits, which
+                             different input data splits, which
                              should be used to normalize the data,
                              fix invalid values, and other processing
                              before the data is more heavely formatted
                              for training.
+            preprocess_y_func: A function that is called on the
+                               different output data splits, which
+                               should be used to normalize the data,
+                               fix invalid values, and other processing
+                               before the data is more heavely formatted
+                               for training.
             lag: A boolean, which determines if the input should lag one
                  timestep behind the expected output. Defaults to True.
                  True implies the model is used for forecasting.
@@ -112,6 +166,7 @@ class HAPINNTrainer:
         self.processed_data = None
         self.processed_test_data = None
         self.preprocess_func = preprocess_func
+        self.preprocess_y_func = preprocess_y_func
         self.lag = lag
         self.time_interval = None
 
@@ -187,7 +242,7 @@ class HAPINNTrainer:
         data = []
         data_ndxs = []
         for ndx, split in enumerate(self.data):
-            split_size = int(len(split) / 10)
+            split_size = int(len(split) / 20)
             if split_size >= min_steps:
                 data.append(split)
                 data_ndxs.append(ndx)
@@ -264,22 +319,18 @@ class HAPINNTrainer:
             return self.processed_data
         return None
 
-    def _process_data(self, data, y_data=None):
+    def _process_data(self, data, y_data):
         """Processes data and optionally y_data.
            Used internally by process_data method.
         """
         if self.preprocess_func is None:
             preprocessed_data_all = data
-            if y_data is None:
-                preprocessed_y_data_all = None
-            else:
-                preprocessed_y_data_all = y_data
         else:
             preprocessed_data_all = self.preprocess_func(data)
-            if y_data is None:
-                preprocessed_y_data_all = None
-            else:
-                preprocessed_y_data_all = self.preprocess_func(y_data)
+        if self.preprocess_y_func is None:
+            preprocessed_y_data_all = y_data
+        else:
+            preprocessed_y_data_all = self.preprocess_y_func(y_data)
 
         x_datas = []
         y_datas = []
@@ -297,35 +348,18 @@ class HAPINNTrainer:
             x_data = np.swapaxes(np.lib.stride_tricks.sliding_window_view(
                 preprocessed_data, self.in_steps, axis=0
             ), 1, 2)
-
-            if (self.in_steps == self.out_steps
-                    and preprocessed_y_data_all is None):
-                if self.lag:
-                    # CHECK lengths
-                    y_data = x_data[self.in_steps:]
-                    x_data = x_data[:-self.in_steps]
-                else:
-                    y_data = x_data.copy()
-                    x_data = x_data
+            y_data = np.swapaxes(
+                np.lib.stride_tricks.sliding_window_view(
+                    preprocessed_y_data, self.out_steps, axis=0), 1, 2
+            )
+            min_len = min(y_data.shape[0], x_data.shape[0])
+            if self.lag:
+                # CHECK lengths
+                y_data = y_data[self.in_steps:min_len]
+                x_data = x_data[:min_len - self.in_steps]
             else:
-                if preprocessed_y_data_all is None:
-                    y_data = np.swapaxes(
-                        np.lib.stride_tricks.sliding_window_view(
-                            preprocessed_data, self.out_steps, axis=0), 1, 2
-                    )
-                else:
-                    y_data = np.swapaxes(
-                        np.lib.stride_tricks.sliding_window_view(
-                            preprocessed_y_data, self.out_steps, axis=0), 1, 2
-                    )
-                min_len = min(y_data.shape[0], x_data.shape[0])
-                if self.lag:
-                    # CHECK lengths
-                    y_data = y_data[self.in_steps:min_len]
-                    x_data = x_data[:min_len - self.in_steps]
-                else:
-                    y_data = y_data[:min_len]
-                    x_data = x_data[:min_len]
+                y_data = y_data[:min_len]
+                x_data = x_data[:min_len]
             x_datas.append(x_data)
             y_datas.append(y_data)
         return {'x': np.vstack(x_datas), 'y': np.vstack(y_datas)}
@@ -346,11 +380,15 @@ class HAPINNTrainer:
         # Split data into segments for later partitioning.
         # The data split has noise in the edges to avoid the
         # chance of a bias in splitting.
+        # NEED TO IMPROVE SPLIT ALGO:
+        # Tests should be pulled from several different places
+        # Currently, only test splits come from test proportion divided by 5%
+        # So 10% test split would result in two test splits
         data = []
         y_data = []
         for ndx in range(len(self.data)):
             # Split Data into Sections
-            split_stride = int(len(self.data[ndx]) / 10)
+            split_stride = int(len(self.data[ndx]) / 20)
             num_splits = int(len(self.data[ndx]) / split_stride)
             ends = np.random.randint(split_stride - min_steps / num_splits,
                                      split_stride + min_steps / num_splits,
@@ -380,16 +418,35 @@ class HAPINNTrainer:
             replace=False)
         data = np.array(data)
         test_data = data[ndxs]
-        data = np.delete(data, ndxs, axis=0)
+        remerge_data = []
+        last_ndx = 0
+        for ndx in sorted(ndxs):
+            if last_ndx != ndx:
+                print(last_ndx, ndx)
+                remerge_data.append(np.concatenate(data[last_ndx:ndx]))
+            last_ndx = ndx + 1
+        if ndx + 1 < len(data):
+            remerge_data.append(np.concatenate(data[ndx + 1:]))
+        data = np.array(remerge_data)
+
         if self.y_data is not None:
             y_data = np.array(y_data)
             y_test_data = y_data[ndxs]
-            y_data = np.delete(y_data, ndxs, axis=0)
+            remerge_data = []
+            last_ndx = 0
+            for ndx in sorted(ndxs):
+                if last_ndx != ndx:
+                    remerge_data.append(np.concatenate(y_data[last_ndx:ndx]))
+                last_ndx = ndx + 1
+            if ndx + 1 < len(y_data):
+                remerge_data.append(np.concatenate(y_data[ndx + 1:]))
+            y_data = np.array(remerge_data)
 
         # Process the data
         if self.y_data is None:
-            self.processed_data = self._process_data(data)
-            self.processed_test_data = self._process_data(test_data)
+            self.processed_data = self._process_data(data, data.copy())
+            self.processed_test_data = self._process_data(
+                test_data, test_data.copy())
         else:
             self.processed_data = self._process_data(data, y_data)
             self.processed_test_data = self._process_data(
@@ -688,10 +745,44 @@ class HAPINNTrainer:
             )
         return results
 
+    @staticmethod
+    def ignore_gaps(func):
+        """Wraps a preprocess function to ignore gaps.
+           Useful when not accessing neighbor elements.
+
+        Args:
+            func: A preprocess function that handles structured data
+        Returns:
+            A wrapped preprocess function
+        """
+        def ig_func(data):
+            split_ndxs = np.cumsum([len(x) for x in data])[:-1]
+            data = np.hstack(data)
+            data = func(data)
+            # if dtype=object, there can be a problem if array does not need to
+            # be an object
+            data = np.array(np.split(data, split_ndxs))
+            return data
+        return ig_func
+
+    @staticmethod
+    def on_gaps(func):
+        """Wraps a preprocess function to apply itself on every array
+           that was split because of gaps.
+           Useful when accessing neighbor elements.
+        Args:
+            func: A preprocess function that handles structured data
+        Returns:
+            A wrapped preprocess function
+        """
+        def g_func(data):
+            return np.array([func(x) for x in data])
+        return g_func
+
 
 class HAPINNTester:
     def __init__(self, in_steps, out_steps,
-                 preprocess_func=None, postprocess_func=None):
+                 preprocess_func=None, preprocess_y_func=None):
         """Initalizes PyTorch or Tensorflow Modules as well
            as other parameters.
 
@@ -703,10 +794,10 @@ class HAPINNTester:
                              the inputs to the model, which
                              should be used to normalize the data,
                              fix invalid values, and other processing
-            postprocess_func: A function that is called on the
-                              outputs of the model, which
-                              should be used to denormalize the data
-                              etc.
+            preprocess_y_func: A function that is called on the
+                               outputs of the model, which
+                               should be used to denormalize the data
+                               etc.
         """
         global torch, nn, tf, TensorDataset, DataLoader
         if MODEL_ENGINE == 'TORCH':
@@ -724,8 +815,8 @@ class HAPINNTester:
         self.processed_data = None
         self.preprocess_func = (
             lambda x: x) if preprocess_func is None else preprocess_func
-        self.postprocess_func = (
-            lambda x: x) if postprocess_func is None else postprocess_func
+        self.preprocess_y_func = (
+            lambda x: x) if preprocess_y_func is None else preprocess_y_func
         self.time_interval = None
 
     def set_hapidatas(self, datas, xyparameters=None):
@@ -796,11 +887,12 @@ class HAPINNTester:
             self.preprocess_func(self.data)
         ).astype(np.float32)
         if self.y_data is None:
-            self.processed_y_data = self.processed_data
+            self.processed_y_data = self.preprocess_y_func(self.processed_data)
         else:
-            self.processed_y_data = rf.structured_to_unstructured(
-                self.preprocess_func(self.y_data)
-            ).astype(np.float32)
+            self.processed_y_data = self.preprocess_y_func(
+                rf.structured_to_unstructured(
+                    self.preprocess_func(self.y_data)
+                ).astype(np.float32))
 
     def test(self, model, stride=None):
         """Tests the model by giving it all inputs
@@ -829,14 +921,14 @@ class HAPINNTester:
                 pred = model(torch.Tensor(np.expand_dims(
                     self.processed_data[ndx - self.in_steps:ndx], axis=0
                 ))).detach().numpy()[0]
-                preds.append(self.postprocess_func(pred))
+                preds.append(self.preprocess_y_func(pred))
         else:
             # OPTIMIZE
             for ndx in range(self.in_steps, len(self.processed_data), stride):
                 pred = model(np.expand_dims(
                     self.processed_data[ndx - self.in_steps:ndx], axis=0
                 )).numpy()[0]
-                preds.append(self.postprocess_func(pred))
+                preds.append(self.preprocess_y_func(pred))
         return preds
 
     def forecast_plot(
@@ -869,23 +961,27 @@ class HAPINNTester:
         if pred_ndx != -1:
             ndx = stride * pred_ndx + self.in_steps
             col_ndx = self.y_data.dtype.names.index(column_name)
-            forecast = np.append(
-                self.y_data[ndx - self.in_steps:ndx][column_name],
-                preds[pred_ndx][:, col_ndx]
-            )
-            truth = self.y_data[ndx - self.in_steps:ndx +
-                                self.out_steps][column_name]
+            forecast = preds[pred_ndx][:, col_ndx]
+            truth = self.processed_y_data[ndx - self.in_steps:ndx +
+                                          self.out_steps][:, col_ndx]
+            forecast_time = np.arange(
+                ndx, len(forecast) + ndx
+            ) * self.time_interval
+            truth_time = np.arange(
+                ndx - self.in_steps, ndx + self.out_steps
+            ) * self.time_interval
         else:
             if stride != self.out_steps:
                 raise NotImplementedError('stride must match out_steps')
             col_ndx = self.y_data.dtype.names.index(column_name)
-            forecasts = np.append(
-                self.y_data[:self.in_steps][column_name],
-                np.concatenate(preds)[:, col_ndx]
-            )
-            truth = self.y_data[column_name]
-        forecast_time = np.arange(len(forecasts)) * self.time_interval
-        truth_time = np.arange(len(truth)) * self.time_interval
+            forecast = np.concatenate(preds)[:, col_ndx]
+            truth = self.processed_y_data[:, col_ndx]
+            forecast_time = np.arange(
+                self.in_steps, len(forecast) + self.in_steps
+            ) * self.time_interval
+            truth_time = np.arange(len(truth)) * self.time_interval
+        forecast_time = forecast_time.astype('timedelta64[s]')
+        truth_time = truth_time.astype('timedelta64[s]')
 
         if return_data:
             return {'forecast': (forecast_time, forecast),
@@ -931,23 +1027,23 @@ class HAPINNTester:
         if pred_ndx != -1:
             ndx = stride * pred_ndx + self.in_steps
             col_ndx = self.y_data.dtype.names.index(column_name)
-            prediction = np.append(
-                self.y_data[ndx - self.out_steps:
-                            ndx - self.in_steps][column_name],
-                preds[pred_ndx][:, col_ndx]
-            )
-            truth = self.y_data[ndx - self.in_steps:ndx][column_name]
+            prediction = preds[pred_ndx][:, col_ndx]
+            truth = self.processed_y_data[ndx - self.in_steps:ndx][:, col_ndx]
+            prediction_time = np.arange(
+                ndx - self.in_steps, len(prediction) + (ndx - self.in_steps)
+            ) * self.time_interval
+            truth_time = np.arange(
+                ndx - self.in_steps, ndx
+            ) * self.time_interval
         else:
             if stride != self.out_steps:
                 raise NotImplementedError('stride must match out_steps')
             ndx = stride + self.in_steps
             col_ndx = self.y_data.dtype.names.index(column_name)
             prediction = np.concatenate(preds)[:, col_ndx]
-            truth = self.y_data[column_name]
-        prediction_time = (np.arange(len(prediction)) *
-                           self.time_interval).astype('timedelta64[s]')
-        truth_time = (np.arange(len(truth)) *
-                      self.time_interval).astype('timedelta64[s]')
+            truth = self.processed_y_data[:, col_ndx]
+            prediction_time = np.arange(len(prediction)) * self.time_interval
+            truth_time = np.arange(len(truth)) * self.time_interval
 
         if return_data:
             return {'prediction': (prediction_time, prediction),

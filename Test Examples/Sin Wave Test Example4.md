@@ -28,7 +28,7 @@ Set HAPI related parameters
 
 
 ```python
-hapi_nn.MODEL_ENGINE = 'TORCH'
+hapi_nn.MODEL_ENGINE = 'TENSORFLOW'
 
 server = 'http://hapi-server.org/servers/TestData2.0/hapi'
 dataset = 'dataset1'
@@ -67,6 +67,28 @@ trainer = HAPINNTrainer(
 )
 ```
 
+    /home/jovyan/users_conda_envs/HAPINN/lib/python3.10/site-packages/flatbuffers/compat.py:19: DeprecationWarning: the imp module is deprecated in favour of importlib and slated for removal in Python 3.12; see the module's documentation for alternative uses
+      import imp
+    /home/jovyan/users_conda_envs/HAPINN/lib/python3.10/site-packages/keras_preprocessing/image/utils.py:23: DeprecationWarning: NEAREST is deprecated and will be removed in Pillow 10 (2023-07-01). Use Resampling.NEAREST or Dither.NONE instead.
+      'nearest': pil_image.NEAREST,
+    /home/jovyan/users_conda_envs/HAPINN/lib/python3.10/site-packages/keras_preprocessing/image/utils.py:24: DeprecationWarning: BILINEAR is deprecated and will be removed in Pillow 10 (2023-07-01). Use Resampling.BILINEAR instead.
+      'bilinear': pil_image.BILINEAR,
+    /home/jovyan/users_conda_envs/HAPINN/lib/python3.10/site-packages/keras_preprocessing/image/utils.py:25: DeprecationWarning: BICUBIC is deprecated and will be removed in Pillow 10 (2023-07-01). Use Resampling.BICUBIC instead.
+      'bicubic': pil_image.BICUBIC,
+    /home/jovyan/users_conda_envs/HAPINN/lib/python3.10/site-packages/keras_preprocessing/image/utils.py:28: DeprecationWarning: HAMMING is deprecated and will be removed in Pillow 10 (2023-07-01). Use Resampling.HAMMING instead.
+      if hasattr(pil_image, 'HAMMING'):
+    /home/jovyan/users_conda_envs/HAPINN/lib/python3.10/site-packages/keras_preprocessing/image/utils.py:29: DeprecationWarning: HAMMING is deprecated and will be removed in Pillow 10 (2023-07-01). Use Resampling.HAMMING instead.
+      _PIL_INTERPOLATION_METHODS['hamming'] = pil_image.HAMMING
+    /home/jovyan/users_conda_envs/HAPINN/lib/python3.10/site-packages/keras_preprocessing/image/utils.py:30: DeprecationWarning: BOX is deprecated and will be removed in Pillow 10 (2023-07-01). Use Resampling.BOX instead.
+      if hasattr(pil_image, 'BOX'):
+    /home/jovyan/users_conda_envs/HAPINN/lib/python3.10/site-packages/keras_preprocessing/image/utils.py:31: DeprecationWarning: BOX is deprecated and will be removed in Pillow 10 (2023-07-01). Use Resampling.BOX instead.
+      _PIL_INTERPOLATION_METHODS['box'] = pil_image.BOX
+    /home/jovyan/users_conda_envs/HAPINN/lib/python3.10/site-packages/keras_preprocessing/image/utils.py:33: DeprecationWarning: LANCZOS is deprecated and will be removed in Pillow 10 (2023-07-01). Use Resampling.LANCZOS instead.
+      if hasattr(pil_image, 'LANCZOS'):
+    /home/jovyan/users_conda_envs/HAPINN/lib/python3.10/site-packages/keras_preprocessing/image/utils.py:34: DeprecationWarning: LANCZOS is deprecated and will be removed in Pillow 10 (2023-07-01). Use Resampling.LANCZOS instead.
+      _PIL_INTERPOLATION_METHODS['lanczos'] = pil_image.LANCZOS
+
+
 Load data for Training
 
 Model input will come from scalar and vector in HAPI dataset. The output comes from the first element in the column.
@@ -84,11 +106,11 @@ trainer.set_hapidatas([data], xyparameters=[['scalar', 'vector'], ['vector_0']])
     hapi(): Reading dataset1_scalar-vector_19700101T000000_19700102T000000.npy 
 
 
-    /home/jovyan/hapi_nn.py:198: UserWarning: Time gaps exist in the data.
+    /home/jovyan/HAPI_NN/hapi_nn.py:209: UserWarning: Time gaps exist in the data.
       warnings.warn('Time gaps exist in the data.')
-    /home/jovyan/hapi_nn.py:239: UserWarning: Removed data gab at index 0. Length of gab (10) was too small. Split size (0) is less than minimum step size (1536).
+    /home/jovyan/HAPI_NN/hapi_nn.py:250: UserWarning: Removed data gab at index 0. Length of gab (10) was too small. Split size (0) is less than minimum step size (1536).
       warnings.warn(f'Removed data gab at index {ndx}. '
-    /home/jovyan/hapi_nn.py:244: UserWarning: Data points with time gaps that caused too small of splits where removed. Removed 1 out of 2 gaps.
+    /home/jovyan/HAPI_NN/hapi_nn.py:255: UserWarning: Data points with time gaps that caused too small of splits where removed. Removed 1 out of 2 gaps.
       warnings.warn('Data points with time gaps that caused '
 
 
@@ -106,24 +128,24 @@ Prepare the downloaded data for training
 trainer.prepare_data()
 ```
 
-    /home/jovyan/hapi_nn.py:408: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+    /home/jovyan/HAPI_NN/hapi_nn.py:419: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
       data = np.array(data)
-    /home/jovyan/hapi_nn.py:419: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+    /home/jovyan/HAPI_NN/hapi_nn.py:430: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
       data = np.array(remerge_data)
-    /home/jovyan/hapi_nn.py:422: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+    /home/jovyan/HAPI_NN/hapi_nn.py:433: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
       y_data = np.array(y_data)
-    /home/jovyan/hapi_nn.py:432: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+    /home/jovyan/HAPI_NN/hapi_nn.py:443: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
       y_data = np.array(remerge_data)
 
 
-    0 3
-    4 5
+    0 13
+    14 17
 
 
 
 
 
-    (0.7222285750587637, 0.20636554221459882, 0.07140588272663745)
+    (0.7216147059946788, 0.20617926750092294, 0.07220602650439831)
 
 
 
@@ -312,28 +334,75 @@ else:
     optimizer = None
 ```
 
-    S2S(
-      (conv1): Conv1dSamePadding(4, 16, kernel_size=(5,), stride=(2,))
-      (conv2): Conv1dSamePadding(16, 16, kernel_size=(5,), stride=(2,))
-      (conv3): Conv1dSamePadding(16, 16, kernel_size=(5,), stride=(2,))
-      (conv4): Conv1dSamePadding(16, 16, kernel_size=(5,), stride=(2,))
-      (conv5): Conv1dSamePadding(16, 16, kernel_size=(5,), stride=(2,))
-      (conv6): Conv1dSamePadding(16, 16, kernel_size=(5,), stride=(2,))
-      (conv7): Conv1dSamePadding(16, 16, kernel_size=(5,), stride=(2,))
-      (conv8): Conv1dSamePadding(16, 16, kernel_size=(5,), stride=(2,))
-      (conv9): Conv1d(16, 16, kernel_size=(2,), stride=(2,))
-      (convt1): ConvTranspose1d(16, 16, kernel_size=(2,), stride=(2,))
-      (convt2): Conv1dTransposeSamePadding(16, 16, kernel_size=(5,), stride=(2,))
-      (convt3): Conv1dTransposeSamePadding(16, 16, kernel_size=(5,), stride=(2,))
-      (convt4): Conv1dTransposeSamePadding(16, 16, kernel_size=(5,), stride=(2,))
-      (convt5): Conv1dTransposeSamePadding(16, 16, kernel_size=(5,), stride=(2,))
-      (convt6): Conv1dTransposeSamePadding(16, 16, kernel_size=(5,), stride=(2,))
-      (convt7): Conv1dTransposeSamePadding(16, 16, kernel_size=(5,), stride=(2,))
-      (convt8): Conv1dTransposeSamePadding(16, 16, kernel_size=(5,), stride=(2,))
-      (convt9): Conv1dTransposeSamePadding(16, 16, kernel_size=(5,), stride=(2,))
-      (convt10): Conv1dTransposeSamePadding(16, 16, kernel_size=(5,), stride=(2,))
-      (conv): Conv1d(16, 1, kernel_size=(1,), stride=(1,))
-    )
+    2022-07-06 18:37:41.987813: I tensorflow/core/platform/cpu_feature_guard.cc:151] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE4.1 SSE4.2 AVX AVX2 AVX512F FMA
+    To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+
+
+    Model: "model"
+    _________________________________________________________________
+     Layer (type)                Output Shape              Param #   
+    =================================================================
+     input_1 (InputLayer)        [(None, 512, 4)]          0         
+                                                                     
+     conv1d (Conv1D)             (None, 256, 16)           336       
+                                                                     
+     conv1d_1 (Conv1D)           (None, 128, 16)           1296      
+                                                                     
+     conv1d_2 (Conv1D)           (None, 64, 16)            1296      
+                                                                     
+     conv1d_3 (Conv1D)           (None, 32, 16)            1296      
+                                                                     
+     conv1d_4 (Conv1D)           (None, 16, 16)            1296      
+                                                                     
+     conv1d_5 (Conv1D)           (None, 8, 16)             1296      
+                                                                     
+     conv1d_6 (Conv1D)           (None, 4, 16)             1296      
+                                                                     
+     conv1d_7 (Conv1D)           (None, 2, 16)             1296      
+                                                                     
+     conv1d_8 (Conv1D)           (None, 1, 16)             528       
+                                                                     
+     conv1d_transpose (Conv1DTra  (None, 2, 16)            528       
+     nspose)                                                         
+                                                                     
+     conv1d_transpose_1 (Conv1DT  (None, 4, 16)            1296      
+     ranspose)                                                       
+                                                                     
+     conv1d_transpose_2 (Conv1DT  (None, 8, 16)            1296      
+     ranspose)                                                       
+                                                                     
+     conv1d_transpose_3 (Conv1DT  (None, 16, 16)           1296      
+     ranspose)                                                       
+                                                                     
+     conv1d_transpose_4 (Conv1DT  (None, 32, 16)           1296      
+     ranspose)                                                       
+                                                                     
+     conv1d_transpose_5 (Conv1DT  (None, 64, 16)           1296      
+     ranspose)                                                       
+                                                                     
+     conv1d_transpose_6 (Conv1DT  (None, 128, 16)          1296      
+     ranspose)                                                       
+                                                                     
+     conv1d_transpose_7 (Conv1DT  (None, 256, 16)          1296      
+     ranspose)                                                       
+                                                                     
+     conv1d_transpose_8 (Conv1DT  (None, 512, 16)          1296      
+     ranspose)                                                       
+                                                                     
+     conv1d_transpose_9 (Conv1DT  (None, 1024, 16)         1296      
+     ranspose)                                                       
+                                                                     
+     conv1d_9 (Conv1D)           (None, 1024, 1)           17        
+                                                                     
+    =================================================================
+    Total params: 22,145
+    Trainable params: 22,145
+    Non-trainable params: 0
+    _________________________________________________________________
+
+
+    /home/jovyan/users_conda_envs/HAPINN/lib/python3.10/site-packages/keras/optimizer_v2/adam.py:105: UserWarning: The `lr` argument is deprecated, use `learning_rate` instead.
+      super(Adam, self).__init__(name, **kwargs)
 
 
 ### Train the model
@@ -370,17 +439,36 @@ trainer.train(model, epochs, batch_size=batch_size, loss_func=loss_function,
 ```
 
     Epoch 1/2
-    1221/1221 [==============================] - 21s 16ms/step - loss: 0.0068 - mae: 0.0243 - val_loss: 1.1339e-04 - val_mae: 0.0059
+
+
+    2022-07-06 18:37:56.426584: W tensorflow/core/framework/cpu_allocator_impl.cc:82] Allocation of 464363520 exceeds 10% of free system memory.
+    2022-07-06 18:37:56.791552: W tensorflow/core/framework/cpu_allocator_impl.cc:82] Allocation of 232181760 exceeds 10% of free system memory.
+
+
+    1772/1772 [==============================] - 32s 17ms/step - loss: 0.0043 - mae: 0.0174 - val_loss: 1.5934e-05 - val_mae: 0.0031
     Epoch 2/2
-    1221/1221 [==============================] - 19s 16ms/step - loss: 1.4656e-04 - mae: 0.0070 - val_loss: 1.0090e-05 - val_mae: 0.0025
+    1772/1772 [==============================] - 29s 16ms/step - loss: 2.9041e-04 - mae: 0.0074 - val_loss: 6.6964e-06 - val_mae: 0.0020
+
+
+    2022-07-06 18:38:57.911471: W tensorflow/core/framework/cpu_allocator_impl.cc:82] Allocation of 464363520 exceeds 10% of free system memory.
+
+
+     13/886 [..............................] - ETA: 8s - loss: 6.6972e-06 - mae: 0.0020
+
+    2022-07-06 18:38:58.320896: W tensorflow/core/framework/cpu_allocator_impl.cc:82] Allocation of 232181760 exceeds 10% of free system memory.
+
+
+    886/886 [==============================] - 8s 9ms/step - loss: 6.6932e-06 - mae: 0.0020
+    254/254 [==============================] - 2s 9ms/step - loss: 6.6964e-06 - mae: 0.0020
+    89/89 [==============================] - 1s 10ms/step - loss: 6.6827e-06 - mae: 0.0020
 
 
 
 
 
-    {'train': [1.0085866961162537e-05, 0.0024755201302468777],
-     'val': [1.0089647730637807e-05, 0.002475948538631201],
-     'test': [1.0038814252766315e-05, 0.002469761995598674]}
+    {'train': [6.693199793517124e-06, 0.002022599335759878],
+     'val': [6.696405307593523e-06, 0.0020228978246450424],
+     'test': [6.682686034764629e-06, 0.002020870568230748]}
 
 
 
@@ -423,13 +511,18 @@ tester.forecast_plot(predictions, -1, 'vector_0', return_data=True)
 
 
 
-    {'forecast': (array([0.0000e+00, 1.0000e+00, 2.0000e+00, ..., 1.1773e+04, 1.1774e+04,
-             1.1775e+04]),
-      array([ 3.13682897e-14,  5.23596397e-03,  1.04717845e-02, ...,
-             -9.30375099e-01, -9.35911536e-01, -9.62406993e-01], dtype=float32)),
-     'truth': (array([0.0000e+00, 1.0000e+00, 2.0000e+00, ..., 1.0797e+04, 1.0798e+04,
-             1.0799e+04]),
+    {'forecast': (array([  512,   513,   514, ..., 11773, 11774, 11775],
+            dtype='timedelta64[s]'),
+      array([ 0.45490137,  0.4345346 ,  0.43284708, ..., -0.93224806,
+             -0.92641723, -0.921886  ], dtype=float32)),
+     'truth': (array([    0,     1,     2, ..., 10797, 10798, 10799],
+            dtype='timedelta64[s]'),
       array([ 3.13682897e-14,  5.23596397e-03,  1.04717845e-02, ...,
              -1.57073177e-02, -1.04717845e-02, -5.23596397e-03], dtype=float32))}
 
 
+
+
+```python
+
+```

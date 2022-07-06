@@ -84,11 +84,11 @@ trainer.set_hapidatas([data], xyparameters=[['scalar'], ['vector_0', 'vector_1',
     hapi(): Reading dataset1_scalar-vector_19700101T000000_19700102T000000.npy 
 
 
-    /home/jovyan/hapi_nn.py:198: UserWarning: Time gaps exist in the data.
+    /home/jovyan/HAPI_NN/hapi_nn.py:209: UserWarning: Time gaps exist in the data.
       warnings.warn('Time gaps exist in the data.')
-    /home/jovyan/hapi_nn.py:239: UserWarning: Removed data gab at index 0. Length of gab (10) was too small. Split size (0) is less than minimum step size (1024).
+    /home/jovyan/HAPI_NN/hapi_nn.py:250: UserWarning: Removed data gab at index 0. Length of gab (10) was too small. Split size (0) is less than minimum step size (1024).
       warnings.warn(f'Removed data gab at index {ndx}. '
-    /home/jovyan/hapi_nn.py:244: UserWarning: Data points with time gaps that caused too small of splits where removed. Removed 1 out of 2 gaps.
+    /home/jovyan/HAPI_NN/hapi_nn.py:255: UserWarning: Data points with time gaps that caused too small of splits where removed. Removed 1 out of 2 gaps.
       warnings.warn('Data points with time gaps that caused '
 
 
@@ -106,23 +106,24 @@ Prepare the downloaded data for training
 trainer.prepare_data()
 ```
 
-    /home/jovyan/hapi_nn.py:408: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+    /home/jovyan/HAPI_NN/hapi_nn.py:419: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
       data = np.array(data)
-    /home/jovyan/hapi_nn.py:419: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+    /home/jovyan/HAPI_NN/hapi_nn.py:430: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
       data = np.array(remerge_data)
-    /home/jovyan/hapi_nn.py:422: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+    /home/jovyan/HAPI_NN/hapi_nn.py:433: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
       y_data = np.array(y_data)
-    /home/jovyan/hapi_nn.py:432: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+    /home/jovyan/HAPI_NN/hapi_nn.py:443: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
       y_data = np.array(remerge_data)
 
 
-    0 17
+    0 3
+    4 10
 
 
 
 
 
-    (0.7150495819560567, 0.20430682481042192, 0.08064359323352129)
+    (0.7154619859974362, 0.2044300364855537, 0.08010797751701015)
 
 
 
@@ -342,15 +343,15 @@ trainer.train(model, epochs, batch_size=batch_size, loss_func=loss_function,
         optimizer=optimizer, device=device)
 ```
 
-    Epoch: 1/1 - Batch: 1839/1839 - 40.4s 21ms/step - Loss: 0.018690 - Validation Loss: 0.000063
+    Epoch: 1/1 - Batch: 1814/1814 - 42.2s 23ms/step - Loss: 0.016786 - Validation Loss: 0.000043
 
 
 
 
 
-    {'train': 0.00044427027017695505,
-     'val': 6.322163116682398e-05,
-     'test': 2.4383337366206813e-05}
+    {'train': 0.0003041931768035893,
+     'val': 4.317175028015872e-05,
+     'test': 1.707996169454033e-05}
 
 
 
@@ -392,7 +393,7 @@ predictions = tester.test(model)
 
 
 ```python
-tester.forecast_plot(predictions, 0, 'vector_0')
+tester.forecast_plot(predictions, 1, 'vector_0')
 ```
 
 
@@ -442,12 +443,12 @@ tester.forecast_plot(predictions, -1, 'vector_2', return_data=True)
 
 
 
-    {'forecast': (array([0.0000e+00, 1.0000e+00, 2.0000e+00, ..., 1.1261e+04, 1.1262e+04,
-             1.1263e+04]),
-      array([-1.        , -0.9999863 , -0.99994516, ...,  0.7610756 ,
-              0.7640818 ,  0.7228854 ], dtype=float32)),
-     'truth': (array([0.0000e+00, 1.0000e+00, 2.0000e+00, ..., 1.0797e+04, 1.0798e+04,
-             1.0799e+04]),
+    {'forecast': (array([  512,   513,   514, ..., 11261, 11262, 11263],
+            dtype='timedelta64[s]'),
+      array([0.6923183 , 0.8550815 , 0.8910202 , ..., 0.71686834, 0.72891796,
+             0.75786924], dtype=float32)),
+     'truth': (array([    0,     1,     2, ..., 10797, 10798, 10799],
+            dtype='timedelta64[s]'),
       array([-1.        , -0.9999863 , -0.99994516, ..., -0.9998766 ,
              -0.99994516, -0.9999863 ], dtype=float32))}
 
