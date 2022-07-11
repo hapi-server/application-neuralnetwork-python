@@ -422,7 +422,6 @@ class HAPINNTrainer:
         last_ndx = 0
         for ndx in sorted(ndxs):
             if last_ndx != ndx:
-                print(last_ndx, ndx)
                 remerge_data.append(np.concatenate(data[last_ndx:ndx]))
             last_ndx = ndx + 1
         if ndx + 1 < len(data):
@@ -887,6 +886,7 @@ class HAPINNTester:
             self.preprocess_func(self.data)
         ).astype(np.float32)
         if self.y_data is None:
+            self.y_data = self.data
             self.processed_y_data = self.preprocess_y_func(self.processed_data)
         else:
             self.processed_y_data = self.preprocess_y_func(
@@ -990,8 +990,8 @@ class HAPINNTester:
             plt.title('Test Forecast')
             plt.xlabel('Time (Seconds)')
             plt.ylabel('Value')
-            plt.plot(forecast_time, forecast)
-            plt.plot(truth_time, truth)
+            plt.plot(forecast_time, forecast, color='C0')
+            plt.plot(truth_time, truth, color='C1')
             plt.legend(['forecast', 'truth'])
 
     def plot(
@@ -1052,6 +1052,6 @@ class HAPINNTester:
             plt.title('Test Prediction')
             plt.xlabel('Time (Seconds)')
             plt.ylabel('Value')
-            plt.plot(prediction_time, prediction)
-            plt.plot(truth_time, truth)
+            plt.plot(prediction_time, prediction, color='C0')
+            plt.plot(truth_time, truth, color='C1')
             plt.legend(['prediction', 'truth'])
