@@ -24,4 +24,6 @@ TODO
  - Create real example
    - Outlier detector
    - Real-data predictor
- 
+ - Improve/Fix Train/Val/Test Split
+   - Val split should have no overlap with train like test split is currently
+   - Splits should be made from at least several different random locations in the time series
