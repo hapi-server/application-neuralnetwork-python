@@ -9,7 +9,7 @@ Import HAPI and other packages
 from hapiclient import hapi, hapitime2datetime
 from datetime import datetime
 from hapiplot import hapiplot
-from hapi_nn import HAPINNTrainer, HAPINNTester
+from hapi_nn import HAPINNTrainer, HAPINNTester, config
 import hapi_nn
 import numpy as np
 import math
@@ -28,7 +28,7 @@ Set HAPI related parameters
 
 
 ```python
-hapi_nn.MODEL_ENGINE = 'TENSORFLOW'
+config.MODEL_ENGINE = 'TENSORFLOW'
 
 server = 'http://hapi-server.org/servers/TestData2.0/hapi'
 dataset = 'dataset1'
@@ -106,11 +106,11 @@ trainer.set_hapidatas([data], xyparameters=[['scalar', 'vector'], ['vector_0']])
     hapi(): Reading dataset1_scalar-vector_19700101T000000_19700102T000000.npy 
 
 
-    /home/jovyan/HAPI_NN/hapi_nn.py:209: UserWarning: Time gaps exist in the data.
+    /home/jovyan/HAPI_NN/hapi_nn/training.py:139: UserWarning: Time gaps exist in the data.
       warnings.warn('Time gaps exist in the data.')
-    /home/jovyan/HAPI_NN/hapi_nn.py:250: UserWarning: Removed data gab at index 0. Length of gab (10) was too small. Split size (0) is less than minimum step size (1536).
+    /home/jovyan/HAPI_NN/hapi_nn/training.py:180: UserWarning: Removed data gab at index 0. Length of gab (10) was too small. Split size (0) is less than minimum step size (1536).
       warnings.warn(f'Removed data gab at index {ndx}. '
-    /home/jovyan/HAPI_NN/hapi_nn.py:255: UserWarning: Data points with time gaps that caused too small of splits where removed. Removed 1 out of 2 gaps.
+    /home/jovyan/HAPI_NN/hapi_nn/training.py:185: UserWarning: Data points with time gaps that caused too small of splits where removed. Removed 1 out of 2 gaps.
       warnings.warn('Data points with time gaps that caused '
 
 
@@ -128,24 +128,20 @@ Prepare the downloaded data for training
 trainer.prepare_data()
 ```
 
-    /home/jovyan/HAPI_NN/hapi_nn.py:419: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+    /home/jovyan/HAPI_NN/hapi_nn/training.py:349: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
       data = np.array(data)
-    /home/jovyan/HAPI_NN/hapi_nn.py:430: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+    /home/jovyan/HAPI_NN/hapi_nn/training.py:359: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
       data = np.array(remerge_data)
-    /home/jovyan/HAPI_NN/hapi_nn.py:433: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+    /home/jovyan/HAPI_NN/hapi_nn/training.py:362: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
       y_data = np.array(y_data)
-    /home/jovyan/HAPI_NN/hapi_nn.py:443: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+    /home/jovyan/HAPI_NN/hapi_nn/training.py:372: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
       y_data = np.array(remerge_data)
 
 
-    0 13
-    14 17
 
 
 
-
-
-    (0.7216147059946788, 0.20617926750092294, 0.07220602650439831)
+    (0.7234905300622855, 0.20671158001779585, 0.06979788991991864)
 
 
 
@@ -206,7 +202,7 @@ Import either the modules for PyTorch or TensorFlow
 
 
 ```python
-if hapi_nn.MODEL_ENGINE == 'TORCH':
+if config.MODEL_ENGINE == 'TORCH':
     import torch
     import torch.nn as nn
     from torch.utils.data import TensorDataset, DataLoader
@@ -219,7 +215,7 @@ Create PyTorch Module or TensorFlow Model
 
 
 ```python
-if hapi_nn.MODEL_ENGINE == 'TORCH':
+if config.MODEL_ENGINE == 'TORCH':
     class Conv1dSamePadding(nn.Conv1d):
         def forward(self, x):
             pad = max(
@@ -334,7 +330,7 @@ else:
     optimizer = None
 ```
 
-    2022-07-06 18:37:41.987813: I tensorflow/core/platform/cpu_feature_guard.cc:151] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE4.1 SSE4.2 AVX AVX2 AVX512F FMA
+    2022-07-21 18:01:52.839443: I tensorflow/core/platform/cpu_feature_guard.cc:151] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE4.1 SSE4.2 AVX AVX2 FMA
     To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
 
 
@@ -441,34 +437,28 @@ trainer.train(model, epochs, batch_size=batch_size, loss_func=loss_function,
     Epoch 1/2
 
 
-    2022-07-06 18:37:56.426584: W tensorflow/core/framework/cpu_allocator_impl.cc:82] Allocation of 464363520 exceeds 10% of free system memory.
-    2022-07-06 18:37:56.791552: W tensorflow/core/framework/cpu_allocator_impl.cc:82] Allocation of 232181760 exceeds 10% of free system memory.
+    2022-07-21 18:01:53.516767: W tensorflow/core/framework/cpu_allocator_impl.cc:82] Allocation of 466264064 exceeds 10% of free system memory.
 
 
-    1772/1772 [==============================] - 32s 17ms/step - loss: 0.0043 - mae: 0.0174 - val_loss: 1.5934e-05 - val_mae: 0.0031
+    1779/1779 [==============================] - 55s 29ms/step - loss: 0.0045 - mae: 0.0174 - val_loss: 2.9916e-05 - val_mae: 0.0045
     Epoch 2/2
-    1772/1772 [==============================] - 29s 16ms/step - loss: 2.9041e-04 - mae: 0.0074 - val_loss: 6.6964e-06 - val_mae: 0.0020
+    1779/1779 [==============================] - 27s 15ms/step - loss: 2.0057e-04 - mae: 0.0075 - val_loss: 5.4533e-06 - val_mae: 0.0018
+     14/890 [..............................] - ETA: 7s - loss: 5.4592e-06 - mae: 0.0018
+
+    2022-07-21 18:03:16.515729: W tensorflow/core/framework/cpu_allocator_impl.cc:82] Allocation of 466264064 exceeds 10% of free system memory.
 
 
-    2022-07-06 18:38:57.911471: W tensorflow/core/framework/cpu_allocator_impl.cc:82] Allocation of 464363520 exceeds 10% of free system memory.
-
-
-     13/886 [..............................] - ETA: 8s - loss: 6.6972e-06 - mae: 0.0020
-
-    2022-07-06 18:38:58.320896: W tensorflow/core/framework/cpu_allocator_impl.cc:82] Allocation of 232181760 exceeds 10% of free system memory.
-
-
-    886/886 [==============================] - 8s 9ms/step - loss: 6.6932e-06 - mae: 0.0020
-    254/254 [==============================] - 2s 9ms/step - loss: 6.6964e-06 - mae: 0.0020
-    89/89 [==============================] - 1s 10ms/step - loss: 6.6827e-06 - mae: 0.0020
+    890/890 [==============================] - 7s 8ms/step - loss: 5.4515e-06 - mae: 0.0018
+    255/255 [==============================] - 2s 8ms/step - loss: 5.4533e-06 - mae: 0.0018
+    86/86 [==============================] - 1s 8ms/step - loss: 5.4444e-06 - mae: 0.0018
 
 
 
 
 
-    {'train': [6.693199793517124e-06, 0.002022599335759878],
-     'val': [6.696405307593523e-06, 0.0020228978246450424],
-     'test': [6.682686034764629e-06, 0.002020870568230748]}
+    {'train': [5.4515085139428265e-06, 0.0018392542842775583],
+     'val': [5.453340691019548e-06, 0.001839479198679328],
+     'test': [5.444437647383893e-06, 0.0018372458871454]}
 
 
 
@@ -513,8 +503,8 @@ tester.forecast_plot(predictions, -1, 'vector_0', return_data=True)
 
     {'forecast': (array([  512,   513,   514, ..., 11773, 11774, 11775],
             dtype='timedelta64[s]'),
-      array([ 0.45490137,  0.4345346 ,  0.43284708, ..., -0.93224806,
-             -0.92641723, -0.921886  ], dtype=float32)),
+      array([ 0.4511972 ,  0.43778965,  0.4307208 , ..., -0.9276569 ,
+             -0.9310748 , -0.91976106], dtype=float32)),
      'truth': (array([    0,     1,     2, ..., 10797, 10798, 10799],
             dtype='timedelta64[s]'),
       array([ 3.13682897e-14,  5.23596397e-03,  1.04717845e-02, ...,

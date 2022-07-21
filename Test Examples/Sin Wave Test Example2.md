@@ -9,7 +9,7 @@ Import HAPI and other packages
 from hapiclient import hapi, hapitime2datetime
 from datetime import datetime
 from hapiplot import hapiplot
-from hapi_nn import HAPINNTrainer, HAPINNTester
+from hapi_nn import HAPINNTrainer, HAPINNTester, config
 import hapi_nn
 import numpy as np
 import math
@@ -28,7 +28,7 @@ Set HAPI related parameters
 
 
 ```python
-hapi_nn.MODEL_ENGINE = 'TORCH'
+config.MODEL_ENGINE = 'TORCH'
 
 server = 'http://hapi-server.org/servers/TestData2.0/hapi'
 dataset = 'dataset1'
@@ -84,11 +84,11 @@ trainer.set_hapidatas([data], xyparameters=[['vector_0', 'vector_1'], ['vector_2
     hapi(): Reading dataset1_vector_19700101T000000_19700102T000000.npy 
 
 
-    /home/jovyan/HAPI_NN/hapi_nn.py:209: UserWarning: Time gaps exist in the data.
+    /home/jovyan/HAPI_NN/hapi_nn/training.py:139: UserWarning: Time gaps exist in the data.
       warnings.warn('Time gaps exist in the data.')
-    /home/jovyan/HAPI_NN/hapi_nn.py:250: UserWarning: Removed data gab at index 0. Length of gab (10) was too small. Split size (0) is less than minimum step size (512).
+    /home/jovyan/HAPI_NN/hapi_nn/training.py:180: UserWarning: Removed data gab at index 0. Length of gab (10) was too small. Split size (0) is less than minimum step size (512).
       warnings.warn(f'Removed data gab at index {ndx}. '
-    /home/jovyan/HAPI_NN/hapi_nn.py:255: UserWarning: Data points with time gaps that caused too small of splits where removed. Removed 1 out of 2 gaps.
+    /home/jovyan/HAPI_NN/hapi_nn/training.py:185: UserWarning: Data points with time gaps that caused too small of splits where removed. Removed 1 out of 2 gaps.
       warnings.warn('Data points with time gaps that caused '
 
 
@@ -106,24 +106,20 @@ Prepare the downloaded data for training
 trainer.prepare_data()
 ```
 
-    /home/jovyan/HAPI_NN/hapi_nn.py:419: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+    /home/jovyan/HAPI_NN/hapi_nn/training.py:349: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
       data = np.array(data)
-    /home/jovyan/HAPI_NN/hapi_nn.py:430: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+    /home/jovyan/HAPI_NN/hapi_nn/training.py:359: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
       data = np.array(remerge_data)
-    /home/jovyan/HAPI_NN/hapi_nn.py:433: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+    /home/jovyan/HAPI_NN/hapi_nn/training.py:362: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
       y_data = np.array(y_data)
-    /home/jovyan/HAPI_NN/hapi_nn.py:443: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+    /home/jovyan/HAPI_NN/hapi_nn/training.py:372: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
       y_data = np.array(remerge_data)
 
 
-    0 11
-    12 14
 
 
 
-
-
-    (0.7071073748567062, 0.20204432556362248, 0.09084829957967137)
+    (0.707089641339128, 0.2020392568890587, 0.09087110177181336)
 
 
 
@@ -184,7 +180,7 @@ Import either the modules for PyTorch or TensorFlow
 
 
 ```python
-if hapi_nn.MODEL_ENGINE == 'TORCH':
+if config.MODEL_ENGINE == 'TORCH':
     import torch
     import torch.nn as nn
     from torch.utils.data import TensorDataset, DataLoader
@@ -197,7 +193,7 @@ Create PyTorch Module or TensorFlow Model
 
 
 ```python
-if hapi_nn.MODEL_ENGINE == 'TORCH':
+if config.MODEL_ENGINE == 'TORCH':
     class Conv1dSamePadding(nn.Conv1d):
         def forward(self, x):
             pad = max(
@@ -327,15 +323,15 @@ trainer.train(model, epochs, batch_size=batch_size, loss_func=loss_function,
         optimizer=optimizer, device=device)
 ```
 
-    Epoch: 1/1 - Batch: 1851/1851 - 24.7s 13ms/step - Loss: 0.010422 - Validation Loss: 0.000003
+    Epoch: 1/1 - Batch: 1851/1851 - 25.5s 13ms/step - Loss: 0.007146 - Validation Loss: 0.000001
 
 
 
 
 
-    {'train': 1.8141272484079213e-05,
-     'val': 2.5967014696575332e-06,
-     'test': 1.1624562623196768e-06}
+    {'train': 7.550769017446631e-06,
+     'val': 1.081833659560728e-06,
+     'test': 4.847753964943335e-07}
 
 
 
@@ -412,8 +408,8 @@ tester.plot(predictions, -1, 'vector_2', return_data=True)
 
     {'prediction': (array([0.000e+00, 1.000e+00, 2.000e+00, ..., 3.197e+03, 3.198e+03,
              3.199e+03]),
-      array([-0.9912931 , -1.0000267 , -1.0008409 , ...,  0.5141625 ,
-              0.50255585,  0.5102424 ], dtype=float32)),
+      array([-1.0106765 , -1.0073618 , -0.9990612 , ...,  0.51290685,
+              0.50948036,  0.50251114], dtype=float32)),
      'truth': (array([0.000e+00, 1.000e+00, 2.000e+00, ..., 3.597e+03, 3.598e+03,
              3.599e+03]),
       array([-1.        , -0.9999863 , -0.99994516, ..., -0.9998766 ,
