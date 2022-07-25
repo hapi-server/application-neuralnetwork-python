@@ -1,5 +1,6 @@
 """
 Author: Travis Hammond
+©️ 2022 The Johns Hopkins University Applied Physics Laboratory LLC.
 """
 
 from hapi_nn.training import HAPINNTrainer
