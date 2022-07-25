@@ -24,3 +24,5 @@ TODO
  - Improve/Fix Train/Val/Test Split
    - Val split should have no overlap with train like test split is currently
    - Splits should be made from at least several different random locations in the time series
+
+©️ 2022 The Johns Hopkins University Applied Physics Laboratory LLC.
