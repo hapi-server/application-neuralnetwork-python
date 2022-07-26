@@ -654,3 +654,6 @@ for ndx, label in enumerate(labels[:len(labels)//2]):
 ### Conclusion
 
 For the most part there seems to be a pattern in the second cluster that differentiates the two clusters. This pattern is the presences of extreme dips near the end of the series. However, the first cluster does have a couple instances with a similar pattern but these have spikes upward before the dip in their series reconstruction. The differences in the clusters does not seem to perfectly split on CMEs or Flares, with both clusters having such events.
+
+
+©️ 2022 The Johns Hopkins University Applied Physics Laboratory LLC.

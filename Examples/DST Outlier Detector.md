@@ -525,3 +525,6 @@ for ndx in range(len(predictions)):
 ### Conclusion
 
 The outliers detected seem to signal some type of space storm and several times, if not the majority, are CMEs or Flares. However, the outliers are often those that have extreme values, while useful, the hope of a more complex outlier detector would be to recognize complicated patterns and signal when such patterns are not the norm. This argubly was achieved, but it seems that this simplified to extreme values.
+
+
+©️ 2022 The Johns Hopkins University Applied Physics Laboratory LLC.

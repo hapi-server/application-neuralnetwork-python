@@ -1,3 +1,8 @@
+"""
+Author: Travis Hammond
+©️ 2022 The Johns Hopkins University Applied Physics Laboratory LLC.
+"""
+
 import setuptools
 
 

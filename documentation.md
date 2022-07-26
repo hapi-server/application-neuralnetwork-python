@@ -279,3 +279,6 @@ Classes
             verbose: An integer, rates verbosity. 0 None, 1 All.
         Returns:
             A dict of results for train, validation, and test.
+            
+
+©️ 2022 The Johns Hopkins University Applied Physics Laboratory LLC.
