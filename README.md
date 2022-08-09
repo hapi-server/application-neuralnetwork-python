@@ -24,7 +24,6 @@ TODO
  - Improve/Fix Train/Val/Test Split
    - Splits should be made from at least several different random locations in the time series
  - Create Backend ML class that replaces current method for TensorFlow and PyTorch
- - Update Documentation
  - Complete setup.py requirements and release on PyPI
 
 ©️ 2022 The Johns Hopkins University Applied Physics Laboratory LLC.
