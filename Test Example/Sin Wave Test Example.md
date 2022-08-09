@@ -121,15 +121,34 @@ trainer.set_hapidatas([data], xyparameters=[['vector_0'], ['vector_1', 'vector_2
 
     hapi(): Running hapi.py version 0.2.4
     hapi(): file directory = ./hapicache/hapi-server.org_servers_TestData2.0_hapi
-    hapi(): Reading dataset1_vector_19700101T000000_19700102T000000.pkl
-    hapi(): Reading dataset1_vector_19700101T000000_19700102T000000.npy 
+    hapi(): Reading http://hapi-server.org/servers/TestData2.0/hapi/info?id=dataset1
+    hapi(): Writing dataset1___.json 
+    hapi(): Writing dataset1___.pkl 
+    hapi(): Reading http://hapi-server.org/servers/TestData2.0/hapi/capabilities
+    hapi(): Writing http://hapi-server.org/servers/TestData2.0/hapi/data?id=dataset1&parameters=vector&time.min=1970-01-01T00:00:00Z&time.max=1970-01-02T00:00:00Z&format=binary to dataset1_vector_19700101T000000_19700102T000000.bin
 
 
-    /home/jovyan/HAPI_NN/hapi_nn/training.py:139: UserWarning: Time gaps exist in the data.
+    /home/jovyan/users_conda_envs/HAPINN/lib/python3.10/site-packages/hapiclient/hapi.py:625: ResourceWarning: unclosed <socket.socket fd=62, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('192.168.21.45', 45504), raddr=('52.2.175.82', 80)>
+      res = urlopen(SERVER + '/capabilities')
+    ResourceWarning: Enable tracemalloc to get the object allocation traceback
+    /home/jovyan/users_conda_envs/HAPINN/lib/python3.10/site-packages/hapiclient/hapi.py:669: ResourceWarning: unclosed <socket.socket fd=65, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('192.168.21.45', 45508), raddr=('52.2.175.82', 80)>
+      urlretrieve(urlbin, fnamebin)
+    ResourceWarning: Enable tracemalloc to get the object allocation traceback
+    /tmp/ipykernel_1479/2586519506.py:1: ResourceWarning: unclosed <socket.socket fd=64, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('192.168.21.45', 45506), raddr=('52.2.175.82', 80)>
+      data, meta = hapi(server, dataset, parameters, start, stop, **options)
+    ResourceWarning: Enable tracemalloc to get the object allocation traceback
+    /home/jovyan/HAPI_NN/hapi_nn/training.py:144: UserWarning: Time gaps exist in the data.
       warnings.warn('Time gaps exist in the data.')
-    /home/jovyan/HAPI_NN/hapi_nn/training.py:180: UserWarning: Removed data gab at index 0. Length of gab (10) was too small. Split size (0) is less than minimum step size (512).
+
+
+    hapi(): Reading and parsing dataset1_vector_19700101T000000_19700102T000000.bin
+    hapi(): Writing ./hapicache/hapi-server.org_servers_TestData2.0_hapi/dataset1_vector_19700101T000000_19700102T000000.pkl
+    hapi(): Writing ./hapicache/hapi-server.org_servers_TestData2.0_hapi/dataset1_vector_19700101T000000_19700102T000000.npy
+
+
+    /home/jovyan/HAPI_NN/hapi_nn/training.py:185: UserWarning: Removed data gab at index 0. Length of gab (10) was too small. Split size (0) is less than minimum step size (512).
       warnings.warn(f'Removed data gab at index {ndx}. '
-    /home/jovyan/HAPI_NN/hapi_nn/training.py:185: UserWarning: Data points with time gaps that caused too small of splits where removed. Removed 1 out of 2 gaps.
+    /home/jovyan/HAPI_NN/hapi_nn/training.py:190: UserWarning: Data points with time gaps that caused too small of splits where removed. Removed 1 out of 2 gaps.
       warnings.warn('Data points with time gaps that caused '
 
 
@@ -147,36 +166,36 @@ Prepare the downloaded data for training
 trainer.prepare_data()
 ```
 
-    /home/jovyan/HAPI_NN/hapi_nn/training.py:349: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+    /home/jovyan/HAPI_NN/hapi_nn/training.py:361: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
       data = np.array(data)
-    /home/jovyan/HAPI_NN/hapi_nn/training.py:359: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
-      data = np.array(remerge_data)
-    /home/jovyan/HAPI_NN/hapi_nn/training.py:362: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
-      y_data = np.array(y_data)
     /home/jovyan/HAPI_NN/hapi_nn/training.py:372: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+      data = np.array(remerge_data)
+    /home/jovyan/HAPI_NN/hapi_nn/training.py:375: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+      y_data = np.array(y_data)
+    /home/jovyan/HAPI_NN/hapi_nn/training.py:386: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
       y_data = np.array(remerge_data)
-    /home/jovyan/HAPI_NN/hapi_nn/training.py:693: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+    /home/jovyan/HAPI_NN/hapi_nn/training.py:689: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
       data = np.array(np.split(data, split_ndxs))
-    /home/jovyan/HAPI_NN/hapi_nn/training.py:708: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+    /home/jovyan/HAPI_NN/hapi_nn/training.py:704: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
       return np.array([func(x) for x in data])
-    /home/jovyan/HAPI_NN/hapi_nn/training.py:693: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+    /home/jovyan/HAPI_NN/hapi_nn/training.py:689: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
       data = np.array(np.split(data, split_ndxs))
-    /home/jovyan/HAPI_NN/hapi_nn/training.py:708: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+    /home/jovyan/HAPI_NN/hapi_nn/training.py:704: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
       return np.array([func(x) for x in data])
-    /home/jovyan/HAPI_NN/hapi_nn/training.py:693: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+    /home/jovyan/HAPI_NN/hapi_nn/training.py:689: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
       data = np.array(np.split(data, split_ndxs))
-    /home/jovyan/HAPI_NN/hapi_nn/training.py:708: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+    /home/jovyan/HAPI_NN/hapi_nn/training.py:704: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
       return np.array([func(x) for x in data])
-    /home/jovyan/HAPI_NN/hapi_nn/training.py:693: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+    /home/jovyan/HAPI_NN/hapi_nn/training.py:689: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
       data = np.array(np.split(data, split_ndxs))
-    /home/jovyan/HAPI_NN/hapi_nn/training.py:708: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+    /home/jovyan/HAPI_NN/hapi_nn/training.py:704: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
       return np.array([func(x) for x in data])
 
 
 
 
 
-    (0.5180656407941107, 0.05180781820234019, 0.4301265410035492)
+    (0.5196015302450665, 0.048078986907061604, 0.4323194828478719)
 
 
 
@@ -228,8 +247,25 @@ tester.set_hapidatas([data], xyparameters=[['vector_0'], ['vector_1', 'vector_2'
 
     hapi(): Running hapi.py version 0.2.4
     hapi(): file directory = ./hapicache/hapi-server.org_servers_TestData2.0_hapi
-    hapi(): Reading dataset1_vector_19700102T010000_19700102T020000.pkl
-    hapi(): Reading dataset1_vector_19700102T010000_19700102T020000.npy 
+    hapi(): Reading http://hapi-server.org/servers/TestData2.0/hapi/info?id=dataset1
+    hapi(): Writing dataset1___.json 
+    hapi(): Writing dataset1___.pkl 
+    hapi(): Reading http://hapi-server.org/servers/TestData2.0/hapi/capabilities
+    hapi(): Writing http://hapi-server.org/servers/TestData2.0/hapi/data?id=dataset1&parameters=vector&time.min=1970-01-02T01:00:00Z&time.max=1970-01-02T02:00:00Z&format=binary to dataset1_vector_19700102T010000_19700102T020000.bin
+    hapi(): Reading and parsing dataset1_vector_19700102T010000_19700102T020000.bin
+    hapi(): Writing ./hapicache/hapi-server.org_servers_TestData2.0_hapi/dataset1_vector_19700102T010000_19700102T020000.pkl
+    hapi(): Writing ./hapicache/hapi-server.org_servers_TestData2.0_hapi/dataset1_vector_19700102T010000_19700102T020000.npy
+
+
+    /home/jovyan/users_conda_envs/HAPINN/lib/python3.10/site-packages/hapiclient/hapi.py:625: ResourceWarning: unclosed <socket.socket fd=62, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('192.168.21.45', 50372), raddr=('52.2.175.82', 80)>
+      res = urlopen(SERVER + '/capabilities')
+    ResourceWarning: Enable tracemalloc to get the object allocation traceback
+    /home/jovyan/users_conda_envs/HAPINN/lib/python3.10/site-packages/hapiclient/hapi.py:669: ResourceWarning: unclosed <socket.socket fd=65, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('192.168.21.45', 50376), raddr=('52.2.175.82', 80)>
+      urlretrieve(urlbin, fnamebin)
+    ResourceWarning: Enable tracemalloc to get the object allocation traceback
+    /tmp/ipykernel_1479/1554058410.py:1: ResourceWarning: unclosed <socket.socket fd=64, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('192.168.21.45', 50374), raddr=('52.2.175.82', 80)>
+      data, meta = hapi(server, dataset, parameters, start2, stop2, **options)
+    ResourceWarning: Enable tracemalloc to get the object allocation traceback
 
 
 
@@ -367,10 +403,6 @@ else:
     metric_function = None
 ```
 
-    2022-07-21 17:54:19.990307: I tensorflow/core/platform/cpu_feature_guard.cc:151] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE4.1 SSE4.2 AVX AVX2 FMA
-    To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
-
-
     Model: "model"
     _________________________________________________________________
      Layer (type)                Output Shape              Param #   
@@ -416,6 +448,8 @@ else:
     _________________________________________________________________
 
 
+    2022-08-09 19:37:08.249621: I tensorflow/core/platform/cpu_feature_guard.cc:151] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE4.1 SSE4.2 AVX AVX2 AVX512F FMA
+    To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
     /home/jovyan/users_conda_envs/HAPINN/lib/python3.10/site-packages/keras/optimizer_v2/adam.py:105: UserWarning: The `lr` argument is deprecated, use `learning_rate` instead.
       super(Adam, self).__init__(name, **kwargs)
 
@@ -453,33 +487,29 @@ trainer.train(model, epochs, batch_size=batch_size, loss_func=loss_function,
               optimizer=optimizer, device=device)
 ```
 
-    2022-07-21 17:54:24.119001: W tensorflow/core/framework/cpu_allocator_impl.cc:82] Allocation of 84600832 exceeds 10% of free system memory.
-    2022-07-21 17:54:24.185622: W tensorflow/core/framework/cpu_allocator_impl.cc:82] Allocation of 169201664 exceeds 10% of free system memory.
+    2022-08-09 19:37:15.991045: W tensorflow/core/framework/cpu_allocator_impl.cc:82] Allocation of 84283392 exceeds 10% of free system memory.
+    2022-08-09 19:37:16.053705: W tensorflow/core/framework/cpu_allocator_impl.cc:82] Allocation of 168566784 exceeds 10% of free system memory.
 
 
-    1291/1291 [==============================] - 15s 10ms/step - loss: 0.0232 - mae: 0.0514 - val_loss: 3.5266e-04 - val_mae: 0.0111
-     18/646 [..............................] - ETA: 3s - loss: 3.4602e-04 - mae: 0.0110
+      16/1287 [..............................] - ETA: 14s - loss: 0.7609 - mae: 0.7604
 
-    2022-07-21 17:54:39.181416: W tensorflow/core/framework/cpu_allocator_impl.cc:82] Allocation of 84600832 exceeds 10% of free system memory.
-    2022-07-21 17:54:39.267638: W tensorflow/core/framework/cpu_allocator_impl.cc:82] Allocation of 169201664 exceeds 10% of free system memory.
-
-
-    646/646 [==============================] - 4s 6ms/step - loss: 3.4637e-04 - mae: 0.0110
-    65/65 [==============================] - 0s 6ms/step - loss: 3.5266e-04 - mae: 0.0111
-      1/536 [..............................] - ETA: 11s - loss: 0.0028 - mae: 0.0500
-
-    2022-07-21 17:54:43.805092: W tensorflow/core/framework/cpu_allocator_impl.cc:82] Allocation of 70240256 exceeds 10% of free system memory.
+    2022-08-09 19:37:17.389619: W tensorflow/core/framework/cpu_allocator_impl.cc:82] Allocation of 18513920 exceeds 10% of free system memory.
+    2022-08-09 19:37:17.390256: W tensorflow/core/framework/cpu_allocator_impl.cc:82] Allocation of 21708800 exceeds 10% of free system memory.
+    2022-08-09 19:37:17.390934: W tensorflow/core/framework/cpu_allocator_impl.cc:82] Allocation of 23756800 exceeds 10% of free system memory.
 
 
-    536/536 [==============================] - 3s 6ms/step - loss: 0.0029 - mae: 0.0495
+    1287/1287 [==============================] - 15s 11ms/step - loss: 0.0209 - mae: 0.0516 - val_loss: 0.0041 - val_mae: 0.0587
+    644/644 [==============================] - 5s 7ms/step - loss: 3.0782e-04 - mae: 0.0098
+    60/60 [==============================] - 0s 7ms/step - loss: 0.0041 - mae: 0.0587
+    536/536 [==============================] - 4s 7ms/step - loss: 5.2102e-04 - mae: 0.0161
 
 
 
 
 
-    {'train': [0.00034637076896615326, 0.011049216613173485],
-     'val': [0.00035265786573290825, 0.011091786436736584],
-     'test': [0.0028712437488138676, 0.049455128610134125]}
+    {'train': [0.00030781698296777904, 0.009837881661951542],
+     'val': [0.004090908449143171, 0.05868293344974518],
+     'test': [0.0005210208473727107, 0.016080277040600777]}
 
 
 
@@ -535,12 +565,12 @@ tester.plot(predictions, -1, 'vector_2', return_data=True)
 
     {'prediction': (array([0.000e+00, 1.000e+00, 2.000e+00, ..., 3.581e+03, 3.582e+03,
              3.583e+03]),
-      array([-0.94239515, -1.0266443 , -1.0379065 , ..., -1.0010976 ,
-             -1.0654906 , -0.9793449 ], dtype=float32)),
+      array([-0.78192586, -0.9947625 , -0.97073597, ..., -0.9573268 ,
+             -0.999024  , -0.9449841 ], dtype=float32)),
      'truth': (array([0.000e+00, 1.000e+00, 2.000e+00, ..., 3.597e+03, 3.598e+03,
              3.599e+03]),
-      array([-1.        , -0.99998623, -0.99994516, ..., -0.9998766 ,
-             -0.99994516, -0.99998623], dtype=float32))}
+      array([-1.0000001 , -0.99998623, -0.9999452 , ..., -0.99987656,
+             -0.9999452 , -0.99998623], dtype=float32))}
 
 
 

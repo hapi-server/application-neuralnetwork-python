@@ -22,7 +22,7 @@ Features
    
 TODO
  - Improve/Fix Train/Val/Test Split
-   - Val split should have no overlap with train like test split is currently
    - Splits should be made from at least several different random locations in the time series
+ - Create Backend ML class that replaces current method for TensorFlow and PyTorch
 
 ©️ 2022 The Johns Hopkins University Applied Physics Laboratory LLC.

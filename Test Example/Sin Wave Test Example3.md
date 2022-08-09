@@ -87,15 +87,17 @@ trainer.set_hapidatas([data], xyparameters=[['scalar'], ['vector_0', 'vector_1',
     hapi(): Writing http://hapi-server.org/servers/TestData2.0/hapi/data?id=dataset1&parameters=scalar,vector&time.min=1970-01-01T00:00:00Z&time.max=1970-01-02T00:00:00Z&format=binary to dataset1_scalar-vector_19700101T000000_19700102T000000.bin
 
 
-    /home/jovyan/users_conda_envs/HAPINN/lib/python3.10/site-packages/hapiclient/hapi.py:625: ResourceWarning: unclosed <socket.socket fd=57, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('192.168.18.104', 57934), raddr=('52.2.175.82', 80)>
+    /home/jovyan/users_conda_envs/HAPINN/lib/python3.10/site-packages/hapiclient/hapi.py:625: ResourceWarning: unclosed <socket.socket fd=57, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('192.168.21.45', 45410), raddr=('52.2.175.82', 80)>
       res = urlopen(SERVER + '/capabilities')
     ResourceWarning: Enable tracemalloc to get the object allocation traceback
-    /home/jovyan/users_conda_envs/HAPINN/lib/python3.10/site-packages/hapiclient/hapi.py:669: ResourceWarning: unclosed <socket.socket fd=60, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('192.168.18.104', 57938), raddr=('52.2.175.82', 80)>
+    /home/jovyan/users_conda_envs/HAPINN/lib/python3.10/site-packages/hapiclient/hapi.py:669: ResourceWarning: unclosed <socket.socket fd=60, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('192.168.21.45', 45414), raddr=('52.2.175.82', 80)>
       urlretrieve(urlbin, fnamebin)
     ResourceWarning: Enable tracemalloc to get the object allocation traceback
-    /tmp/ipykernel_1037/4104119907.py:1: ResourceWarning: unclosed <socket.socket fd=58, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('192.168.18.104', 57936), raddr=('52.2.175.82', 80)>
+    /tmp/ipykernel_1455/4104119907.py:1: ResourceWarning: unclosed <socket.socket fd=58, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('192.168.21.45', 45412), raddr=('52.2.175.82', 80)>
       data, meta = hapi(server, dataset, parameters, start, stop, **options)
     ResourceWarning: Enable tracemalloc to get the object allocation traceback
+    /home/jovyan/HAPI_NN/hapi_nn/training.py:144: UserWarning: Time gaps exist in the data.
+      warnings.warn('Time gaps exist in the data.')
 
 
     hapi(): Reading and parsing dataset1_scalar-vector_19700101T000000_19700102T000000.bin
@@ -103,11 +105,9 @@ trainer.set_hapidatas([data], xyparameters=[['scalar'], ['vector_0', 'vector_1',
     hapi(): Writing ./hapicache/hapi-server.org_servers_TestData2.0_hapi/dataset1_scalar-vector_19700101T000000_19700102T000000.npy
 
 
-    /home/jovyan/HAPI_NN/hapi_nn/training.py:139: UserWarning: Time gaps exist in the data.
-      warnings.warn('Time gaps exist in the data.')
-    /home/jovyan/HAPI_NN/hapi_nn/training.py:180: UserWarning: Removed data gab at index 0. Length of gab (10) was too small. Split size (0) is less than minimum step size (1024).
+    /home/jovyan/HAPI_NN/hapi_nn/training.py:185: UserWarning: Removed data gab at index 0. Length of gab (10) was too small. Split size (0) is less than minimum step size (1024).
       warnings.warn(f'Removed data gab at index {ndx}. '
-    /home/jovyan/HAPI_NN/hapi_nn/training.py:185: UserWarning: Data points with time gaps that caused too small of splits where removed. Removed 1 out of 2 gaps.
+    /home/jovyan/HAPI_NN/hapi_nn/training.py:190: UserWarning: Data points with time gaps that caused too small of splits where removed. Removed 1 out of 2 gaps.
       warnings.warn('Data points with time gaps that caused '
 
 
@@ -125,20 +125,20 @@ Prepare the downloaded data for training
 trainer.prepare_data()
 ```
 
-    /home/jovyan/HAPI_NN/hapi_nn/training.py:349: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+    /home/jovyan/HAPI_NN/hapi_nn/training.py:361: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
       data = np.array(data)
-    /home/jovyan/HAPI_NN/hapi_nn/training.py:359: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
-      data = np.array(remerge_data)
-    /home/jovyan/HAPI_NN/hapi_nn/training.py:362: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
-      y_data = np.array(y_data)
     /home/jovyan/HAPI_NN/hapi_nn/training.py:372: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+      data = np.array(remerge_data)
+    /home/jovyan/HAPI_NN/hapi_nn/training.py:375: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+      y_data = np.array(y_data)
+    /home/jovyan/HAPI_NN/hapi_nn/training.py:386: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
       y_data = np.array(remerge_data)
 
 
 
 
 
-    (0.7149037526735369, 0.20425821504958194, 0.0808380322768812)
+    (0.7362200007986476, 0.1751301130086387, 0.08864988619271368)
 
 
 
@@ -182,20 +182,22 @@ tester.set_hapidatas([data], xyparameters=[['scalar'], ['vector_0', 'vector_1', 
     hapi(): Writing http://hapi-server.org/servers/TestData2.0/hapi/data?id=dataset1&parameters=scalar,vector&time.min=1970-01-02T01:00:00Z&time.max=1970-01-02T04:00:00Z&format=binary to dataset1_scalar-vector_19700102T010000_19700102T040000.bin
 
 
-    /home/jovyan/users_conda_envs/HAPINN/lib/python3.10/site-packages/hapiclient/hapi.py:625: ResourceWarning: unclosed <socket.socket fd=58, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('192.168.18.104', 57944), raddr=('52.2.175.82', 80)>
+    /home/jovyan/users_conda_envs/HAPINN/lib/python3.10/site-packages/hapiclient/hapi.py:625: ResourceWarning: unclosed <socket.socket fd=57, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('192.168.21.45', 35500), raddr=('52.2.175.82', 80)>
       res = urlopen(SERVER + '/capabilities')
-    ResourceWarning: Enable tracemalloc to get the object allocation traceback
-    /home/jovyan/users_conda_envs/HAPINN/lib/python3.10/site-packages/hapiclient/hapi.py:669: ResourceWarning: unclosed <socket.socket fd=60, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('192.168.18.104', 57948), raddr=('52.2.175.82', 80)>
-      urlretrieve(urlbin, fnamebin)
-    ResourceWarning: Enable tracemalloc to get the object allocation traceback
-    /tmp/ipykernel_1037/4150274213.py:1: ResourceWarning: unclosed <socket.socket fd=57, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('192.168.18.104', 57946), raddr=('52.2.175.82', 80)>
-      data, meta = hapi(server, dataset, parameters, start2, stop2, **options)
     ResourceWarning: Enable tracemalloc to get the object allocation traceback
 
 
     hapi(): Reading and parsing dataset1_scalar-vector_19700102T010000_19700102T040000.bin
     hapi(): Writing ./hapicache/hapi-server.org_servers_TestData2.0_hapi/dataset1_scalar-vector_19700102T010000_19700102T040000.pkl
     hapi(): Writing ./hapicache/hapi-server.org_servers_TestData2.0_hapi/dataset1_scalar-vector_19700102T010000_19700102T040000.npy
+
+
+    /home/jovyan/users_conda_envs/HAPINN/lib/python3.10/site-packages/hapiclient/hapi.py:669: ResourceWarning: unclosed <socket.socket fd=60, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('192.168.21.45', 35504), raddr=('52.2.175.82', 80)>
+      urlretrieve(urlbin, fnamebin)
+    ResourceWarning: Enable tracemalloc to get the object allocation traceback
+    /tmp/ipykernel_1455/4150274213.py:1: ResourceWarning: unclosed <socket.socket fd=58, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('192.168.21.45', 35502), raddr=('52.2.175.82', 80)>
+      data, meta = hapi(server, dataset, parameters, start2, stop2, **options)
+    ResourceWarning: Enable tracemalloc to get the object allocation traceback
 
 
 
@@ -377,15 +379,15 @@ trainer.train(model, epochs, batch_size=batch_size, loss_func=loss_function,
         optimizer=optimizer, device=device)
 ```
 
-    Epoch: 1/1 - Batch: 1839/1839 - 54.5s 29ms/step - Loss: 0.014105 - Validation Loss: 0.000051
+    Epoch: 1/1 - Batch: 1729/1729 - 38.2s 22ms/step - Loss: 0.015514 - Validation Loss: 0.000005
 
 
 
 
 
-    {'train': 0.00035833045691183385,
-     'val': 5.130360934256904e-05,
-     'test': 2.0082271849377514e-05}
+    {'train': 4.5749475812055214e-05,
+     'val': 5.462765395093589e-06,
+     'test': 2.8335347874425384e-06}
 
 
 
@@ -479,8 +481,8 @@ tester.forecast_plot(predictions, -1, 'vector_2', return_data=True)
 
     {'forecast': (array([  512,   513,   514, ..., 11261, 11262, 11263],
             dtype='timedelta64[s]'),
-      array([0.8580227 , 0.8564094 , 0.8814501 , ..., 0.70444465, 0.7202684 ,
-             0.70017236], dtype=float32)),
+      array([0.8875789 , 0.8931578 , 0.91626376, ..., 0.7358366 , 0.76530135,
+             0.73764324], dtype=float32)),
      'truth': (array([    0,     1,     2, ..., 10797, 10798, 10799],
             dtype='timedelta64[s]'),
       array([-1.        , -0.9999863 , -0.99994516, ..., -0.9998766 ,
@@ -492,6 +494,5 @@ tester.forecast_plot(predictions, -1, 'vector_2', return_data=True)
 ```python
 
 ```
-
 
 ©️ 2022 The Johns Hopkins University Applied Physics Laboratory LLC.

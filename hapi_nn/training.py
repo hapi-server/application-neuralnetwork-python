@@ -95,6 +95,8 @@ class HAPINNTrainer:
         self.y_data = None
         self.split_ndxs = None
         self.processed_data = None
+        self.processed_train_data = None
+        self.processed_val_data = None
         self.processed_test_data = None
         self.preprocess_func = preprocess_func
         self.preprocess_y_func = preprocess_y_func
@@ -125,6 +127,8 @@ class HAPINNTrainer:
             )
         datas = datas if isinstance(datas, (list, tuple)) else [datas]
         self.processed_data = None
+        self.processed_train_data = None
+        self.processed_val_data = None
         self.processed_test_data = None
 
         # Calculate time interval and split on inconsistencies for
@@ -347,11 +351,19 @@ class HAPINNTrainer:
                 len(data) *
                 self.data_split[2]),
             replace=False)
+        ndxs2 = np.random.choice(
+            np.delete(np.arange(len(data) - 1), ndxs, axis=0),
+            size=round(
+                len(data) *
+                self.data_split[1]),
+            replace=False)
+        
         data = np.array(data)
         test_data = data[ndxs]
+        val_data = data[ndxs2]
         remerge_data = []
         last_ndx = 0
-        for ndx in sorted(ndxs):
+        for ndx in sorted(np.append(ndxs, ndxs2)):
             if last_ndx != ndx:
                 remerge_data.append(np.concatenate(data[last_ndx:ndx]))
             last_ndx = ndx + 1
@@ -362,9 +374,10 @@ class HAPINNTrainer:
         if self.y_data is not None:
             y_data = np.array(y_data)
             y_test_data = y_data[ndxs]
+            y_val_data = y_data[ndxs2]
             remerge_data = []
             last_ndx = 0
-            for ndx in sorted(ndxs):
+            for ndx in sorted(np.append(ndxs, ndxs2)):
                 if last_ndx != ndx:
                     remerge_data.append(np.concatenate(y_data[last_ndx:ndx]))
                 last_ndx = ndx + 1
@@ -374,35 +387,19 @@ class HAPINNTrainer:
 
         # Process the data
         if self.y_data is None:
-            self.processed_data = self._process_data(data, data.copy())
+            self.processed_train_data = self._process_data(data, data.copy())
+            self.processed_val_data = self._process_data(
+                val_data, val_data.copy())
             self.processed_test_data = self._process_data(
                 test_data, test_data.copy())
         else:
-            self.processed_data = self._process_data(data, y_data)
+            self.processed_train_data = self._process_data(data, y_data)
+            self.processed_val_data = self._process_data(
+                val_data, y_val_data
+            )
             self.processed_test_data = self._process_data(
                 test_data, y_test_data
             )
-
-    def _partition_data(self, data, split):
-        """Partitions data given the percentage of the left split result.
-           Used internally by partition_data method.
-        """
-        if len(data) != 2:
-            raise ValueError('Data should only have two dict entries.')
-
-        # Randomly sample to split into two data dicts
-        length = len(data['x'])
-        ndxs = np.random.choice(
-            np.arange(length),
-            size=int(split * length),
-            replace=False
-        )
-        data1 = {'x': data['x'][ndxs], 'y': data['y'][ndxs]}
-        data2 = {
-            'x': np.delete(data['x'], ndxs, axis=0),
-            'y': np.delete(data['y'], ndxs, axis=0)
-        }
-        return data1, data2
 
     def partition_data(self):
         """Partitions the data that was processed by process_data method.
@@ -410,23 +407,21 @@ class HAPINNTrainer:
         Returns:
             A list of the actual resulting partition proportions is returned.
         """
-        if self.processed_data is None:
-            raise ValueError('Data must first be processed.')
+        if self.processed_train_data is None:
+            raise ValueError('Train data must first be processed.')
+        if self.processed_val_data is None:
+            raise ValueError('Validation data must first be processed.')
         if self.processed_test_data is None:
             raise ValueError('Test data must first be processed.')
-        if 'train_x' in self.processed_data:
+        if 'train_x' in self.processed_train_data:
             raise ValueError(
-                'Data is already partitioned. Reprocess first if need be.')
+                'Train data is already partitioned. Reprocess first if need be.')
 
-        # Split data and make final dict for training
-        train_val_split = self._partition_data(
-            self.processed_data, self.data_split[0] /
-            (self.data_split[0] + self.data_split[1])
-        )
-        processed_data = {'train_x': train_val_split[0]['x'],
-                          'train_y': train_val_split[0]['y'],
-                          'val_x': train_val_split[1]['x'],
-                          'val_y': train_val_split[1]['y'],
+        # Make final dict for training
+        processed_data = {'train_x': self.processed_train_data['x'],
+                          'train_y': self.processed_train_data['y'],
+                          'val_x': self.processed_val_data['x'],
+                          'val_y': self.processed_val_data['y'],
                           'test_x': self.processed_test_data['x'],
                           'test_y': self.processed_test_data['y']}
         self.processed_data = processed_data

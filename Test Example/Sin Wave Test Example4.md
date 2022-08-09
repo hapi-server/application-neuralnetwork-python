@@ -106,11 +106,11 @@ trainer.set_hapidatas([data], xyparameters=[['scalar', 'vector'], ['vector_0']])
     hapi(): Reading dataset1_scalar-vector_19700101T000000_19700102T000000.npy 
 
 
-    /home/jovyan/HAPI_NN/hapi_nn/training.py:139: UserWarning: Time gaps exist in the data.
+    /home/jovyan/HAPI_NN/hapi_nn/training.py:144: UserWarning: Time gaps exist in the data.
       warnings.warn('Time gaps exist in the data.')
-    /home/jovyan/HAPI_NN/hapi_nn/training.py:180: UserWarning: Removed data gab at index 0. Length of gab (10) was too small. Split size (0) is less than minimum step size (1536).
+    /home/jovyan/HAPI_NN/hapi_nn/training.py:185: UserWarning: Removed data gab at index 0. Length of gab (10) was too small. Split size (0) is less than minimum step size (1536).
       warnings.warn(f'Removed data gab at index {ndx}. '
-    /home/jovyan/HAPI_NN/hapi_nn/training.py:185: UserWarning: Data points with time gaps that caused too small of splits where removed. Removed 1 out of 2 gaps.
+    /home/jovyan/HAPI_NN/hapi_nn/training.py:190: UserWarning: Data points with time gaps that caused too small of splits where removed. Removed 1 out of 2 gaps.
       warnings.warn('Data points with time gaps that caused '
 
 
@@ -128,20 +128,20 @@ Prepare the downloaded data for training
 trainer.prepare_data()
 ```
 
-    /home/jovyan/HAPI_NN/hapi_nn/training.py:349: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+    /home/jovyan/HAPI_NN/hapi_nn/training.py:361: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
       data = np.array(data)
-    /home/jovyan/HAPI_NN/hapi_nn/training.py:359: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
-      data = np.array(remerge_data)
-    /home/jovyan/HAPI_NN/hapi_nn/training.py:362: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
-      y_data = np.array(y_data)
     /home/jovyan/HAPI_NN/hapi_nn/training.py:372: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+      data = np.array(remerge_data)
+    /home/jovyan/HAPI_NN/hapi_nn/training.py:375: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+      y_data = np.array(y_data)
+    /home/jovyan/HAPI_NN/hapi_nn/training.py:386: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
       y_data = np.array(remerge_data)
 
 
 
 
 
-    (0.7234905300622855, 0.20671158001779585, 0.06979788991991864)
+    (0.763007734900038, 0.15688180678247884, 0.08011045831748313)
 
 
 
@@ -330,7 +330,7 @@ else:
     optimizer = None
 ```
 
-    2022-07-21 18:01:52.839443: I tensorflow/core/platform/cpu_feature_guard.cc:151] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE4.1 SSE4.2 AVX AVX2 FMA
+    2022-08-09 19:50:32.409772: I tensorflow/core/platform/cpu_feature_guard.cc:151] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE4.1 SSE4.2 AVX AVX2 AVX512F FMA
     To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
 
 
@@ -434,31 +434,32 @@ trainer.train(model, epochs, batch_size=batch_size, loss_func=loss_function,
         optimizer=optimizer, device=device)
 ```
 
+    2022-08-09 19:50:32.753115: W tensorflow/core/framework/cpu_allocator_impl.cc:82] Allocation of 443645952 exceeds 10% of free system memory.
+    2022-08-09 19:50:33.098016: W tensorflow/core/framework/cpu_allocator_impl.cc:82] Allocation of 221822976 exceeds 10% of free system memory.
+
+
     Epoch 1/2
+      10/1693 [..............................] - ETA: 28s - loss: 0.4506 - mae: 0.5958
+
+    2022-08-09 19:50:34.833873: W tensorflow/core/framework/cpu_allocator_impl.cc:82] Allocation of 18513920 exceeds 10% of free system memory.
+    2022-08-09 19:50:34.834515: W tensorflow/core/framework/cpu_allocator_impl.cc:82] Allocation of 21708800 exceeds 10% of free system memory.
+    2022-08-09 19:50:34.835214: W tensorflow/core/framework/cpu_allocator_impl.cc:82] Allocation of 23756800 exceeds 10% of free system memory.
 
 
-    2022-07-21 18:01:53.516767: W tensorflow/core/framework/cpu_allocator_impl.cc:82] Allocation of 466264064 exceeds 10% of free system memory.
-
-
-    1779/1779 [==============================] - 55s 29ms/step - loss: 0.0045 - mae: 0.0174 - val_loss: 2.9916e-05 - val_mae: 0.0045
+    1693/1693 [==============================] - 30s 17ms/step - loss: 0.0050 - mae: 0.0187 - val_loss: 1.1955e-05 - val_mae: 0.0027
     Epoch 2/2
-    1779/1779 [==============================] - 27s 15ms/step - loss: 2.0057e-04 - mae: 0.0075 - val_loss: 5.4533e-06 - val_mae: 0.0018
-     14/890 [..............................] - ETA: 7s - loss: 5.4592e-06 - mae: 0.0018
-
-    2022-07-21 18:03:16.515729: W tensorflow/core/framework/cpu_allocator_impl.cc:82] Allocation of 466264064 exceeds 10% of free system memory.
-
-
-    890/890 [==============================] - 7s 8ms/step - loss: 5.4515e-06 - mae: 0.0018
-    255/255 [==============================] - 2s 8ms/step - loss: 5.4533e-06 - mae: 0.0018
-    86/86 [==============================] - 1s 8ms/step - loss: 5.4444e-06 - mae: 0.0018
+    1693/1693 [==============================] - 28s 16ms/step - loss: 1.4836e-04 - mae: 0.0080 - val_loss: 1.2898e-05 - val_mae: 0.0029
+    847/847 [==============================] - 8s 10ms/step - loss: 1.2880e-05 - mae: 0.0029
+    174/174 [==============================] - 2s 10ms/step - loss: 1.2898e-05 - mae: 0.0029
+    89/89 [==============================] - 1s 10ms/step - loss: 1.2714e-05 - mae: 0.0029
 
 
 
 
 
-    {'train': [5.4515085139428265e-06, 0.0018392542842775583],
-     'val': [5.453340691019548e-06, 0.001839479198679328],
-     'test': [5.444437647383893e-06, 0.0018372458871454]}
+    {'train': [1.2880488611699548e-05, 0.002918094862252474],
+     'val': [1.2898417480755597e-05, 0.002919031772762537],
+     'test': [1.2713904652628116e-05, 0.002904004417359829]}
 
 
 
@@ -503,8 +504,8 @@ tester.forecast_plot(predictions, -1, 'vector_0', return_data=True)
 
     {'forecast': (array([  512,   513,   514, ..., 11773, 11774, 11775],
             dtype='timedelta64[s]'),
-      array([ 0.4511972 ,  0.43778965,  0.4307208 , ..., -0.9276569 ,
-             -0.9310748 , -0.91976106], dtype=float32)),
+      array([ 0.4575257 ,  0.43503672,  0.4304811 , ..., -0.92879343,
+             -0.9276579 , -0.9231007 ], dtype=float32)),
      'truth': (array([    0,     1,     2, ..., 10797, 10798, 10799],
             dtype='timedelta64[s]'),
       array([ 3.13682897e-14,  5.23596397e-03,  1.04717845e-02, ...,
@@ -516,6 +517,5 @@ tester.forecast_plot(predictions, -1, 'vector_0', return_data=True)
 ```python
 
 ```
-
 
 ©️ 2022 The Johns Hopkins University Applied Physics Laboratory LLC.
